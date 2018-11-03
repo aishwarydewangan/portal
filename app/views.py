@@ -31,7 +31,7 @@ def login():
 
 @app.route('/loginNext',methods=['GET','POST'])
 def loginNext():
-	
+
 	if request.method == "POST":
 		email = request.form['Lemail']
 		password = request.form['Lloginpassword']
@@ -41,7 +41,7 @@ def loginNext():
 			flash('Login successful', 'success')
 			return "Login Successful for: %s" % user.firstname
 		return "Password Error"
-		
+
 @app.route('/home.html')
 @app.route('/home')
 def home():
