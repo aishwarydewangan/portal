@@ -18,9 +18,10 @@ def register():
 
 @app.route('/registerNext', methods = ['GET','POST'])
 def registerNext():
-	user = Login(firstname=request.form["fname"], lastname=request.form["lname"], email=request.form["email"], password=request.form['loginpassword'])
+	user = Login(firstname=request.form["fname"], lastname=request.form["lname"], email=request.form["email"], password=request.form['loginpassword'], messFile=request.form["email"]+".txt")
 	db.session.add(user)
 	db.session.commit()
+
 	flash('Your account has been created! You are now able to log in', 'success')
 	return "Register Successful for: %s" % user.firstname
 

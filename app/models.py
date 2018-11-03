@@ -7,7 +7,8 @@ class Login(db.Model):
     lastname = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.String(30), nullable=False)
-    # messFile=db.Column(db.String(35,nullable=False))
+    messFile=db.Column(db.String(35), nullable=False)
+
     def __repr__(self):
         return "Login('{self.email}')"
 
