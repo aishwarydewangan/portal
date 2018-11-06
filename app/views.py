@@ -21,8 +21,10 @@ def CreateMessFile(messFileName):
 	# 	newDateEntry={'date':datelist[i],'mess_meal':l,'total':0}
 	# 	with open("UserFiles/"+messFileName, "ab") as f:
 	# 		pickle.dump(newDateEntry,f)
-			
-	
+
+@app.route('/cancel')
+def cancel():
+	return render_template('cancel.html')
 
 
 @app.route('/register')
