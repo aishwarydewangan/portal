@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///new.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Mess.db'
 db = SQLAlchemy(app)
 
 from app import views
