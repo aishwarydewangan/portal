@@ -58,8 +58,7 @@ def loginNext():
 		
 		user = Login.query.filter(and_(Login.rollNo == rollNo, Login.password == password)).first()
 		if user:
-			flash('Login successful', 'success')
-			return "Login Successful for: %s" % user.firstname
+			return redirect(url_for('home'))
 		return "Password Error"
 
 
