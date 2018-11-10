@@ -36,15 +36,13 @@ def register():
 
 @app.route('/registerNext', methods=['GET', 'POST'])
 def registerNext():
-	# try:
-	user = Login(firstname=request.form["fname"], lastname=request.form["lname"], email=request.form["email"], rollNo=request.form["rollNo"], password=request.form['loginpassword'], json=init_json())
-	db.session.add(user)
-	db.session.commit()
-	# except:
-	# 	return "Email Id or Roll No already exists. Please check again. "
-	flash('Your account has been created! You are now able to log in', 'success')
-	return "Register Successful for: %s" % user.firstname
-
+	try:
+		user = Login(firstname=request.form["fname"], lastname=request.form["lname"], email=request.form["email"], rollNo=request.form["rollNo"], password=request.form['loginpassword'], json=init_json())
+		db.session.add(user)
+		db.session.commit()
+	except:
+		return "Email Id or Roll No already exists. Please check again."
+	return redirect(url_for('home'))
 
 @app.route('/login')
 def login():
