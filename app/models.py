@@ -9,7 +9,7 @@ class Login(db.Model):
     email = db.Column(db.String(30), unique=True, nullable=False)
     rollNo = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.String(30), nullable=False)
-    json = db.Column(db.String(35), nullable=True)
+    json = db.Column(db.Unicode, nullable=True)
 
     def __repr__(self):
         return "Login('{self.email}')"

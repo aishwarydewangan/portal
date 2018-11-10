@@ -17,15 +17,6 @@ app.secret_key = 'MKhJHJH798798kjhkjhkjGHh'
 def index():
 	return render_template('login.html')
 
-# def CreateMessFile(messFileName):
-# 	open('app/UserFiles/'+messFileName, "wb").close()
-	# datelist = pd.date_range(end=pd.datetime.today().date(), periods=180).tolist()
-	# l = [0] * 16
-	# for i in range(181):
-	# 	newDateEntry={'date':datelist[i],'mess_meal':l,'total':0}
-	# 	with open("UserFiles/"+messFileName, "ab") as f:
-	# 		pickle.dump(newDateEntry,f)
-
 
 def init_json():
 	date_list = [datetime.datetime(2019, 6, 30) - datetime.timedelta(days=x) for x in range(540)]
@@ -33,7 +24,7 @@ def init_json():
 		date_list[item] = date_list[item].date()
 	dic = {}
 	for i in date_list:
-		dic[i] = [[[0 for _ in range(4)] for _ in range(4)], 0]
+		dic[str(i)] = [[[0 for _ in range(4)] for _ in range(4)], 0]
 	json_data = json.dumps(dic)
 	return json_data
 
@@ -45,14 +36,12 @@ def register():
 
 @app.route('/registerNext', methods=['GET', 'POST'])
 def registerNext():
-	try:
-		# json_name = request.form["rollNo"]
-		user = Login(firstname=request.form["fname"], lastname=request.form["lname"], email=request.form["email"], rollNo=request.form["rollNo"], password=request.form['loginpassword'], json=init_json())
-		db.session.add(user)
-		db.session.commit()
-	except:
-		return "Email Id or Roll No already exists. Please check again. "
-	# CreateMessFile(messFileName)
+	# try:
+	user = Login(firstname=request.form["fname"], lastname=request.form["lname"], email=request.form["email"], rollNo=request.form["rollNo"], password=request.form['loginpassword'], json=init_json())
+	db.session.add(user)
+	db.session.commit()
+	# except:
+	# 	return "Email Id or Roll No already exists. Please check again. "
 	flash('Your account has been created! You are now able to log in', 'success')
 	return "Register Successful for: %s" % user.firstname
 
