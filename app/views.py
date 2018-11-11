@@ -28,6 +28,10 @@ def init_json():
 	json_data = json.dumps(dic)
 	return json_data
 
+@app.route('/cancel')
+def cancel():
+	return render_template('cancel.html')
+
 
 @app.route('/register')
 def register():
@@ -55,7 +59,7 @@ def loginNext():
 	if request.method == "POST":
 		rollNo = request.form['LrollNo']
 		password = request.form['Lloginpassword']
-		
+
 		user = Login.query.filter(and_(Login.rollNo == rollNo, Login.password == password)).first()
 		if user:
 			return redirect(url_for('home'))
