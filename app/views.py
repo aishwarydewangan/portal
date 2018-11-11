@@ -32,6 +32,10 @@ def init_json():
 def cancel():
 	return render_template('cancel.html')
 
+@app.route('/change_mess')
+def change_mess():
+	return render_template('change_mess.html')
+
 
 @app.route('/register')
 def register():
