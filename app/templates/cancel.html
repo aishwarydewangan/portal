@@ -12,19 +12,19 @@
                             <div class="row">
                                 <div class="col-md-5">
                                     <p id="result-6">&nbsp;</p>
-                                    <form action="/cancelNext">
-                                        <input type="text" id="demo-6" class="form-control form-control-sm"/>
+                                    <form method="POST" action="/cancelNext">
+                                        <input type="text" id="demo-6" name="date_range" class="form-control form-control-sm"/>
                                         <br /><br />
                                         <div class="form-group form-check">
-                                            <input type="checkbox" class="form-check-input">
+                                            <input type="checkbox" name="breakfast" class="form-check-input">
                                             <label class="form-check-label">Breakfast</label>
                                         </div>
                                         <div class="form-group form-check">
-                                            <input type="checkbox" class="form-check-input">
+                                            <input type="checkbox" name="lunch" class="form-check-input">
                                             <label class="form-check-label">Lunch</label>
                                         </div>
                                         <div class="form-group form-check">
-                                            <input type="checkbox" class="form-check-input">
+                                            <input type="checkbox" name="dinner" class="form-check-input">
                                             <label class="form-check-label">Dinner</label>
                                         </div>
                                         <button type="submit" class="btn btn-primary">Cancel Meal(s)</button>
