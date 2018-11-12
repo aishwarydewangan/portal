@@ -66,7 +66,7 @@ def registerNext():
 		db.session.commit()
 	except:
 		return "Email Id or Roll No already exists. Please check again."
-	return redirect(url_for('home'))
+	return redirect(url_for('index'))
 
 @app.route('/admin/registerNext', methods=['GET', 'POST'])
 def adminRegisterNext():
@@ -96,7 +96,7 @@ def loginNext():
 			session['username'] = user.firstname
 			session['rollNo'] = user.rollNo
 			session['email'] = user.email
-			return redirect(url_for('home'))
+			return redirect(url_for('index'))
 		return "Password Error"
 
 @app.route('/logout', methods=['POST', 'GET'])
