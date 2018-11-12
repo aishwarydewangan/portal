@@ -39,6 +39,10 @@ def cancel():
 def change():
 	return render_template('change.html')
 
+@app.after_request
+def after_request(response):
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    return response
 
 @app.route('/register')
 def register():
@@ -75,9 +79,10 @@ def loginNext():
 
 @app.route('/logout', methods=['POST', 'GET'])
 def logout():
-    if 'username' in session:
-        name = session.pop('username')
-        return render_template('login.html')
+	if 'username' in session:
+		name = session.pop('username')
+		
+	return redirect(url_for('index'))
 
 
 @app.route('/home.html')
