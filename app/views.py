@@ -60,7 +60,7 @@ def register():
 @app.route('/registerNext', methods=['GET', 'POST'])
 def registerNext():
 	try:
-		user = Login(firstname=request.form["fname"], lastname=request.form["lname"], email=request.form["email"], rollNo=request.form["rollNo"], password=request.form['loginpassword'], json=init_json())
+		user = Login(firstname=request.form["fname"], lastname=request.form["lname"], email=request.form["email"], rollNo=request.form["rollNo"], password=sha256_crypt.encrypt(request.form['loginpassword']), json=init_json())
 		db.session.add(user)
 		db.session.commit()
 	except:
@@ -83,11 +83,12 @@ def loginNext():
 		rollNo = request.form['LrollNo']
 		password = request.form['Lloginpassword']
 
-		user = Login.query.filter(and_(Login.rollNo == rollNo, Login.password == password)).first()
+		user = Login.query.filter(Login.rollNo == rollNo).first()
 		if user:
-			session['username'] = user.firstname
-			print(session['username'])
-			return redirect(url_for('home'))
+			if sha256_crypt.verify(password,user.password):
+				session['username'] = user.firstname
+				print(session['username'])
+				return redirect(url_for('home'))
 		return "Password Error"
 
 @app.route('/logout', methods=['POST', 'GET'])
