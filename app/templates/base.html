@@ -14,10 +14,16 @@
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
 
         <link href="{{ url_for('static',filename = 'lightpick.css') }}" rel="stylesheet" type="text/css">
+
+        <style type="text/css">
+            .bg-portal {
+                background-color: #3E7AFF;
+            }
+        </style>
     </head>
     <body>
-        <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid" style="width: 80%;">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-portal">
                 <a class="navbar-brand" href="/home">Home</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -25,6 +31,15 @@
 
                 <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                     <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/view">View</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/change">Change</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/cancel">Cancel</a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="far fa-user-circle fa-lg"></i>

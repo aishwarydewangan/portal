@@ -2,7 +2,7 @@
 
 {% block content %}
     <br /><br />
-    <h1 style="font-size: 60px; font-family: 'Open Sans', sans-serif;">Cancel Meal</h1>
+    <h1 style="font-size: 60px; font-family: 'Open Sans', sans-serif;">View Meal</h1>
     <br /><br />
 
     <div class="container">
@@ -10,7 +10,7 @@
             <div class="card">
                 <div class="card-body">
                     <p id="result-6">&nbsp;</p>
-                    <form method="POST" action="/" id="cancelForm">
+                    <form method="POST" action="/cancelNext">
                         <input type="text" id="demo-6" name="date_range" class="form-control form-control-sm"/>
                         <br />
                         <div class="form-group form-check">
@@ -23,8 +23,7 @@
                             <input type="checkbox" name="dinner" class="form-check-input">
                             <label class="form-check-label">Dinner</label>
                         </div>
-                        <button type="submit" class="btn btn-primary" onclick="cancelMeal();">Cancel</button>
-                        <button type="submit" class="btn btn-primary" onclick="uncancelMeal();">Uncancel</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
             </div>
@@ -37,16 +36,6 @@
 
     <script src="{{ url_for('static',filename = 'lightpick.js') }}"></script>
     <script src="{{ url_for('static',filename = 'demo.js') }}"></script>
-
-    <script type="text/javascript">
-        function cancelMeal() {
-            document.getElementById('cancelForm').action = "/cancelMeal";
-        }
-
-        function uncancelMeal() {
-            document.getElementById('cancelForm').action = "/uncancelMeal";
-        }
-    </script>
 
 
 
