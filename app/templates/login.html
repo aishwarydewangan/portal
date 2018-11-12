@@ -22,39 +22,39 @@
 					<div class="tab-content" id="nav-tabContent">
 						<div class="tab-pane fade show active" id="nav-login" role="tabpanel" aria-labelledby="nav-login-tab">
 							<br />
-							<form action="/loginNext" method="post" id="form2">
+							<form action="/loginNext" method="post" id="form2" onsubmit="return loginCheck()">
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Enter Roll Number" name="LrollNo" id="LRollNo">
+									<input type="text" class="form-control" placeholder="Roll Number" name="rollNo" id="login_rollNo">
 								</div>
 								<div class="form-group">
-									<input type="password" class="form-control" placeholder="Password" name="Lloginpassword" id="LloginPassword">
+									<input type="password" class="form-control" placeholder="Password" name="loginPassword" id="login_password">
 								</div>
 								<div class="form-group form-check">
 									<input type="checkbox" class="form-check-input">
 									<label class="form-check-label">Remember Me</label>
 								</div>
-								<button type="submit" class="btn btn-primary">Login Me Up</button>
+								<button type="submit" class="btn btn-primary">Login</button>
 							</form>
 						</div>
 						<div class="tab-pane fade" id="nav-signup" role="tabpanel" aria-labelledby="nav-signup-tab">
 							<br />
-							<form action="/registerNext" method="post" id="form1">
+							<form action="/registerNext" method="post" id="form1" onsubmit="return registerCheck()">
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Enter first name" name="fname" id="fName">
+									<input type="text" class="form-control" placeholder="First Name" name="fname" id="fname">
 								</div>
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Enter surname" name="lname" id="lName">
+									<input type="text" class="form-control" placeholder="Last Name" name="lname" id="lname">
 								</div>
 								<div class="form-group">
-									<input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" name="email" id="Email">
+									<input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Email" name="email" id="email">
 								</div>
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Enter Roll No" name="rollNo" id="RollNo">
+									<input type="text" class="form-control" placeholder="Roll No" name="rollNo" id="reg_rollNo">
 								</div>
 								<div class="form-group">
-									<input type="password" class="form-control" placeholder="Password" name="loginpassword" id="loginPassword">
+									<input type="password" class="form-control" placeholder="Password" name="loginPassword" id="reg_password">
 								</div>
-								<button type="submit" class="btn btn-primary">Signup Me Up</button>
+								<button type="submit" class="btn btn-primary">Signup</button>
 							</form>
 						</div>
 					</div>
@@ -67,5 +67,102 @@
 		crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+		<script type="text/javascript">
+			function loginCheck() {
+				var rollNo = document.getElementById('login_rollNo');
+				var password = document.getElementById('login_password');
+
+				if(rollNo.value == "") {
+					alert("Roll No. is empty");
+					rollNo.focus();
+					return false;
+				}
+
+				if(isNaN(rollNo.value)) {
+					alert("Roll No. is must be numeric");
+					rollNo.focus();
+					return false;
+				}
+
+				if(password.value == "") {
+					alert("Password is empty");
+					password.focus();
+					return false;
+				}
+
+				if(password.value.length < 8) {
+					alert("Password must be atleast 8 characters long");
+					password.focus();
+					return false;
+				}
+
+				return true;
+			}
+
+			function registerCheck() {
+				var fname = document.getElementById('fname');
+				var lname = document.getElementById('lname');
+				var email = document.getElementById('email');
+				var rollNo = document.getElementById('reg_rollNo');
+				var password = document.getElementById('reg_password');
+
+				if(fname.value == "") {
+					alert("First Name is empty");
+					rollNo.focus();
+					return false;
+				}
+
+				if(lname.value == "") {
+					alert("Last Name is empty");
+					rollNo.focus();
+					return false;
+				}
+
+				if(email.value == "") {
+					alert("Email is empty");
+					rollNo.focus();
+					return false;
+				}
+
+				if(rollNo.value == "") {
+					alert("Roll No. is empty");
+					rollNo.focus();
+					return false;
+				}
+
+				if(password.value == "") {
+					alert("Password is empty");
+					password.focus();
+					return false;
+				}
+
+				if(isNaN(rollNo.value)) {
+					alert("Roll No. is not numeric");
+					rollNo.focus();
+					return false;
+				}
+
+				if(password.value.length < 8) {
+					alert("Password must be atleast 8 characters long");
+					password.focus();
+					return false;
+				}
+
+				if (email.value.indexOf("@", 0) < 0) { 
+			        alert("Please enter a valid e-mail address."); 
+			        email.focus(); 
+			        return false; 
+			    } 
+			   
+			    if (email.value.indexOf(".", 0) < 0) { 
+			        alert("Please enter a valid e-mail address."); 
+			        email.focus(); 
+			        return false; 
+			    }
+
+				return true;
+			}
+		</script>
 	</body>
 </html>

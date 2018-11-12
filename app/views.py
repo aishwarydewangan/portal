@@ -60,7 +60,7 @@ def register():
 @app.route('/registerNext', methods=['GET', 'POST'])
 def registerNext():
 	try:
-		user = Login(firstname=request.form["fname"], lastname=request.form["lname"], email=request.form["email"], rollNo=request.form["rollNo"], password=sha256_crypt.encrypt(request.form['loginpassword']), json=init_json())
+		user = Login(firstname=request.form["fname"], lastname=request.form["lname"], email=request.form["email"], rollNo=request.form["rollNo"], password=sha256_crypt.encrypt(request.form['loginPassword']), json=init_json())
 		db.session.add(user)
 		db.session.commit()
 	except:
@@ -80,8 +80,8 @@ def login():
 def loginNext():
 
 	if request.method == "POST":
-		rollNo = request.form['LrollNo']
-		password = request.form['Lloginpassword']
+		rollNo = request.form['rollNo']
+		password = request.form['loginPassword']
 
 		user = Login.query.filter(Login.rollNo == rollNo).first()
 		if user:
