@@ -15,7 +15,10 @@ app.secret_key = 'MKhJHJH798798kjhkjhkjGHh'
 @app.route('/index')
 @app.route('/')
 def index():
-	return render_template('login.html')
+	if 'username' in session:
+		return render_template('home.html')
+	else:
+		return render_template('login.html')
 
 
 def init_json():
@@ -66,11 +69,21 @@ def loginNext():
 
 		user = Login.query.filter(and_(Login.rollNo == rollNo, Login.password == password)).first()
 		if user:
+			session['username'] = user.firstname
 			return redirect(url_for('home'))
 		return "Password Error"
+
+@app.route('/logout', methods=['POST', 'GET'])
+def logout():
+    if 'username' in session:
+        name = session.pop('username')
+        return render_template('login.html')
 
 
 @app.route('/home.html')
 @app.route('/home')
 def home():
-	return render_template('home.html')
+	if 'username' in session :
+		return render_template('home.html')
+	else:
+		return render_template('login.html')
