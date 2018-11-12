@@ -10,7 +10,7 @@
             <div class="card">
                 <div class="card-body">
                     <p id="result-6">&nbsp;</p>
-                    <form method="POST" action="/cancelNext">
+                    <form method="POST" action="/" id="cancelForm">
                         <input type="text" id="demo-6" name="date_range" class="form-control form-control-sm"/>
                         <br />
                         <div class="form-group form-check">
@@ -23,7 +23,8 @@
                             <input type="checkbox" name="dinner" class="form-check-input">
                             <label class="form-check-label">Dinner</label>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary" onclick="cancelMeal();">Cancel</button>
+                        <button type="submit" class="btn btn-primary" onclick="uncancelMeal();">Uncancel</button>
                     </form>
                 </div>
             </div>
@@ -36,6 +37,16 @@
 
     <script src="{{ url_for('static',filename = 'lightpick.js') }}"></script>
     <script src="{{ url_for('static',filename = 'demo.js') }}"></script>
+
+    <script type="text/javascript">
+        function cancelMeal() {
+            document.getElementById('cancelForm').action = "/cancelMeal";
+        }
+
+        function uncancelMeal() {
+            document.getElementById('cancelForm').action = "/uncancelMeal";
+        }
+    </script>
 
 
 
