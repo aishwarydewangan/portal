@@ -35,6 +35,10 @@ def init_json():
 def cancel():
 	return render_template('cancel.html')
 
+@app.route('/view')
+def view():
+	return render_template('view.html')
+
 @app.route('/change')
 def change():
 	return render_template('change.html')
@@ -46,7 +50,11 @@ def after_request(response):
 
 @app.route('/register')
 def register():
-	return render_template('login.html')
+	if 'username' in session :
+		return render_template('home.html')
+	else:
+		return render_template('login.html')
+
 
 
 @app.route('/registerNext', methods=['GET', 'POST'])
@@ -61,7 +69,11 @@ def registerNext():
 
 @app.route('/login')
 def login():
-	return render_template('login.html')
+	if 'username' in session :
+		return render_template('home.html')
+	else:
+		return render_template('login.html')
+
 
 
 @app.route('/loginNext',methods=['GET','POST'])
@@ -74,6 +86,7 @@ def loginNext():
 		user = Login.query.filter(and_(Login.rollNo == rollNo, Login.password == password)).first()
 		if user:
 			session['username'] = user.firstname
+			print(session['username'])
 			return redirect(url_for('home'))
 		return "Password Error"
 
