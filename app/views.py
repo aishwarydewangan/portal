@@ -4,12 +4,13 @@ from flask import url_for, redirect, request, make_response,flash
 from flask import session
 from app.models import Login
 from app import app, db
-import pandas as pd
 from passlib.hash import sha256_crypt
 import datetime
 import json
+from werkzeug import exceptions
 
 app.secret_key = 'MKhJHJH798798kjhkjhkjGHh'
+
 
 @app.route('/register')
 @app.route('/login')
@@ -33,22 +34,88 @@ def init_json():
 	json_data = json.dumps(dic)
 	return json_data
 
+
 @app.route('/cancel')
 def cancel():
 	return render_template('cancel.html')
+
+
+@app.route('/cancelMeal', methods=['POST'])
+def cancel_meal():
+	date_range = request.form['date_range']
+	if date_range == '':
+		return render_template('error.html')
+	try:
+		breakfast = request.form['breakfast']
+		breakfast = True
+	except exceptions.BadRequestKeyError:
+		breakfast = False
+	try:
+		lunch = request.form['lunch']
+		lunch = True
+	except exceptions.BadRequestKeyError:
+		lunch = False
+	try:
+		dinner = request.form['dinner']
+		dinner = True
+	except exceptions.BadRequestKeyError:
+		dinner = False
+	if not (breakfast or lunch or dinner):
+		return render_template('error.html')
+	else:
+		user = Login.query.filter(and_(Login.rollNo == session['rollNo'])).first()
+		dic = json.loads(user.json)
+		start_date_str, end_date_str = date_range.split(' - ')
+		if end_date_str == start_date_str or end_date_str == '...':
+			start_date = datetime.datetime.strptime(start_date_str, '%d/%m/%Y').date()
+			date_count = 0
+		else:
+			start_date = datetime.datetime.strptime(start_date_str, '%d/%m/%Y').date()
+			end_date = datetime.datetime.strptime(end_date_str, '%d/%m/%Y').date()
+			date_count = float((end_date - start_date).days)
+
+		while date_count > -1:
+			date = start_date + datetime.timedelta(days=date_count)
+			date_str = date.strftime('%Y-%m-%d')
+			if breakfast:
+				for item in dic[date_str][0][0]:
+					if item == 1:
+						pos = dic[date_str][0][0].index(item)
+						dic[date_str][0][0][pos] = -1
+			if lunch:
+				for item in dic[date_str][0][1]:
+					if item == 1:
+						pos = dic[date_str][0][1].index(item)
+						dic[date_str][0][1][pos] = -1
+			if dinner:
+				for item in dic[date_str][0][3]:
+					if item == 1:
+						pos = dic[date_str][0][3].index(item)
+						dic[date_str][0][3][pos] = -1
+			date_count -= 1
+
+		json_mod = json.dumps(dic)
+		user.json = json_mod
+		db.session.commit()
+
+		return redirect(url_for('index'))
+
 
 @app.route('/view')
 def view():
 	return render_template('view.html')
 
+
 @app.route('/change')
 def change():
 	return render_template('change.html')
 
+
 @app.after_request
 def after_request(response):
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    return response
+	response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+	return response
+
 
 @app.route('/admin/register')
 @app.route('/admin/login')
@@ -68,6 +135,7 @@ def registerNext():
 		return "Email Id or Roll No already exists. Please check again."
 	return redirect(url_for('index'))
 
+
 @app.route('/admin/registerNext', methods=['GET', 'POST'])
 def adminRegisterNext():
 	try:
@@ -83,7 +151,7 @@ def adminRegisterNext():
 	return redirect(url_for('dashboard'))
 
 
-@app.route('/loginNext',methods=['GET','POST'])
+@app.route('/loginNext', methods=['GET', 'POST'])
 def loginNext():
 
 	if request.method == "POST":
@@ -99,9 +167,12 @@ def loginNext():
 			return redirect(url_for('index'))
 		return "Password Error"
 
+
 @app.route('/logout', methods=['POST', 'GET'])
 def logout():
 	if 'username' in session:
 		name = session.pop('username')
+		email = session.pop('email')
+		roll_no = session.pop('rollNo')
 		
 	return redirect(url_for('index'))
