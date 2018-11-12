@@ -79,9 +79,10 @@ def loginNext():
 
 @app.route('/logout', methods=['POST', 'GET'])
 def logout():
-    if 'username' in session:
-        name = session.pop('username')
-        return render_template('login.html')
+	if 'username' in session:
+		name = session.pop('username')
+		
+	return redirect(url_for('index'))
 
 
 @app.route('/home.html')
