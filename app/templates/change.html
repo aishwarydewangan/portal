@@ -3,30 +3,116 @@
 {% block content %}
     <br /><br />
     <h1 style="font-size: 60px; font-family: 'Open Sans', sans-serif;">Change Mess</h1>
-    <br /><br />
 
-    <div class="container">
-            <div class="col-md-10">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <p id="result-6">&nbsp;</p>
-                                    <input type="text" id="demo-6" class="form-control form-control-sm"/>
+    <div class="container" align="right" style="padding-top: 50px">
+			<div class="card" style="width: 100%;" align="center">
+				<div class="card-body">
+					<nav class="nav-fill">
+						<div class="nav nav-tabs" id="nav-tab" role="tablist">
+							<a class="nav-item nav-link active" id="nav-login-tab" data-toggle="tab" href="#nav-datewise" role="tab" aria-controls="nav-login" aria-selected="true">Datewise</a>
+              <a class="nav-item nav-link" id="nav-signup-tab" data-toggle="tab" href="#nav-daywise" role="tab" aria-controls="nav-signup" aria-selected="false">Daywise</a>
+						  <a class="nav-item nav-link" id="nav-signup-tab" data-toggle="tab" href="#nav-monthwise" role="tab" aria-controls="nav-signup" aria-selected="false">Monthwise</a>
+						</div>
+					</nav>
+					<div class="tab-content" id="nav-tabContent">
+						<div class="tab-pane fade" id="nav-datewise" role="tabpanel" aria-labelledby="nav-login-tab">
+							<br />
+              <div class="container">
+                      <div class="col-md-10">
+                              <div class="card">
+                                  <div class="card-body">
+                                      <div class="row">
+                                          <div class="col-md-12">
+                                              <p id="result-6">&nbsp;</p>
+                                              <form action="/cancelNext">
+                                                  <input type="text" id="demo-6" class="form-control form-control-sm" style="width : 300px"/>
+                                                  <br /><br />
+                                                  <div class="form-group form-check">
+                                                      <input type="checkbox" class="form-check-input">
+                                                      <label class="form-check-label">Breakfast</label>
+                                                  </div>
+                                                  <div class="form-group form-check">
+                                                      <input type="checkbox" class="form-check-input">
+                                                      <label class="form-check-label">Lunch</label>
+                                                  </div>
+                                                  <div class="form-group form-check">
+                                                      <input type="checkbox" class="form-check-input">
+                                                      <label class="form-check-label">Dinner</label>
+                                                  </div>
+
+                                                  <input type="radio" name="mess" value="Yuktahar" checked>Yuktahar
+                                                  <input type="radio" name="mess" value="North"> North
+                                                  <input type="radio" name="mess" value="South"> South
+                                                  <input type="radio" name="mess" value="Kadamb"> Kadamb<br><br>
+
+
+
+                                                  <button type="submit" class="btn btn-primary">Change Meal(s)</button>
+                                              </form>
+                                          </div>
+                                          <div class="col-md-7" id="gist-6"></div>
+                                    </div>
                                 </div>
-                                <div class="col-md-7" id="gist-6"></div>
-                            </div>
+                          </div>
+                      </div>
+                  </div>
+						</div>
+						<div class="tab-pane fade show active" id="nav-daywise" role="tabpanel" aria-labelledby="nav-signup-tab">
+							<br />
+
+              <div class="container" align="right" style="padding-top: 50px">
+                <div class="card" style="width: 100%;" align="center">
+                  <div class="card-body">
+
+                    <ul class="nav nav-pills">
+                      <li class="nav-item">
+                        <a class="nav-link active" data-toggle="pill" href="#nav-breakfast">Breakfast</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#nav-lunch">Lunch</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#nav-dinner">Dinner</a>
+                      </li>
+                    </ul>
+
+                    <div class="tab-content" id="nav-tabContent">
+                      <div class="tab-pane fade show active" id="nav-breakfast" role="tabpanel" aria-labelledby="nav-breakfast">
+                        <br />
+                        Breakfast
+                      </div>
+                      <div class="tab-pane fade" id="nav-lunch" role="tabpanel" aria-labelledby="nav-lunch">
+                        <br />
+                          Lunch
                         </div>
+
+                      <div class="tab-pane fade" id="nav-dinner" role="tabpanel" aria-labelledby="nav-dinner">
+                        <br />
+                          Dinner
+                      </div>
                     </div>
-
-
-
-
+                  </div>
                 </div>
               </div>
-          </div>
 
 
+
+
+              </div>
+
+
+            <div class="tab-pane fade" id="nav-monthwise" role="tabpanel" aria-labelledby="nav-signup-tab">
+							<br />
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script async src="https://buttons.github.io/buttons.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 
