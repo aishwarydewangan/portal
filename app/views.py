@@ -11,8 +11,10 @@ import json
 
 app.secret_key = 'MKhJHJH798798kjhkjhkjGHh'
 
-
+@app.route('/register')
+@app.route('/login')
 @app.route('/index')
+@app.route('/home')
 @app.route('/')
 def index():
 	if 'username' in session:
@@ -48,13 +50,12 @@ def after_request(response):
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     return response
 
-@app.route('/register')
-def register():
-	if 'username' in session :
-		return render_template('home.html')
-	else:
-		return render_template('login.html')
-
+@app.route('/admin/register')
+@app.route('/admin/login')
+@app.route('/admin/index')
+@app.route('/admin/')
+def adminIndex():
+	return render_template('admin_login.html')
 
 
 @app.route('/registerNext', methods=['GET', 'POST'])
@@ -67,13 +68,19 @@ def registerNext():
 		return "Email Id or Roll No already exists. Please check again."
 	return redirect(url_for('home'))
 
-@app.route('/login')
-def login():
-	if 'username' in session :
-		return render_template('home.html')
-	else:
-		return render_template('login.html')
-
+@app.route('/admin/registerNext', methods=['GET', 'POST'])
+def adminRegisterNext():
+	try:
+		data = request.form["fname"]
+		data = data + "<br />" + request.form["lname"]
+		data = data + "<br />" + request.form["email"]
+		data = data + "<br />" + request.form["mess"]
+		data = data + "<br />" + request.form["adminID"]
+		data = data + "<br />" + request.form["loginPassword"]
+		return data
+	except:
+		return "Email Id or Roll No already exists. Please check again."
+	return redirect(url_for('dashboard'))
 
 
 @app.route('/loginNext',methods=['GET','POST'])
@@ -98,12 +105,3 @@ def logout():
 		name = session.pop('username')
 		
 	return redirect(url_for('index'))
-
-
-@app.route('/home.html')
-@app.route('/home')
-def home():
-	if 'username' in session :
-		return render_template('home.html')
-	else:
-		return render_template('login.html')

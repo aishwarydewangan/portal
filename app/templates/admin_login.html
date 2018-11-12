@@ -22,9 +22,9 @@
 					<div class="tab-content" id="nav-tabContent">
 						<div class="tab-pane fade show active" id="nav-login" role="tabpanel" aria-labelledby="nav-login-tab">
 							<br />
-							<form action="/loginNext" method="post" id="form2" onsubmit="return loginCheck()">
+							<form action="/admin/loginNext" method="post" id="form2" onsubmit="return loginCheck()">
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Roll Number" name="rollNo" id="login_rollNo">
+									<input type="text" class="form-control" placeholder="Admin ID" name="adminID" id="login_id">
 								</div>
 								<div class="form-group">
 									<input type="password" class="form-control" placeholder="Password" name="loginPassword" id="login_password">
@@ -38,7 +38,10 @@
 						</div>
 						<div class="tab-pane fade" id="nav-signup" role="tabpanel" aria-labelledby="nav-signup-tab">
 							<br />
-							<form action="/registerNext" method="post" id="form1" onsubmit="return registerCheck()">
+							<form action="/admin/registerNext" method="post" id="form1" onsubmit="return registerCheck()">
+								<div class="form-group">
+									<input type="text" class="form-control" placeholder="Admin ID" name="adminID" id="reg_id">
+								</div>
 								<div class="form-group">
 									<input type="text" class="form-control" placeholder="First Name" name="fname" id="fname">
 								</div>
@@ -46,10 +49,15 @@
 									<input type="text" class="form-control" placeholder="Last Name" name="lname" id="lname">
 								</div>
 								<div class="form-group">
-									<input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Email" name="email" id="email">
-								</div>
+						    		<select class="form-control" name="mess">
+						    			<option value="north">North</option>
+						    			<option value="south">South</option>
+						    			<option value="yuktahar">Yuktahar</option>
+						    			<option value="kadamb">Kadamb</option>
+						    		</select>
+						    	</div>
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Roll No" name="rollNo" id="reg_rollNo">
+									<input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Email" name="email" id="email">
 								</div>
 								<div class="form-group">
 									<input type="password" class="form-control" placeholder="Password" name="loginPassword" id="reg_password">
@@ -70,18 +78,18 @@
 
 		<script type="text/javascript">
 			function loginCheck() {
-				var rollNo = document.getElementById('login_rollNo');
+				var adminID = document.getElementById('login_id');
 				var password = document.getElementById('login_password');
 
-				if(rollNo.value == "") {
-					alert("Roll No. is empty");
-					rollNo.focus();
+				if(adminID.value == "") {
+					alert("ID is empty");
+					adminID.focus();
 					return false;
 				}
 
-				if(isNaN(rollNo.value)) {
-					alert("Roll No. is must be numeric");
-					rollNo.focus();
+				if(isNaN(adminID.value)) {
+					alert("ID is must be numeric");
+					adminID.focus();
 					return false;
 				}
 
@@ -104,7 +112,7 @@
 				var fname = document.getElementById('fname');
 				var lname = document.getElementById('lname');
 				var email = document.getElementById('email');
-				var rollNo = document.getElementById('reg_rollNo');
+				var adminID = document.getElementById('reg_id');
 				var password = document.getElementById('reg_password');
 
 				if(fname.value == "") {
@@ -125,9 +133,9 @@
 					return false;
 				}
 
-				if(rollNo.value == "") {
-					alert("Roll No. is empty");
-					rollNo.focus();
+				if(adminID.value == "") {
+					alert("ID is empty");
+					adminID.focus();
 					return false;
 				}
 
@@ -137,9 +145,9 @@
 					return false;
 				}
 
-				if(isNaN(rollNo.value)) {
-					alert("Roll No. is not numeric");
-					rollNo.focus();
+				if(isNaN(adminID.value)) {
+					alert("ID is not numeric");
+					adminID.focus();
 					return false;
 				}
 
