@@ -306,6 +306,7 @@
 
                         <form method="POST" action="/changeMeal" id="cancelForm">
                             <div class="form-group form-check">
+                                <input type="hidden" id="month_change" name="date_range" class="form-control form-control-sm">
                                 <input type="checkbox" name="breakfast" class="form-check-input">
                                 <label class="form-check-label">Breakfast</label>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -377,6 +378,7 @@
           year = year + Math.floor((month)/12);
           month = (month)%12;
           document.getElementById("month-dropdown").innerHTML = months[month]+ ", " + year ;
+          document.getElementById("month_change").value = months[month]+ ", " + year ;
         }
 
         function breakfast() {
