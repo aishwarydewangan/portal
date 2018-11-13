@@ -5,12 +5,12 @@
     <h1 style="font-size: 60px; font-family: 'Open Sans', sans-serif;">Change Mess</h1>
 
     <div class="container" align="right" style="padding-top: 50px">
-			<div class="card" style="width: 100%;" align="center">
+			<div class="card" style="width: 100%;" align="left">
 				<div class="card-body">
 					<nav class="nav-fill">
 						<div class="nav nav-tabs" id="nav-tab" role="tablist">
 							<a class="nav-item nav-link active" id="nav-login-tab" data-toggle="tab" href="#nav-datewise" role="tab" aria-controls="nav-login" aria-selected="true">Datewise</a>
-              <a class="nav-item nav-link" id="nav-signup-tab" data-toggle="tab" href="#nav-daywise" role="tab" aria-controls="nav-signup" aria-selected="false">Daywise</a>
+              <a class="nav-item nav-link" id="nav-signup-tab" data-toggle="tab" href="#nav-daywise" role="tab" aria-controls="nav-signup" aria-selected="false" onclick="populate()">Daywise</a>
 						  <a class="nav-item nav-link" id="nav-signup-tab" data-toggle="tab" href="#nav-monthwise" role="tab" aria-controls="nav-signup" aria-selected="false">Monthwise</a>
 						</div>
 					</nav>
@@ -18,86 +18,269 @@
 						<div class="tab-pane fade" id="nav-datewise" role="tabpanel" aria-labelledby="nav-login-tab">
 							<br />
               <div class="container">
-                      <div class="col-md-10">
-                              <div class="card">
-                                  <div class="card-body">
-                                      <div class="row">
-                                          <div class="col-md-12">
-                                              <p id="result-6">&nbsp;</p>
-                                              <form action="/cancelNext">
-                                                  <input type="text" id="demo-6" class="form-control form-control-sm" style="width : 300px"/>
-                                                  <br /><br />
-                                                  <div class="form-group form-check">
-                                                      <input type="checkbox" class="form-check-input">
-                                                      <label class="form-check-label">Breakfast</label>
-                                                  </div>
-                                                  <div class="form-group form-check">
-                                                      <input type="checkbox" class="form-check-input">
-                                                      <label class="form-check-label">Lunch</label>
-                                                  </div>
-                                                  <div class="form-group form-check">
-                                                      <input type="checkbox" class="form-check-input">
-                                                      <label class="form-check-label">Dinner</label>
-                                                  </div>
-
-                                                  <input type="radio" name="mess" value="Yuktahar" checked>Yuktahar
-                                                  <input type="radio" name="mess" value="North"> North
-                                                  <input type="radio" name="mess" value="South"> South
-                                                  <input type="radio" name="mess" value="Kadamb"> Kadamb<br><br>
-
-
-
-                                                  <button type="submit" class="btn btn-primary">Change Meal(s)</button>
-                                              </form>
-                                          </div>
-                                          <div class="col-md-7" id="gist-6"></div>
-                                    </div>
-                                </div>
+                  <div class="col-md-10">
+                      <div class="card">
+                          <div class="card-body">
+                              <p id="result-6">&nbsp;</p>
+                              <form method="POST" action="/changeMeal" id="cancelForm">
+                                  <input type="text" id="demo-6" name="date_range" class="form-control form-control-sm"/>
+                                  <br />
+                                  <div class="form-group form-check">
+                                      <input type="checkbox" name="breakfast" class="form-check-input">
+                                      <label class="form-check-label">Breakfast</label>
+                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                      <input type="checkbox" name="lunch" class="form-check-input">
+                                      <label class="form-check-label">Lunch</label>
+                                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                      <input type="checkbox" name="dinner" class="form-check-input">
+                                      <label class="form-check-label">Dinner</label>
+                                      <br><br>
+                                      <input type="radio" name="mess" value="Yuktahar" checked>Yuktahar
+                                      <input type="radio" name="mess" value="North"> North
+                                      <input type="radio" name="mess" value="South"> South
+                                      <input type="radio" name="mess" value="Kadamb"> Kadamb<br><br>
+                                  </div>
+                                  <button type="submit" class="btn btn-primary">Change</button>
+                              </form>
                           </div>
                       </div>
                   </div>
-						</div>
+              </div>
+            </div>
 						<div class="tab-pane fade show active" id="nav-daywise" role="tabpanel" aria-labelledby="nav-signup-tab">
 							<br />
-
-              <div class="container" align="right" style="padding-top: 50px">
-                <div class="card" style="width: 100%;" align="center">
+              <div class="container" align="left" style="padding-top: 50px">
+                <div class="card" style="width: 100%;">
                   <div class="card-body">
 
                     <ul class="nav nav-pills">
                       <li class="nav-item">
-                        <a class="nav-link active" data-toggle="pill" href="#nav-breakfast">Breakfast</a>
+                        <a class="nav-link active" data-toggle="pill" href="#nav-breakfast" onclick="breakfast()">Breakfast</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href="#nav-lunch">Lunch</a>
+                        <a class="nav-link" data-toggle="pill" href="#nav-lunch" onclick="lunch()">Lunch</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href="#nav-dinner">Dinner</a>
+                        <a class="nav-link" data-toggle="pill" href="#nav-dinner" onclick="dinner()">Dinner</a>
                       </li>
                     </ul>
+                    <br / >
 
-                    <div class="tab-content" id="nav-tabContent">
-                      <div class="tab-pane fade show active" id="nav-breakfast" role="tabpanel" aria-labelledby="nav-breakfast">
-                        <br />
-                        Breakfast
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <table class="table table-hover">
+                          <thead>
+                            <tr>
+                              <th>Days</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td id="monday" onclick="change_day('monday')" style="background-color: lightblue">Monday</td>
+                            </tr>
+                            <tr>
+                              <td id="tuesday" onclick="change_day('tuesday')">Tuesday</td>
+                            </tr>
+                            <tr>
+                              <td id="wednesday" onclick="change_day('wednesday')">Wednesday</td>
+                            </tr>
+                            <tr>
+                              <td id="thursday" onclick="change_day('thursday')">Thursday</td>
+                            </tr>
+                            <tr>
+                              <td id="friday" onclick="change_day('friday')">Friday</td>
+                            </tr>
+                            <tr>
+                              <td id="saturday" onclick="change_day('saturday')">Saturday</td>
+                            </tr>
+                            <tr>
+                              <td id="sunday" onclick="change_day('sunday')">Sunday</td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
-                      <div class="tab-pane fade" id="nav-lunch" role="tabpanel" aria-labelledby="nav-lunch">
-                        <br />
-                          Lunch
-                        </div>
+                      <div class="col-sm-2">
+                        <table class="table table">
+                          <thead>
+                            <tr>
+                              <th>Yuktahar</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="col-sm-2">
+                        <table class="table table">
+                          <thead>
+                            <tr>
+                              <th>Kadamb</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div><div class="col-sm-2">
+                        <table class="table table">
+                          <thead>
+                            <tr>
+                              <th>North</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div><div class="col-sm-2">
+                        <table class="table table">
+                          <thead>
+                            <tr>
+                              <th>South</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                            <tr>
+                              <td>-</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
 
-                      <div class="tab-pane fade" id="nav-dinner" role="tabpanel" aria-labelledby="nav-dinner">
-                        <br />
-                          Dinner
-                      </div>
+
+
+
                     </div>
                   </div>
                 </div>
-              </div>
-
-
-
-
               </div>
 
 
@@ -119,6 +302,35 @@
     <script src="{{ url_for('static',filename = 'lightpick.js') }}"></script>
     <script src="{{ url_for('static',filename = 'change_mess.js') }}"></script>
 
+
+    <script type="text/javascript">
+        meal = 1;
+        day = "monday";
+        function breakfast() {
+            meal = 1;
+        }
+        function lunch() {
+            meal = 2;
+        }
+        function dinner() {
+            meal = 3;
+        }
+        function change_day(newday) {
+            // document.getElementById(day).style.backgroundColor = "white";
+            document.getElementById(day).style.removeProperty("background-color");
+
+            day = newday;
+            document.getElementById(day).style.backgroundColor = "lightblue";
+        }
+
+        function populate(){
+            alert("populate");
+        }
+
+        function uncancelMeal() {
+            document.getElementById('cancelForm').action = "/uncancelMeal";
+        }
+    </script>
 
 
 {% endblock %}
