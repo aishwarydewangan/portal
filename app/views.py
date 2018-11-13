@@ -418,7 +418,9 @@ def adminChange():
 	# 			db.session.add(menu)
 	# 			db.session.commit()
 
-	return render_template('adminChange.html')
+	menus = Menu.query.filter(Menu.mess == session['mess']).all()
+
+	return render_template('adminChange.html', menus=menus)
 
 
 @app.route('/admin/changeMenu', methods=['GET', 'POST'])

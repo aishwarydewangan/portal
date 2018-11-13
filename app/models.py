@@ -44,6 +44,12 @@ class Menu(db.Model):
 	item11 = db.Column(db.String(30), nullable=False)
 	item12 = db.Column(db.String(30), nullable=False)
 
+
+class Rates(db.Model):
+	mess = db.Column(db.String(30), primary_key=True, nullable=False)
+	time = db.Column(db.String(30), primary_key=True, nullable=False)
+	rate = db.Column(db.String(30), nullable=False)
+
 #pic
 class Feedback(db.Model):
 	id =db.Column(db.Integer, primary_key=True)
