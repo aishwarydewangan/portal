@@ -2,7 +2,7 @@ from flask import render_template
 from sqlalchemy import and_
 from flask import url_for, redirect, request, make_response,flash
 from flask import session
-from app.models import User, Admin, Menu
+from app.models import User, Admin, Menu, Feedback
 from app import app, db
 from passlib.hash import sha256_crypt
 import datetime
@@ -22,6 +22,22 @@ def index():
 		return render_template('home.html')
 	else:
 		return render_template('login.html')
+
+
+@app.route('/feedback')
+def feedback():
+	return render_template('feedback.html')
+
+@app.route('/feedbackform', methods=['POST'])
+def feedback_form():
+	try:
+		user = User.query.filter(User.rollNo == session['rollNo']).first()
+		feed = Feedback(mess=request.form["mess"],date_of_issue=datetime.datetime.now() , issue=request.form["issue"], description=request.form["description"], user_id=user.id)
+		db.session.add(feed)
+		db.session.commit()
+	except:
+		return "Error"
+	return "Feedback added successfully"
 
 
 def init_json():

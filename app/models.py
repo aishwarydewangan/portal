@@ -3,16 +3,17 @@ from app import db
 
 
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    firstname = db.Column(db.String(20), nullable=False)
-    lastname = db.Column(db.String(20), nullable=False)
-    email = db.Column(db.String(30), unique=True, nullable=False)
-    rollNo = db.Column(db.String(30), unique=True, nullable=False)
-    password = db.Column(db.String(30), nullable=False)
-    json = db.Column(db.Unicode, nullable=True)
-
-    def __repr__(self):
-        return "User('{self.email}')"
+	id = db.Column(db.Integer, primary_key=True)
+	firstname = db.Column(db.String(20), nullable=False)
+	lastname = db.Column(db.String(20), nullable=False)
+	email = db.Column(db.String(30), unique=True, nullable=False)
+	rollNo = db.Column(db.String(30), unique=True, nullable=False)
+	password = db.Column(db.String(30), nullable=False)
+	json = db.Column(db.Unicode, nullable=True)
+	feedback=db.relationship('Feedback',backref='user',lazy=True)
+	
+	def __repr__(self):
+		return "User('{self.email}')"
 
 class Admin(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
@@ -42,6 +43,20 @@ class Menu(db.Model):
 	item10 = db.Column(db.String(30), nullable=False)
 	item11 = db.Column(db.String(30), nullable=False)
 	item12 = db.Column(db.String(30), nullable=False)
+
+#pic
+class Feedback(db.Model):
+	id =db.Column(db.Integer, primary_key=True)
+	mess=db.Column(db.String(60), nullable=False)
+	date_of_issue=db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+	issue=db.Column(db.Text,nullable=False)
+	description=db.Column(db.Text,nullable=False)
+	user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
+	
+	def __repr__(self):
+		return "Feedback('{self.content}')"
+
+
 
 
 db.create_all()
