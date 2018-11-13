@@ -192,9 +192,36 @@ def view():
 	return render_template('view.html')
 
 
+# @app.route('/change')
+# def change():
+# 	return render_template('change.html')
+
 @app.route('/change')
 def change():
-	return render_template('change.html')
+	Y = {'item1': 'item1'}
+
+	time = ["breakfast", "lunch", "snacks", "dinner"]
+	day = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
+	mess = ["north", "south", "yuktahar", "kadamb"]
+
+	# for t in time:
+	# 	for d in day:
+	# 		for m in mess:
+	# 			print (Menu.query.filter((Menu.day == d) and (Menu.time == t) and (Menu.mess == m).first())
+
+	menus = Menu.query.all()
+	t = 0
+	d = 0
+	m = 0
+
+	for menu in menus:
+		st = "item" + str(t)
+		print (menu.item1)
+		Y[st] = menu.item1
+		break;
+
+	print(Y["item0"])
+	return render_template('change.html',title='change', Y=Y, menus=menus)
 
 
 @app.route('/changeMeal', methods=['POST'])
