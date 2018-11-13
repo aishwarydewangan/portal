@@ -2,7 +2,7 @@ from flask import render_template
 from sqlalchemy import and_
 from flask import url_for, redirect, request, make_response,flash
 from flask import session
-from app.models import Login, Admin
+from app.models import User, Admin, Menu
 from app import app, db
 from passlib.hash import sha256_crypt
 import datetime
@@ -63,7 +63,7 @@ def uncancel_meal():
 	if not (breakfast or lunch or dinner):
 		return render_template('error.html')
 	else:
-		user = Login.query.filter(and_(Login.rollNo == session['rollNo'])).first()
+		user = User.query.filter(and_(User.rollNo == session['rollNo'])).first()
 		dic = json.loads(user.json)
 		start_date_str, end_date_str = date_range.split(' - ')
 		if end_date_str == start_date_str or end_date_str == '...':
@@ -124,7 +124,7 @@ def cancel_meal():
 	if not (breakfast or lunch or dinner):
 		return render_template('error.html')
 	else:
-		user = Login.query.filter(and_(Login.rollNo == session['rollNo'])).first()
+		user = User.query.filter(and_(User.rollNo == session['rollNo'])).first()
 		dic = json.loads(user.json)
 		start_date_str, end_date_str = date_range.split(' - ')
 		if end_date_str == start_date_str or end_date_str == '...':
@@ -189,7 +189,7 @@ def adminIndex():
 @app.route('/registerNext', methods=['GET', 'POST'])
 def registerNext():
 	try:
-		user = Login(firstname=request.form["fname"], lastname=request.form["lname"], email=request.form["email"], rollNo=request.form["rollNo"], password=request.form['loginPassword'], json=init_json())
+		user = User(firstname=request.form["fname"], lastname=request.form["lname"], email=request.form["email"], rollNo=request.form["rollNo"], password=request.form['loginPassword'], json=init_json())
 		db.session.add(user)
 		db.session.commit()
 	except:
@@ -216,7 +216,7 @@ def loginNext():
 		rollNo = request.form['rollNo']
 		password = request.form['loginPassword']
 
-		user = Login.query.filter(Login.rollNo == rollNo).first()
+		user = User.query.filter(User.rollNo == rollNo).first()
 
 		if user:
 			session['username'] = user.firstname
@@ -237,10 +237,27 @@ def adminLoginNext():
 
 		if admin:
 			session['username'] = admin.firstname
+			session['mess'] = admin.mess
 			session['adminID'] = admin.adminID
 			session['email'] = admin.email
 			return "Login Successful"
 		return "Password Error"
+
+
+@app.route('/admin/change')
+def adminChange():
+	# time = ["breakfast", "lunch", "snacks", "dinner"]
+	# day = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
+	# mess = ["north", "south", "yuktahar", "kadamb"]
+
+	# for i in day:
+	# 	for j in time:
+	# 		for k in mess:
+	# 			menu = Menu(mess=k, time=j, day=i, item1="item1", item2="item2", item3="item3", item4="item4", item5="item5", item6="item6", item7="item7", item8="item8", item9="item9", item10="item10", item11="item11", item12="item12")
+	# 			db.session.add(menu)
+	# 			db.session.commit()
+
+	return render_template('adminChange.html')
 
 
 @app.route('/logout', methods=['POST', 'GET'])
