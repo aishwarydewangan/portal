@@ -1,0 +1,17 @@
+#month-dropdown{
+  width : 100%;
+  background-color: white;
+  border-color: lightgrey;
+  color: #3E7AFF;
+  align: center;
+}
+
+#dropdown-menu{
+  width: 100%;
+  background-color: white;
+  align: center;
+}
+
+#dropdown-menu : hover{
+  background-color: black;
+}
