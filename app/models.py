@@ -2,7 +2,7 @@ from datetime import datetime
 from app import db
 
 
-class Login(db.Model):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(20), nullable=False)
     lastname = db.Column(db.String(20), nullable=False)
@@ -12,7 +12,7 @@ class Login(db.Model):
     json = db.Column(db.Unicode, nullable=True)
 
     def __repr__(self):
-        return "Login('{self.email}')"
+        return "User('{self.email}')"
 
 class Admin(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
@@ -25,6 +25,23 @@ class Admin(db.Model):
 
 	def __repr__(self):
 		return "Admin('{self.email}')"
+
+class Menu(db.Model):
+	mess = db.Column(db.String(30), primary_key=True, nullable=False)
+	time = db.Column(db.String(30), primary_key=True, nullable=False)
+	day = db.Column(db.String(30), primary_key=True, nullable=False)
+	item1 = db.Column(db.String(30), nullable=False)
+	item2 = db.Column(db.String(30), nullable=False)
+	item3 = db.Column(db.String(30), nullable=False)
+	item4 = db.Column(db.String(30), nullable=False)
+	item5 = db.Column(db.String(30), nullable=False)
+	item6 = db.Column(db.String(30), nullable=False)
+	item7 = db.Column(db.String(30), nullable=False)
+	item8 = db.Column(db.String(30), nullable=False)
+	item9 = db.Column(db.String(30), nullable=False)
+	item10 = db.Column(db.String(30), nullable=False)
+	item11 = db.Column(db.String(30), nullable=False)
+	item12 = db.Column(db.String(30), nullable=False)
 
 
 db.create_all()
