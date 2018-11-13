@@ -2,7 +2,7 @@ from flask import render_template
 from sqlalchemy import and_
 from flask import url_for, redirect, request, make_response,flash
 from flask import session
-from app.models import Login
+from app.models import Login, Admin
 from app import app, db
 from passlib.hash import sha256_crypt
 import datetime
@@ -183,7 +183,7 @@ def after_request(response):
 @app.route('/admin/index')
 @app.route('/admin/')
 def adminIndex():
-	return render_template('admin_login.html')
+	return render_template('adminLogin.html')
 
 
 @app.route('/registerNext', methods=['GET', 'POST'])
@@ -193,22 +193,19 @@ def registerNext():
 		db.session.add(user)
 		db.session.commit()
 	except:
-		return "Email Id or Roll No already exists. Please check again."
+		return "Error: Please check your Email ID or Roll No"
 	return redirect(url_for('index'))
 
 
 @app.route('/admin/registerNext', methods=['GET', 'POST'])
 def adminRegisterNext():
 	try:
-		data = request.form["fname"]
-		data = data + "<br />" + request.form["lname"]
-		data = data + "<br />" + request.form["email"]
-		data = data + "<br />" + request.form["mess"]
-		data = data + "<br />" + request.form["adminID"]
-		data = data + "<br />" + request.form["loginPassword"]
-		return data
+		admin = Admin(firstname=request.form["fname"], lastname=request.form["lname"], email=request.form["email"], mess=request.form["mess"], adminID=request.form["adminID"], password=request.form['loginPassword'])
+		db.session.add(admin)
+		db.session.commit()
+		return "Admin added"
 	except:
-		return "Email Id or Roll No already exists. Please check again."
+		return "Error: Please check for following errors: <br />1. Email<br />2.Admin ID"
 	return redirect(url_for('dashboard'))
 
 
@@ -226,6 +223,23 @@ def loginNext():
 			session['rollNo'] = user.rollNo
 			session['email'] = user.email
 			return redirect(url_for('index'))
+		return "Password Error"
+
+
+@app.route('/admin/loginNext', methods=['GET', 'POST'])
+def adminLoginNext():
+
+	if request.method == "POST":
+		adminID = request.form['adminID']
+		password = request.form['loginPassword']
+
+		admin = Admin.query.filter(Admin.adminID == adminID).first()
+
+		if admin:
+			session['username'] = admin.firstname
+			session['adminID'] = admin.adminID
+			session['email'] = admin.email
+			return "Login Successful"
 		return "Password Error"
 
 

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<title>Index</title>
+
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	</head>
+	<body>
+		<div class="container" align="right" style="padding-top: 50px">
+			<div class="card" style="width: 18rem;" align="center">
+				<div class="card-body">
+					<nav class="nav-fill">
+						<div class="nav nav-tabs" id="nav-tab" role="tablist">
+							<a class="nav-item nav-link active" id="nav-login-tab" data-toggle="tab" href="#nav-login" role="tab" aria-controls="nav-login" aria-selected="true">Login</a>
+							<a class="nav-item nav-link" id="nav-signup-tab" data-toggle="tab" href="#nav-signup" role="tab" aria-controls="nav-signup" aria-selected="false">Signup</a>
+						</div>
+					</nav>
+					<div class="tab-content" id="nav-tabContent">
+						<div class="tab-pane fade show active" id="nav-login" role="tabpanel" aria-labelledby="nav-login-tab">
+							<br />
+							<form action="/admin/loginNext" method="post" id="form2" onsubmit="return loginCheck()">
+								<div class="form-group">
+									<input type="text" class="form-control" placeholder="Admin ID" name="adminID" id="login_id">
+								</div>
+								<div class="form-group">
+									<input type="password" class="form-control" placeholder="Password" name="loginPassword" id="login_password">
+								</div>
+								<div class="form-group form-check">
+									<input type="checkbox" class="form-check-input">
+									<label class="form-check-label">Remember Me</label>
+								</div>
+								<button type="submit" class="btn btn-primary">Login</button>
+							</form>
+						</div>
+						<div class="tab-pane fade" id="nav-signup" role="tabpanel" aria-labelledby="nav-signup-tab">
+							<br />
+							<form action="/admin/registerNext" method="post" id="form1" onsubmit="return registerCheck()">
+								<div class="form-group">
+									<input type="text" class="form-control" placeholder="Admin ID" name="adminID" id="reg_id">
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" placeholder="First Name" name="fname" id="fname">
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" placeholder="Last Name" name="lname" id="lname">
+								</div>
+								<div class="form-group">
+						    		<select class="form-control" name="mess">
+						    			<option value="north">North</option>
+						    			<option value="south">South</option>
+						    			<option value="yuktahar">Yuktahar</option>
+						    			<option value="kadamb">Kadamb</option>
+						    		</select>
+						    	</div>
+								<div class="form-group">
+									<input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Email" name="email" id="email">
+								</div>
+								<div class="form-group">
+									<input type="password" class="form-control" placeholder="Password" name="loginPassword" id="reg_password">
+								</div>
+								<button type="submit" class="btn btn-primary">Signup</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" 
+		crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+		<script type="text/javascript">
+			function loginCheck() {
+				var adminID = document.getElementById('login_id');
+				var password = document.getElementById('login_password');
+
+				if(adminID.value == "") {
+					alert("ID is empty");
+					adminID.focus();
+					return false;
+				}
+
+				if(isNaN(adminID.value)) {
+					alert("ID is must be numeric");
+					adminID.focus();
+					return false;
+				}
+
+				if(password.value == "") {
+					alert("Password is empty");
+					password.focus();
+					return false;
+				}
+
+				if(password.value.length < 8) {
+					alert("Password must be atleast 8 characters long");
+					password.focus();
+					return false;
+				}
+
+				return true;
+			}
+
+			function registerCheck() {
+				var fname = document.getElementById('fname');
+				var lname = document.getElementById('lname');
+				var email = document.getElementById('email');
+				var adminID = document.getElementById('reg_id');
+				var password = document.getElementById('reg_password');
+
+				if(fname.value == "") {
+					alert("First Name is empty");
+					fname.focus();
+					return false;
+				}
+
+				if(lname.value == "") {
+					alert("Last Name is empty");
+					lname.focus();
+					return false;
+				}
+
+				if(email.value == "") {
+					alert("Email is empty");
+					email.focus();
+					return false;
+				}
+
+				if(adminID.value == "") {
+					alert("ID is empty");
+					adminID.focus();
+					return false;
+				}
+
+				if(password.value == "") {
+					alert("Password is empty");
+					password.focus();
+					return false;
+				}
+
+				if(isNaN(adminID.value)) {
+					alert("ID is not numeric");
+					adminID.focus();
+					return false;
+				}
+
+				if(password.value.length < 8) {
+					alert("Password must be atleast 8 characters long");
+					password.focus();
+					return false;
+				}
+
+				if (email.value.indexOf("@", 0) < 0) { 
+			        alert("Please enter a valid e-mail address."); 
+			        email.focus(); 
+			        return false; 
+			    } 
+			   
+			    if (email.value.indexOf(".", 0) < 0) { 
+			        alert("Please enter a valid e-mail address."); 
+			        email.focus(); 
+			        return false; 
+			    }
+
+				return true;
+			}
+		</script>
+	</body>
+</html>
