@@ -10,49 +10,108 @@
             <div class="card">
                 <div class="card-body">
                     <form method="POST" action="/admin/changeMenu">
-                        <div class="form-group">
-                            <select class="form-control" name="time">
-                                <option value="breakfast">Breakfast</option>
-                                <option value="lunch">Lunch</option>
-                                <option value="snacks">Snacks</option>
-                                <option value="dinner">Dinner</option>
-                            </select>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <select class="form-control" name="time">
+                                        <option value="breakfast">Breakfast</option>
+                                        <option value="lunch">Lunch</option>
+                                        <option value="snacks">Snacks</option>
+                                        <option value="dinner">Dinner</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <select class="form-control" name="day">
+                                        <option value="sunday">Sunday</option>
+                                        <option value="monday">Monday</option>
+                                        <option value="tuesday">Tuesday</option>
+                                        <option value="wednesday">Wednesday</option>
+                                        <option value="thursday">Thursday</option>
+                                        <option value="friday">Friday</option>
+                                        <option value="saturday">Saturday</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Item 1" name="item1">
+                        <div class="dropdown-divider"></div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Item 1" name="item1">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Item 2" name="item2">
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Item 2" name="item2">
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Item 3" name="item3">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Item 4" name="item4">
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Item 3" name="item3">
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Item 5" name="item5">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Item 6" name="item6">
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Item 4" name="item4">
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Item 7" name="item7">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Item 8" name="item8">
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Item 5" name="item5">
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Item 9" name="item9">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Item 10" name="item10">
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Item 6" name="item6">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Item 7" name="item7">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Item 8" name="item8">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Item 9" name="item9">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Item 10" name="item10">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Item 11" name="item11">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Item 12" name="item12">
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Item 11" name="item11">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Item 12" name="item12">
+                                </div>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
@@ -60,5 +119,9 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        
+    </script>
 
 {% endblock %}
