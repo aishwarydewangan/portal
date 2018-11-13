@@ -40,6 +40,67 @@ def cancel():
 	return render_template('cancel.html')
 
 
+@app.route('/uncancelMeal', methods=['POST'])
+def uncancel_meal():
+	date_range = request.form['date_range']
+	if date_range == '':
+		return render_template('error.html')
+	try:
+		breakfast = request.form['breakfast']
+		breakfast = True
+	except exceptions.BadRequestKeyError:
+		breakfast = False
+	try:
+		lunch = request.form['lunch']
+		lunch = True
+	except exceptions.BadRequestKeyError:
+		lunch = False
+	try:
+		dinner = request.form['dinner']
+		dinner = True
+	except exceptions.BadRequestKeyError:
+		dinner = False
+	if not (breakfast or lunch or dinner):
+		return render_template('error.html')
+	else:
+		user = Login.query.filter(and_(Login.rollNo == session['rollNo'])).first()
+		dic = json.loads(user.json)
+		start_date_str, end_date_str = date_range.split(' - ')
+		if end_date_str == start_date_str or end_date_str == '...':
+			start_date = datetime.datetime.strptime(start_date_str, '%d/%m/%Y').date()
+			date_count = 0
+		else:
+			start_date = datetime.datetime.strptime(start_date_str, '%d/%m/%Y').date()
+			end_date = datetime.datetime.strptime(end_date_str, '%d/%m/%Y').date()
+			date_count = float((end_date - start_date).days)
+
+		while date_count > -1:
+			date = start_date + datetime.timedelta(days=date_count)
+			date_str = date.strftime('%Y-%m-%d')
+			if breakfast:
+				for item in dic[date_str][0][0]:
+					if item == -1:
+						pos = dic[date_str][0][0].index(item)
+						dic[date_str][0][0][pos] = 1
+			if lunch:
+				for item in dic[date_str][0][1]:
+					if item == -1:
+						pos = dic[date_str][0][1].index(item)
+						dic[date_str][0][1][pos] = 1
+			if dinner:
+				for item in dic[date_str][0][3]:
+					if item == -1:
+						pos = dic[date_str][0][3].index(item)
+						dic[date_str][0][3][pos] = 1
+			date_count -= 1
+
+		json_mod = json.dumps(dic)
+		user.json = json_mod
+		db.session.commit()
+
+		return redirect(url_for('index'))
+
+
 @app.route('/cancelMeal', methods=['POST'])
 def cancel_meal():
 	date_range = request.form['date_range']
