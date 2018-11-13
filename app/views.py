@@ -154,7 +154,6 @@ def cancel_meal():
 						pos = dic[date_str][0][3].index(item)
 						dic[date_str][0][3][pos] = -1
 			date_count -= 1
-
 		json_mod = json.dumps(dic)
 		user.json = json_mod
 		db.session.commit()
@@ -170,6 +169,74 @@ def view():
 @app.route('/change')
 def change():
 	return render_template('change.html')
+
+
+@app.route('/changeMeal', methods=['POST'])
+def change_meal_date():
+	date_range = request.form['date_range']
+	if date_range == '':
+		return render_template('error.html')
+	try:
+		breakfast = request.form['breakfast']
+		breakfast = True
+	except exceptions.BadRequestKeyError:
+		breakfast = False
+	try:
+		lunch = request.form['lunch']
+		lunch = True
+	except exceptions.BadRequestKeyError:
+		lunch = False
+	try:
+		dinner = request.form['dinner']
+		dinner = True
+	except exceptions.BadRequestKeyError:
+		dinner = False
+	mess = request.form['mess']
+	if mess == 'North':
+		mess_number = 0
+	elif mess == 'South':
+		mess_number = 1
+	elif mess == 'Kadamb':
+		mess_number = 2
+	elif mess == 'Yuktahar':
+		mess_number = 3
+	print(mess, mess_number)
+	if not (breakfast or lunch or dinner):
+		return render_template('error.html')
+	user = Login.query.filter(and_(Login.rollNo == session['rollNo'])).first()
+	dic = json.loads(user.json)
+	start_date_str, end_date_str = date_range.split(' - ')
+	if end_date_str == start_date_str or end_date_str == '...':
+		start_date = datetime.datetime.strptime(start_date_str, '%d/%m/%Y').date()
+		date_count = 0
+	else:
+		start_date = datetime.datetime.strptime(start_date_str, '%d/%m/%Y').date()
+		end_date = datetime.datetime.strptime(end_date_str, '%d/%m/%Y').date()
+		date_count = float((end_date - start_date).days)
+
+	while date_count > -1:
+		date = start_date + datetime.timedelta(days=date_count)
+		date_str = date.strftime('%Y-%m-%d')
+		if breakfast:
+			for i in range(len(dic[date_str][0][0])):
+				dic[date_str][0][0][i] = 0
+			dic[date_str][0][0][mess_number] = 1
+
+		if lunch:
+			for i in range(len(dic[date_str][0][1])):
+				dic[date_str][0][1][i] = 0
+			dic[date_str][0][1][mess_number] = 1
+
+		if dinner:
+			for i in range(len(dic[date_str][0][3])):
+				dic[date_str][0][3][i] = 0
+			dic[date_str][0][3][mess_number] = 1
+		date_count -= 1
+
+	json_mod = json.dumps(dic)
+	user.json = json_mod
+	db.session.commit()
+	return redirect(url_for('index'))
 
 
 @app.after_request
