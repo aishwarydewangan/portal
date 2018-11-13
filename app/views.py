@@ -203,7 +203,7 @@ def change_meal_date():
 	print(mess, mess_number)
 	if not (breakfast or lunch or dinner):
 		return render_template('error.html')
-	user = Login.query.filter(and_(Login.rollNo == session['rollNo'])).first()
+	user = User.query.filter(and_(User.rollNo == session['rollNo'])).first()
 	dic = json.loads(user.json)
 	start_date_str, end_date_str = date_range.split(' - ')
 	if end_date_str == start_date_str or end_date_str == '...':
