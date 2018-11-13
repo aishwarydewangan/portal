@@ -349,6 +349,37 @@ def adminChange():
 	return render_template('adminChange.html')
 
 
+@app.route('/admin/changeMenu', methods=['GET', 'POST'])
+def adminChangeMenu():
+
+	menu = Menu.query.filter((Menu.time == request.form['time']) and (Menu.day == request.form['day']) and (Menu.mess == session['mess'])).first()
+
+	menu.item1 = request.form['item1']
+	menu.item2 = request.form['item2']
+
+	if request.form['time'] == "snacks":
+		menu.item3 = menu.item4 = menu.item5 = menu.item6 = menu.item7 = "NA"
+		menu.item8 = menu.item9 = menu.item10 = menu.item11 = menu.item12 = "NA"
+	else:
+		menu.item3 = request.form['item3']
+		menu.item4 = request.form['item4']
+		menu.item5 = request.form['item5']
+		menu.item6 = request.form['item6']
+		menu.item7 = request.form['item7']
+		menu.item8 = request.form['item8']
+		if request.form['time'] == "breakfast":
+			menu.item9 = menu.item10 = menu.item11 = menu.item12 = "NA"
+		else:
+			menu.item9 = request.form['item9']
+			menu.item10 = request.form['item10']
+			menu.item11 = request.form['item11']
+			menu.item12 = request.form['item12']
+
+	db.session.commit()
+
+	return "Menu Changed successfully";
+
+
 @app.route('/logout', methods=['POST', 'GET'])
 def logout():
 	if 'username' in session:
