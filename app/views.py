@@ -39,6 +39,12 @@ def feedback_form():
 		return "Error"
 	return "Feedback added successfully"
 
+@app.route('/daywise', methods=['POST'])
+def daywise():
+	new_day = request.form['day_change']
+	new_meal = request.form['time_change']
+	print(new_day)
+	return render_template('change.html')
 
 def init_json():
 	date_list = [datetime.datetime(2019, 6, 30) - datetime.timedelta(days=x) for x in range(540)]
@@ -349,5 +355,5 @@ def logout():
 		name = session.pop('username')
 		email = session.pop('email')
 		roll_no = session.pop('rollNo')
-		
+
 	return redirect(url_for('index'))
