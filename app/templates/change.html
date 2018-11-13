@@ -17,12 +17,13 @@
 					<div class="tab-content" id="nav-tabContent">
 						<div class="tab-pane fade show active" id="nav-datewise" role="tabpanel" aria-labelledby="nav-login-tab">
 							<br />
-              <div class="container">
-                  <div class="col-md-10">
+              <div class="container" id = "date-container">
+                  <div class="col-md-12">
                       <div class="card">
                           <div class="card-body">
                               <p id="result-6">&nbsp;</p>
                               <form method="POST" action="/changeMeal" id="cancelForm">
+                                <!--TODO - Add Value as "SELECT DATE"-->
                                   <input type="text" id="demo-6" name="date_range" class="form-control form-control-sm"/>
                                   <br />
                                   <div class="form-group form-check">
@@ -293,8 +294,8 @@
 
             <div class="tab-pane fade" id="nav-monthwise" role="tabpanel" aria-labelledby="nav-signup-tab">
 							<br />
-              <div class="container">
-                <div class="col-md-10">
+              <div class="container" id = "month-container">
+                <div class="col-md-12">
                   <div class="card">
                     <div class="card-body">
                       <div class="dropdown" >
@@ -311,9 +312,9 @@
                         <br>
                         <br>
 
-                        <form method="POST" action="/changeMeal" id="cancelForm">
+                        <form method="POST" action="/change_meal_month" id="cancelForm">
                             <div class="form-group form-check">
-                                <input type="hidden" id="month_change" name="date_range" class="form-control form-control-sm">
+                                <input type="hidden" id="month_change" name="select_month" class="form-control form-control-sm">
                                 <input type="checkbox" name="breakfast" class="form-check-input">
                                 <label class="form-check-label">Breakfast</label>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

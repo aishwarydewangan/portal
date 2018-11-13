@@ -6,6 +6,7 @@ from app.models import User, Admin, Menu, Feedback
 from app import app, db
 from passlib.hash import sha256_crypt
 import datetime
+from calendar import monthrange
 import json
 from werkzeug import exceptions
 
@@ -28,16 +29,18 @@ def index():
 def feedback():
 	return render_template('feedback.html')
 
+
 @app.route('/feedbackform', methods=['POST'])
 def feedback_form():
 	try:
 		user = User.query.filter(User.rollNo == session['rollNo']).first()
-		feed = Feedback(mess=request.form["mess"],date_of_issue=datetime.datetime.now() , issue=request.form["issue"], description=request.form["description"], user_id=user.id)
+		feed = Feedback(mess=request.form["mess"], date_of_issue=datetime.datetime.now(), issue=request.form["issue"], description=request.form["description"], user_id=user.id)
 		db.session.add(feed)
 		db.session.commit()
 	except:
 		return "Error"
 	return "Feedback added successfully"
+
 
 @app.route('/daywise', methods=['POST'])
 def daywise():
@@ -45,6 +48,7 @@ def daywise():
 	new_meal = request.form['time_change']
 	print(new_day)
 	return render_template('change.html')
+
 
 def init_json():
 	date_list = [datetime.datetime(2019, 6, 30) - datetime.timedelta(days=x) for x in range(540)]
@@ -235,6 +239,74 @@ def change_meal_date():
 		start_date = datetime.datetime.strptime(start_date_str, '%d/%m/%Y').date()
 		end_date = datetime.datetime.strptime(end_date_str, '%d/%m/%Y').date()
 		date_count = float((end_date - start_date).days)
+
+	while date_count > -1:
+		date = start_date + datetime.timedelta(days=date_count)
+		date_str = date.strftime('%Y-%m-%d')
+		if breakfast:
+			for i in range(len(dic[date_str][0][0])):
+				dic[date_str][0][0][i] = 0
+			dic[date_str][0][0][mess_number] = 1
+
+		if lunch:
+			for i in range(len(dic[date_str][0][1])):
+				dic[date_str][0][1][i] = 0
+			dic[date_str][0][1][mess_number] = 1
+
+		if dinner:
+			for i in range(len(dic[date_str][0][3])):
+				dic[date_str][0][3][i] = 0
+			dic[date_str][0][3][mess_number] = 1
+		date_count -= 1
+
+	json_mod = json.dumps(dic)
+	user.json = json_mod
+	db.session.commit()
+	return redirect(url_for('index'))
+
+
+@app.route('/change_meal_month', methods=['POST'])
+def change_meal_month():
+	month = request.form['select_month']
+	if month == '':
+		return render_template('error.html')
+	else:
+		month_string, year_string = month.split(', ')
+		month_dict = {'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6, 'July': 7, 'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12}
+		week_day_number, number_of_days = monthrange(int(year_string), month_dict[month_string])
+		start_date_string = "1/" + str(month_dict[month_string]) + "/" + year_string
+		start_date = datetime.datetime.strptime(start_date_string, '%d/%m/%Y').date()
+		date_count = number_of_days -1
+		end_date = start_date + datetime.timedelta(days=date_count)
+	try:
+		breakfast = request.form['breakfast']
+		breakfast = True
+	except exceptions.BadRequestKeyError:
+		breakfast = False
+	try:
+		lunch = request.form['lunch']
+		lunch = True
+	except exceptions.BadRequestKeyError:
+		lunch = False
+	try:
+		dinner = request.form['dinner']
+		dinner = True
+	except exceptions.BadRequestKeyError:
+		dinner = False
+	mess = request.form['mess']
+	if mess == 'North':
+		mess_number = 0
+	elif mess == 'South':
+		mess_number = 1
+	elif mess == 'Kadamb':
+		mess_number = 2
+	elif mess == 'Yuktahar':
+		mess_number = 3
+	if not (breakfast or lunch or dinner):
+		return render_template('error.html')
+
+	user = User.query.filter(and_(User.rollNo == session['rollNo'])).first()
+	dic = json.loads(user.json)
 
 	while date_count > -1:
 		date = start_date + datetime.timedelta(days=date_count)
