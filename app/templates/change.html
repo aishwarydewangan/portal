@@ -49,6 +49,7 @@
             </div>
 						<div class="tab-pane fade" id="nav-daywise" role="tabpanel" aria-labelledby="nav-signup-tab">
 							<br />
+
               <div class="container" align="left" style="padding-top: 50px">
                 <div class="card" style="width: 100%;">
                   <div class="card-body">
@@ -274,7 +275,13 @@
                         </table>
                       </div>
                     </div>
-
+                    <form method="POST" action="/daywise" id="daywiseForm">
+                      <div class="form-group form-check">
+                        <input type="hidden" id="day_change" name="day_change" class="form-control form-control-sm">
+                        <input type="hidden" id="time_change" name="time_change" class="form-control form-control-sm">
+                        <button type="submit"id="daywise_submit" class="btn btn-primary">Change</button>
+                      </div>
+                    </form>
 
 
 
@@ -383,12 +390,15 @@
 
         function breakfast() {
             meal = 1;
+            populate();
         }
         function lunch() {
             meal = 2;
+            populate();
         }
         function dinner() {
             meal = 3;
+            populate();
         }
         function change_day(newday) {
             // document.getElementById(day).style.backgroundColor = "white";
@@ -396,15 +406,19 @@
 
             day = newday;
             document.getElementById(day).style.backgroundColor = "lightblue";
+            populate();
         }
 
         function populate(){
-            alert("populate");
+          console.log("populate");
+            document.getElementById("day_change").value = day ;
+            document.getElementById("time_change").value = meal ;
+            document.getElementById("daywise_submit").click();
+
+            // document.getElementById('daywiseForm').action = "/daywise";
         }
 
-        function uncancelMeal() {
-            document.getElementById('cancelForm').action = "/uncancelMeal";
-        }
+
     </script>
 
 
