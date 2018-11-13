@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <form action="/feedbackform" method="post" id="form1">
+        <div class="form-group">
+            <label for="usr">Mess:</label>
+            <!-- <input type="text" class="form-control" id="mess" name="mess"> -->
+
+            <!-- <label style="margin-left: 80px;">Interest:</label> -->
+				<select name="mess" id="mess" style="width:108px">
+					  <option value="Kadamb">Kadamb</option>
+					  <option value="North">North</option>
+					  <option value="Yuktahar">Yuktahar</option>
+					  <option value="South">South</option>
+			    </select><br>
+
+        </div>
+        
+        <div class="form-group">
+            <label for="pwd">Issue/Suggestion:</label>
+            <input type="text" class="form-control" id="issue" name="issue">
+        </div>
+        <div class="form-group">
+            <label for="comment">Description:</label>
+            <textarea class="form-control" rows="5" id="description" name="description"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}
