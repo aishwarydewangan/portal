@@ -1154,4 +1154,17 @@ def adminRates():
     #         db.session.add(r)
     #         db.session.commit()
 
-    return "Rates Table Updated"
+    rates = Rates.query.filter(Rates.mess == session['mess']).all()
+
+    return render_template('adminRates.html', rates=rates)
+
+
+@app.route('/admin/changeRates', methods=['GET', 'POST'])
+def adminChangeRates():
+    r = Rates.query.filter((Rates.mess==session['mess']) and (Rates.time == request.form['time'])).first()
+
+    r.rate = request.form['rate']
+
+    db.session.commit()
+
+    return "Rate Changed successfully"

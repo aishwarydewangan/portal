@@ -1,0 +1,111 @@
+{% extends "adminBase.html" %}
+
+{% block content %}
+    <br /><br />
+    <h1 style="font-size: 60px; font-family: 'Open Sans', sans-serif;">Change Rates</h1>
+    <br /><br />
+
+    <div class="container">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" action="/admin/changeRates" onsubmit="return priceCheck()">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <select class="form-control" name="time" onchange="changePrice()" id="time">
+                                        <option value="breakfast">Breakfast</option>
+                                        <option value="lunch">Lunch</option>
+                                        <option value="snacks">Snacks</option>
+                                        <option value="dinner">Dinner</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Price" name="rate" id="rate">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        var breakfastPrice = "0";
+        var lunchPrice = "0";
+        var snacksPrice = "0";
+        var dinnerPrice = "0";
+
+        {% for r in rates %}
+
+            {% if r.time == "breakfast" %}
+                breakfastPrice = '{{ r.rate }}';
+            {% endif %}
+
+            {% if r.time == "lunch" %}
+                lunchPrice = '{{ r.rate }}';
+            {% endif %}
+
+            {% if r.time == "snacks" %}
+                snacksPrice = '{{ r.rate }}';
+            {% endif %}
+
+            {% if r.time == "dinner" %}
+                dinnerPrice = '{{ r.rate }}';
+            {% endif %}
+
+
+        {% endfor %}
+
+        document.getElementById('rate').value = breakfastPrice;
+
+        function changePrice() {
+
+            var op = document.getElementById('time').value;
+
+            if(op == "breakfast") {
+                document.getElementById('rate').value = breakfastPrice;
+            }
+
+            if(op == "lunch") {
+                document.getElementById('rate').value = lunchPrice;
+            }
+
+            if(op == "snacks") {
+                document.getElementById('rate').value = snacksPrice;
+            }
+
+            if(op == "dinner") {
+                document.getElementById('rate').value = dinnerPrice;
+            }
+        }
+
+        function priceCheck() {
+
+            if(document.getElementById('rate').value == "") {
+                alert("Price is empty");
+                document.getElementById('rate').focus();
+                return false;
+            }
+
+            if(isNaN(document.getElementById('rate').value)) {
+                alert("Price must be numeric");
+                document.getElementById('rate').focus();
+                return false;
+            }
+
+            return true;
+        }
+        
+    </script>
+
+{% endblock %}
