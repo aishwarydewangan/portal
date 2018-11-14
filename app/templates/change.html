@@ -10,21 +10,20 @@
 					<nav class="nav-fill">
 						<div class="nav nav-tabs" id="nav-tab" role="tablist">
 							<a class="nav-item nav-link active" id="nav-login-tab" data-toggle="tab" href="#nav-datewise" role="tab" aria-controls="nav-login" aria-selected="true">Datewise</a>
-              <a class="nav-item nav-link" id="nav-signup-tab" data-toggle="tab" href="#nav-daywise" role="tab" aria-controls="nav-signup" aria-selected="false" onclick="populate()">Daywise</a>
+              <a class="nav-item nav-link" id="nav-signup-tab" data-toggle="tab" href="#nav-daywise" role="tab" aria-controls="nav-signup" aria-selected="false" onclick="init_change()">Daywise</a>
 						  <a class="nav-item nav-link" id="nav-signup-tab" data-toggle="tab" href="#nav-monthwise" role="tab" aria-controls="nav-signup" aria-selected="false" onclick="monthwise()">Monthwise</a>
 						</div>
 					</nav>
 					<div class="tab-content" id="nav-tabContent">
 						<div class="tab-pane fade show active" id="nav-datewise" role="tabpanel" aria-labelledby="nav-login-tab">
 							<br />
-              <div class="container" id = "date-container">
+              <div class="container" id="date-container">
                   <div class="col-md-12">
                       <div class="card">
                           <div class="card-body">
-                              <p id="result-6">&nbsp;</p>
+                              <p id="result-6" >Select Date :</p>
                               <form method="POST" action="/changeMeal" id="cancelForm">
-                                <!--TODO - Add Value as "SELECT DATE"-->
-                                  <input type="text" id="demo-6" name="date_range" class="form-control form-control-sm"/>
+                                  <input type="text" id="demo-6" name="date_range" class="form-control form-control-sm" />
                                   <br />
                                   <div class="form-group form-check">
                                       <input type="checkbox" name="breakfast" class="form-check-input">
@@ -78,7 +77,7 @@
                           </thead>
                           <tbody>
                             <tr>
-                              <td id="monday" onclick="change_day('monday')" style="background-color: lightblue">Monday</td>
+                              <td id="monday" onclick="change_day('monday')" style="background-color: #3E7AFF; color: white">Monday</td>
                             </tr>
                             <tr>
                               <td id="tuesday" onclick="change_day('tuesday')">Tuesday</td>
@@ -102,15 +101,15 @@
                         </table>
                       </div>
                       <div class="col-sm-2">
-                        <table class="table table">
+                        <table class="table table-striped" onclick="select_mess('2')">
                           <thead>
                             <tr>
-                              <th>Yuktahar</th>
+                              <th id="mess_2" >Yuktahar</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-                              <td id="Y1" >{{ Y.item0001 }}</td>
+                              <td id="Y1" >-</td>
                             </tr>
                             <tr>
                               <td id="Y2" >-</td>
@@ -149,10 +148,10 @@
                         </table>
                       </div>
                       <div class="col-sm-2">
-                        <table class="table table">
+                        <table class="table table-striped" onclick="select_mess('3')">
                           <thead>
                             <tr>
-                              <th>Kadamb</th>
+                              <th id="mess_3" >Kadamb</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -195,10 +194,10 @@
                           </tbody>
                         </table>
                       </div><div class="col-sm-2">
-                        <table class="table table">
+                        <table class="table table-striped" onclick="select_mess('0')">
                           <thead>
                             <tr>
-                              <th>North</th>
+                              <th id="mess_0" >North</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -241,10 +240,10 @@
                           </tbody>
                         </table>
                       </div><div class="col-sm-2">
-                        <table class="table table">
+                        <table class="table table-striped" onclick="select_mess('1')">
                           <thead>
                             <tr>
-                              <th>South</th>
+                              <th id="mess_1">South</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -288,11 +287,31 @@
                         </table>
                       </div>
                     </div>
-                    <form method="POST" action="/daywise" id="daywiseForm">
+                    <form method="POST" id="daywiseForm">
                       <div class="form-group form-check">
-                        <input type="hidden" id="day_change" name="day_change" class="form-control form-control-sm">
-                        <input type="hidden" id="time_change" name="time_change" class="form-control form-control-sm">
-                        <button type="submit"id="daywise_submit" class="btn btn-primary">Change</button>
+                        <input type="hidden" id="0" name="sun_breakfast" class="form-control form-control-sm">
+                        <input type="hidden" id="10" name="sun_lunch" class="form-control form-control-sm">
+                        <input type="hidden" id="30" name="sun_dinner" class="form-control form-control-sm">
+                        <input type="hidden" id="1" name="mon_breakfast" class="form-control form-control-sm">
+                        <input type="hidden" id="11" name="mon_lunch" class="form-control form-control-sm">
+                        <input type="hidden" id="31" name="mon_dinner" class="form-control form-control-sm">
+                        <input type="hidden" id="2" name="tue_breakfast" class="form-control form-control-sm">
+                        <input type="hidden" id="12" name="tue_lunch" class="form-control form-control-sm">
+                        <input type="hidden" id="32" name="tue_dinner" class="form-control form-control-sm">
+                        <input type="hidden" id="3" name="wed_breakfast" class="form-control form-control-sm">
+                        <input type="hidden" id="13" name="wed_lunch" class="form-control form-control-sm">
+                        <input type="hidden" id="33" name="wed_dinner" class="form-control form-control-sm">
+                        <input type="hidden" id="4" name="thu_breakfast" class="form-control form-control-sm">
+                        <input type="hidden" id="14" name="thu_lunch" class="form-control form-control-sm">
+                        <input type="hidden" id="34" name="thu_dinner" class="form-control form-control-sm">
+                        <input type="hidden" id="5" name="fri_breakfast" class="form-control form-control-sm">
+                        <input type="hidden" id="15" name="fri_lunch" class="form-control form-control-sm">
+                        <input type="hidden" id="35" name="fri_dinner" class="form-control form-control-sm">
+                        <input type="hidden" id="6" name="sat_breakfast" class="form-control form-control-sm">
+                        <input type="hidden" id="16" name="sat_lunch" class="form-control form-control-sm">
+                        <input type="hidden" id="36" name="sat_dinner" class="form-control form-control-sm">
+
+                        <button type="submit" class="btn btn-primary" onclick="daywise_change()">Change</button>
                       </div>
                     </form>
 
@@ -303,7 +322,7 @@
                 </div>
               </div>
 
-
+-
             <div class="tab-pane fade" id="nav-monthwise" role="tabpanel" aria-labelledby="nav-signup-tab">
 							<br />
               <div class="container" id = "month-container">
@@ -1788,6 +1807,113 @@
         meal["63311"]= "{{Y.item63311}}";
         meal["63312"]= "{{Y.item63312}}";
 
+
+        var selected_mess = {};
+
+        function select_mess(arg){
+          var k;
+
+          var day_num = -1;
+
+          switch (day) {
+            case "sunday":
+                day_num = 0;
+                break;
+            case "monday":
+                day_num = 1;
+                break;
+            case "tuesday":
+                day_num = 2;
+                break;
+            case "wednesday":
+                day_num = 3;
+                break;
+            case "thursday":
+                day_num = 4;
+                break;
+            case "friday":
+                day_num = 5;
+                break;
+            case "saturday":
+                day_num = 6;
+                break;
+          }
+
+          k = time * 10 + day_num;
+
+          console.log("select_mess",k);
+
+          if(selected_mess[k] == arg)
+          {
+            selected_mess[k] = "-1";
+            mess_id = "mess_" + arg;
+            document.getElementById(mess_id).style.removeProperty("background-color");
+          }
+          else if(selected_mess[k] == "-1")
+          {
+              selected_mess[k] = arg;
+              mess_id = "mess_" + arg;
+              document.getElementById(mess_id).style.backgroundColor = "red";
+          }
+          else {
+          {
+              cur = selected_mess[k];
+              mess_id = "mess_" + cur;
+              document.getElementById(mess_id).style.removeProperty("background-color");
+              mess_id = "mess_" + arg;
+              document.getElementById(mess_id).style.backgroundColor = "red";
+              selected_mess[k] = arg;
+
+          }
+
+          console.log(selected_mess[k],":",k);
+
+          }
+        }
+
+        function init_change(){
+          var i;
+          var j;
+          var k;
+
+          for(i=0;i<4;i++)
+          {
+            if(i==2)
+            {
+              continue;
+            }
+            for(j=0;j<7;j++)
+            {
+              k = i*10 + j;
+              selected_mess[k] = "-1";
+              console.log(k,":",selected_mess[k]," ");
+            }
+          }
+          populate();
+        }
+
+        function daywise_change(){
+          var i;
+          var j;
+          var k;
+          for(i=0;i<3;i++)
+          {
+            if(i == 2)
+            {
+              continue;
+            }
+            for(j=0;j<7;j++)
+            {
+              k = i*10 + j;
+              document.getElementById(k.toString()).value = selected_mess[k];
+              console.log(document.getElementById(k.toString()).value)
+            }
+
+            document.getElementById('daywiseForm').action = "/daywise";
+          }
+        }
+
+
         function monthwise(){
           var date = new Date();
           var month = date.getMonth();
@@ -1828,11 +1954,13 @@
             populate();
         }
         function change_day(newday) {
-            // document.getElementById(day).style.backgroundColor = "white";
             document.getElementById(day).style.removeProperty("background-color");
+            document.getElementById(day).style.removeProperty("color");
 
             day = newday;
-            document.getElementById(day).style.backgroundColor = "lightblue";
+            document.getElementById(day).style.backgroundColor = "#3E7AFF";
+            document.getElementById(day).style.color = "white";
+
             populate();
         }
 
@@ -1843,25 +1971,25 @@
 
             switch (day) {
               case "sunday":
-                  day_num = "0";
+                  day_num = 0;
                   break;
               case "monday":
-                  day_num = "1";
+                  day_num = 1;
                   break;
               case "tuesday":
-                  day_num = "2";
+                  day_num = 2;
                   break;
               case "wednesday":
-                  day_num = "3";
+                  day_num = 3;
                   break;
               case "thursday":
-                  day_num = "4";
+                  day_num = 4;
                   break;
               case "friday":
-                  day_num = "5";
+                  day_num = 5;
                   break;
               case "saturday":
-                  day_num = "6";
+                  day_num = 6;
                   break;
             }
             id_name = ""
@@ -1870,29 +1998,44 @@
             i = 2;
             for (i = 1; i < 13; i++) {
               id_name = "Y" + i.toString();
-              meal_val =  day_num + time.toString() + "2" + i.toString();
+              meal_val =  day_num.toString() + time.toString() + "2" + i.toString();
               document.getElementById(id_name).innerHTML=meal[meal_val];
             }
             for (i = 1; i < 13; i++) {
               id_name = "N" + i.toString();
-              meal_val =  day_num + time.toString() + "0" + i.toString();
+              meal_val =  day_num.toString() + time.toString() + "0" + i.toString();
               console.log(meal_val);
               console.log(meal[meal_val]);
               document.getElementById(id_name).innerHTML=meal[meal_val];
             }
             for (i = 1; i < 13; i++) {
               id_name = "S" + i.toString();
-              meal_val =  day_num + time.toString() + "1" + i.toString();
+              meal_val =  day_num.toString() + time.toString() + "1" + i.toString();
               document.getElementById(id_name).innerHTML=meal[meal_val];
             }
             for (i = 1; i < 13; i++) {
               id_name = "K" + i.toString();
-              meal_val =  day_num + time.toString() + "3" + i.toString();
+              meal_val =  day_num.toString() + time.toString() + "3" + i.toString();
               document.getElementById(id_name).innerHTML=meal[meal_val];
+            }
+            var k;
+            k = time * 10 + day_num;
+            console.log(k,selected_mess[k]);
+            for(i = 0;i<4;i++)
+            {
+              mess_id = "mess_" + i;
+              if(selected_mess[k] != i)
+              {
+                  console.log("remove" , i);
+                  document.getElementById(mess_id).style.removeProperty("background-color");
+              }
+              else {
+                  console.log("color" , i);
+                  document.getElementById(mess_id).style.backgroundColor = "red";
+              }
             }
 
 
-          
         }
 
 

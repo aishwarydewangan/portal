@@ -44,10 +44,7 @@ def feedback_form():
 
 @app.route('/daywise', methods=['POST'])
 def daywise():
-	new_day = request.form['day_change']
-	new_meal = request.form['time_change']
-	print(new_day)
-	return render_template('change.html')
+	return render_template('home.html')
 
 
 def init_json():
