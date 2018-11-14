@@ -3,15 +3,23 @@
   background-color: white;
   border-color: lightgrey;
   color: #3E7AFF;
-  align: center;
+  text-align: center;
 }
 
 #dropdown-menu{
   width: 100%;
   background-color: white;
-  align: center;
+  text-align: center;
 }
-
+ /*TODO - ADD Hover animation*/
 #dropdown-menu : hover{
   background-color: black;
+}
+
+#month-container{
+  text-align: center;
+}
+
+#date-container{
+  text-align: center;
 }

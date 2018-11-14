@@ -9,13 +9,13 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-body">
-                    <form method="POST" action="/admin/changeMenu">
+                    <form method="POST" action="/admin/changeMenu" onsubmit="return itemCheck()">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <select class="form-control" name="time">
-                                        <option value="breakfast">Breakfast</option>
+                                    <select class="form-control" name="time" onchange="changeItems()" id="time">
                                         <option value="lunch">Lunch</option>
+                                        <option value="breakfast">Breakfast</option>
                                         <option value="snacks">Snacks</option>
                                         <option value="dinner">Dinner</option>
                                     </select>
@@ -39,25 +39,12 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Item 1" name="item1">
+                                    <input type="text" class="form-control" placeholder="Item 1" name="item1" id="item1">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Item 2" name="item2">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Item 3" name="item3">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Item 4" name="item4">
+                                    <input type="text" class="form-control" placeholder="Item 2" name="item2" id="item2">
                                 </div>
                             </div>
                         </div>
@@ -65,25 +52,12 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Item 5" name="item5">
+                                    <input type="text" class="form-control" placeholder="Item 3" name="item3" id="item3">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Item 6" name="item6">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Item 7" name="item7">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Item 8" name="item8">
+                                    <input type="text" class="form-control" placeholder="Item 4" name="item4" id="item4">
                                 </div>
                             </div>
                         </div>
@@ -91,12 +65,12 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Item 9" name="item9">
+                                    <input type="text" class="form-control" placeholder="Item 5" name="item5" id="item5">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Item 10" name="item10">
+                                    <input type="text" class="form-control" placeholder="Item 6" name="item6" id="item6">
                                 </div>
                             </div>
                         </div>
@@ -104,12 +78,38 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Item 11" name="item11">
+                                    <input type="text" class="form-control" placeholder="Item 7" name="item7" id="item7">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Item 12" name="item12">
+                                    <input type="text" class="form-control" placeholder="Item 8" name="item8" id="item8">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Item 9" name="item9" id="item9">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Item 10" name="item10" id="item10">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Item 11" name="item11" id="item11">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Item 12" name="item12" id="item12">
                                 </div>
                             </div>
                         </div>
@@ -121,7 +121,159 @@
     </div>
 
     <script type="text/javascript">
-        
+        function changeItems() {
+
+            var op = document.getElementById('time').value;
+
+            if(op == "breakfast") {
+                document.getElementById('item3').style.display = 'block';
+                document.getElementById('item4').style.display = 'block';
+                document.getElementById('item5').style.display = 'block';
+                document.getElementById('item6').style.display = 'block';
+                document.getElementById('item7').style.display = 'block';
+                document.getElementById('item8').style.display = 'block';
+                document.getElementById('item9').style.display = 'none';
+                document.getElementById('item10').style.display = 'none';
+                document.getElementById('item11').style.display = 'none';
+                document.getElementById('item12').style.display = 'none';
+            }
+
+            if(op == "lunch") {
+                document.getElementById('item3').style.display = 'block';
+                document.getElementById('item4').style.display = 'block';
+                document.getElementById('item5').style.display = 'block';
+                document.getElementById('item6').style.display = 'block';
+                document.getElementById('item7').style.display = 'block';
+                document.getElementById('item8').style.display = 'block';
+                document.getElementById('item9').style.display = 'block';
+                document.getElementById('item10').style.display = 'block';
+                document.getElementById('item11').style.display = 'block';
+                document.getElementById('item12').style.display = 'block';
+            }
+
+            if(op == "snacks") {
+                document.getElementById('item3').style.display = 'none';
+                document.getElementById('item4').style.display = 'none';
+                document.getElementById('item5').style.display = 'none';
+                document.getElementById('item6').style.display = 'none';
+                document.getElementById('item7').style.display = 'none';
+                document.getElementById('item8').style.display = 'none';
+                document.getElementById('item9').style.display = 'none';
+                document.getElementById('item10').style.display = 'none';
+                document.getElementById('item11').style.display = 'none';
+                document.getElementById('item12').style.display = 'none';
+            }
+
+            if(op == "dinner") {
+                document.getElementById('item3').style.display = 'block';
+                document.getElementById('item4').style.display = 'block';
+                document.getElementById('item5').style.display = 'block';
+                document.getElementById('item6').style.display = 'block';
+                document.getElementById('item7').style.display = 'block';
+                document.getElementById('item8').style.display = 'block';
+                document.getElementById('item9').style.display = 'block';
+                document.getElementById('item10').style.display = 'block';
+                document.getElementById('item11').style.display = 'block';
+                document.getElementById('item12').style.display = 'block';
+            }
+        }
+
+        function itemCheck() {
+            var item1 = document.getElementById('item1');
+            var item2 = document.getElementById('item2');
+            var item3 = document.getElementById('item3');
+            var item4 = document.getElementById('item4');
+            var item5 = document.getElementById('item5');
+            var item6 = document.getElementById('item6');
+            var item7 = document.getElementById('item7');
+            var item8 = document.getElementById('item8');
+            var item9 = document.getElementById('item9');
+            var item10 = document.getElementById('item10');
+            var item11 = document.getElementById('item11');
+            var item12 = document.getElementById('item12');
+            var op = document.getElementById('time').value;
+
+            if(item1.value == "") {
+                alert("Item is empty");
+                item1.focus();
+                return false;
+            }
+
+            if(item2.value == "") {
+                alert("Item is empty");
+                item2.focus();
+                return false;
+            }
+
+            if(op == "breakfast" || op == "lunch" || op == "dinner") {
+                
+                if(item3.value == "") {
+                    alert("Item is empty");
+                    item3.focus();
+                    return false;
+                }
+
+                if(item4.value == "") {
+                    alert("Item is empty");
+                    item4.focus();
+                    return false;
+                }
+
+                if(item5.value == "") {
+                    alert("Item is empty");
+                    item5.focus();
+                    return false;
+                }
+
+                if(item6.value == "") {
+                    alert("Item is empty");
+                    item6.focus();
+                    return false;
+                }
+
+                if(item7.value == "") {
+                    alert("Item is empty");
+                    item7.focus();
+                    return false;
+                }
+
+                if(item8.value == "") {
+                    alert("Item is empty");
+                    item8.focus();
+                    return false;
+                }
+            }
+
+            if(op == "lunch" || op == "dinner") {
+
+
+                if(item9.value == "") {
+                    alert("Item is empty");
+                    item9.focus();
+                    return false;
+                }
+
+                if(item10.value == "") {
+                    alert("Item is empty");
+                    item10.focus();
+                    return false;
+                }
+
+                if(item11.value == "") {
+                    alert("Item is empty");
+                    item11.focus();
+                    return false;
+                }
+
+                if(item12.value == "") {
+                    alert("Item is empty");
+                    item12.focus();
+                    return false;
+                }
+            }
+
+            return true;      
+        }
     </script>
 
 {% endblock %}
