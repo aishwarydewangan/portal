@@ -33,10 +33,10 @@ def index():
 
 @app.route('/feedback')
 def feedback():
-	if 'username' in session:
-		return render_template('feedback.html')
-	else:
-		return render_template('login.html')
+    if 'username' in session:
+        return render_template('feedback.html')
+    else:
+        return render_template('login.html')
 
 
 @app.route('/feedbackform', methods=['POST'])
@@ -232,6 +232,7 @@ def cancel():
         return render_template('cancel.html')
     else:
         return render_template('login.html')
+
 
 @app.route('/uncancelMeal', methods=['POST'])
 def uncancel_meal():
@@ -589,18 +590,19 @@ def after_request(response):
 
 @app.route('/registerNext', methods=['GET', 'POST'])
 def registerNext():
-	try:
-		user = User(firstname=request.form["fname"], lastname=request.form["lname"], email=request.form["email"], rollNo=request.form["rollNo"], password=sha256_crypt.encrypt(request.form['loginPassword']), json=init_json())
-		db.session.add(user)
-		db.session.commit()
-	except:
-		return "Error: Please check your Email ID or Roll No"
-	return redirect(url_for('index'))
+    try:
+        user = User(firstname=request.form["fname"], lastname=request.form["lname"], email=request.form["email"],
+                    rollNo=request.form["rollNo"], password=sha256_crypt.encrypt(request.form['loginPassword']),
+                    json=init_json())
+        db.session.add(user)
+        db.session.commit()
+    except:
+        return "Error: Please check your Email ID or Roll No"
+    return redirect(url_for('index'))
 
 
 @app.route('/loginNext', methods=['GET', 'POST'])
 def loginNext():
-
     if request.method == "POST":
         rollNo = request.form['rollNo']
         password = request.form['loginPassword']
@@ -608,7 +610,7 @@ def loginNext():
         user = User.query.filter(User.rollNo == rollNo).first()
 
         if user:
-            if sha256_crypt.verify(password,user.password):
+            if sha256_crypt.verify(password, user.password):
                 session['username'] = user.firstname
                 session['rollNo'] = user.rollNo
                 session['email'] = user.email
@@ -645,46 +647,8 @@ def adminRegisterNext():
         return "Admin added"
     except:
         return "Error: Please check for following errors: <br />1. Email<br />2.Admin ID"
-    return redirect(url_for('dashboard'))
-		user = User.query.filter(User.rollNo == rollNo).first()
+    # return redirect(url_for('dashboard'))
 
-		if user:
-			if sha256_crypt.verify(password,user.password):
-				session['username'] = user.firstname
-				session['rollNo'] = user.rollNo
-				session['email'] = user.email
-				return redirect(url_for('index'))
-		return "Invalid Username or Password"
-
-
-@app.route('/logout', methods=['POST', 'GET'])
-def logout():
-	if 'username' in session:
-		name = session.pop('username')
-		email = session.pop('email')
-		roll_no = session.pop('rollNo')
-
-	return redirect(url_for('index'))
-
-
-@app.route('/admin/register')
-@app.route('/admin/login')
-@app.route('/admin/index')
-@app.route('/admin/')
-def adminIndex():
-	return render_template('adminLogin.html')
-
-
-@app.route('/admin/registerNext', methods=['GET', 'POST'])
-def adminRegisterNext():
-	try:
-		admin = Admin(firstname=request.form["fname"], lastname=request.form["lname"], email=request.form["email"], mess=request.form["mess"], adminID=request.form["adminID"], password=request.form['loginPassword'])
-		db.session.add(admin)
-		db.session.commit()
-		return "Admin added"
-	except:
-		return "Error: Please check for following errors: <br />1. Email<br />2.Admin ID"
-	return redirect(url_for('dashboard'))
 
 @app.route('/admin/loginNext', methods=['GET', 'POST'])
 def adminLoginNext():
@@ -749,7 +713,4 @@ def adminChangeMenu():
 
     db.session.commit()
 
-	return "Menu Changed successfully";
-
-
-
+    return "Menu Changed successfully"
