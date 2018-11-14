@@ -39,6 +39,31 @@
     <script src="{{ url_for('static',filename = 'demo.js') }}"></script>
 
     <script type="text/javascript">
+
+    error_code = "{{error.status}}";
+    if(error_code == 0)
+    {
+      alert("Cancel Successfull");
+    }
+    else if(error_code == 1)
+    {
+        alert("Uncancel Successfull");
+    }
+    else if (error_code == 3)
+    {
+      alert("Select atleast one meal");
+    }
+    else if(error_code == 2)
+    {
+      alert("Incorrect range of date");
+    }
+    else if(error_code == 4)
+    {
+      alert("No meal selected for change");
+    }
+
+
+
         function cancelMeal() {
             document.getElementById('cancelForm').action = "/cancelMeal";
         }

@@ -19,10 +19,11 @@ app.secret_key = 'MKhJHJH798798kjhkjhkjGHh'
 @app.route('/home')
 @app.route('/')
 def index():
+    error={};
     if 'username' in session:
         return render_template('home.html')
     else:
-        return render_template('login.html')
+        return render_template('login.html',error=error)
 
 
 # @app.route('/download')
@@ -33,10 +34,12 @@ def index():
 
 @app.route('/feedback')
 def feedback():
+    error={};
+    error["a"]=2;
     if 'username' in session:
         return render_template('feedback.html')
     else:
-        return render_template('login.html')
+        return render_template('login.html',error = error)
 
 
 @app.route('/feedbackform', methods=['POST'])
@@ -212,7 +215,7 @@ def daywise():
         sat_dinner = True
 
     if not (sun_breakfast or sun_lunch or sun_dinner or mon_breakfast or mon_dinner or mon_lunch or tue_breakfast or tue_lunch or tue_dinner or wed_breakfast or wed_lunch or wed_dinner or thu_breakfast or thu_lunch or thu_dinner or fri_breakfast or fri_lunch or fri_dinner or sat_breakfast or sat_lunch or sat_dinner):
-        return render_template('error.html')
+        return change(4)
 
     user = User.query.filter(and_(User.rollNo == session['rollNo'])).first()
     dic = json.loads(user.json)
@@ -599,7 +602,7 @@ def daywise():
     user.json = json_mod
     db.session.commit()
 
-    return redirect(url_for('index'))
+    return change(0);
 
 
 def init_json():
@@ -616,17 +619,22 @@ def init_json():
 
 @app.route('/cancel')
 def cancel():
+    error={};
+    error["a"]=2;
+    error["status"] = -1;
     if 'username' in session:
-        return render_template('cancel.html')
+        return render_template('cancel.html',error = error)
     else:
-        return render_template('login.html')
+        return render_template('login.html',error = error)
 
 
 @app.route('/uncancelMeal', methods=['POST'])
 def uncancel_meal():
+    error = {};
     date_range = request.form['date_range']
     if date_range == '':
-        return render_template('error.html')
+        error["status"] = 2;
+        return render_template('cancel.html',error = error)
     try:
         breakfast = request.form['breakfast']
         breakfast = True
@@ -643,7 +651,8 @@ def uncancel_meal():
     except exceptions.BadRequestKeyError:
         dinner = False
     if not (breakfast or lunch or dinner):
-        return render_template('error.html')
+        error["status"] = 3;
+        return render_template('cancel.html',error = error)
     else:
         user = User.query.filter(and_(User.rollNo == session['rollNo'])).first()
         dic = json.loads(user.json)
@@ -680,14 +689,18 @@ def uncancel_meal():
         user.json = json_mod
         db.session.commit()
 
-        return redirect(url_for('index'))
+
+        error["status"] = 1;
+        return render_template('cancel.html',error = error)
 
 
 @app.route('/cancelMeal', methods=['POST'])
 def cancel_meal():
+    error = {};
     date_range = request.form['date_range']
     if date_range == '':
-        return render_template('error.html')
+        error["status"] = 2;
+        return render_template('cancel.html',error = error)
     try:
         breakfast = request.form['breakfast']
         breakfast = True
@@ -704,7 +717,8 @@ def cancel_meal():
     except exceptions.BadRequestKeyError:
         dinner = False
     if not (breakfast or lunch or dinner):
-        return render_template('error.html')
+        error["status"] = 3;
+        return render_template('cancel.html',error = error)
     else:
         user = User.query.filter(and_(User.rollNo == session['rollNo'])).first()
         dic = json.loads(user.json)
@@ -740,7 +754,8 @@ def cancel_meal():
         user.json = json_mod
         db.session.commit()
 
-        return redirect(url_for('index'))
+        error["status"] = 0;
+        return render_template('cancel.html',error = error)
 
 
 @app.route('/view')
@@ -776,7 +791,9 @@ def view():
         return render_template('view.html', breakfast_dict=breakfast_dict, lunch_dict=lunch_dict,
                                dinner_dict=dinner_dict)
     else:
-        return render_template('login.html')
+        error={};
+        error["a"]=2;
+        return render_template('login.html',error=error)
 
 
 # @app.route('/change')
@@ -784,60 +801,78 @@ def view():
 # 	return render_template('change.html')
 
 @app.route('/change')
-def change():
-    Y = {}
+def change(status = -1):
+    if 'username' in session:
+        print(status)
+        Y = {}
 
-    time = ["breakfast", "lunch", "snacks", "dinner"]
-    day = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
-    mess = ["north", "south", "yuktahar", "kadamb"]
+        time = ["breakfast", "lunch", "snacks", "dinner"]
+        day = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
+        mess = ["north", "south", "yuktahar", "kadamb"]
 
-    menus = Menu.query.all()
-    t = 0
-    d = 0
-    m = 0
+        menus = Menu.query.all()
+        t = 0
+        d = 0
+        m = 0
 
-    for menu in menus:
-        st = "item" + str(d) + str(t) + str(m)
-        s = st + str(1)
-        Y[s] = menu.item1
-        s = st + str(2)
-        Y[s] = menu.item2
-        s = st + str(3)
-        Y[s] = menu.item3
-        s = st + str(4)
-        Y[s] = menu.item4
-        s = st + str(5)
-        Y[s] = menu.item5
-        s = st + str(6)
-        Y[s] = menu.item6
-        s = st + str(7)
-        Y[s] = menu.item7
-        s = st + str(8)
-        Y[s] = menu.item8
-        s = st + str(9)
-        Y[s] = menu.item9
-        s = st + str(10)
-        Y[s] = menu.item10
-        s = st + str(11)
-        Y[s] = menu.item11
-        s = st + str(12)
-        Y[s] = menu.item12
-        m = m + 1
-        if m == 4:
-            m = 0
-            t = t + 1
-        if t == 4:
-            t = 0
-            d = d + 1
+        for menu in menus:
+            st = "item" + str(d) + str(t) + str(m)
+            s = st + str(1)
+            Y[s] = menu.item1
+            s = st + str(2)
+            Y[s] = menu.item2
+            s = st + str(3)
+            Y[s] = menu.item3
+            s = st + str(4)
+            Y[s] = menu.item4
+            s = st + str(5)
+            Y[s] = menu.item5
+            s = st + str(6)
+            Y[s] = menu.item6
+            s = st + str(7)
+            Y[s] = menu.item7
+            s = st + str(8)
+            Y[s] = menu.item8
+            s = st + str(9)
+            Y[s] = menu.item9
+            s = st + str(10)
+            Y[s] = menu.item10
+            s = st + str(11)
+            Y[s] = menu.item11
+            s = st + str(12)
+            Y[s] = menu.item12
+            m = m + 1
+            if m == 4:
+                m = 0
+                t = t + 1
+            if t == 4:
+                t = 0
+                d = d + 1
+        error={};
+        # if status==0:
+        #     error["status"] = 0
+        # elif status==1:
+        #     error["status"] = 1
+        # elif status==2:
+        #     error["status"] = 2
+        # else:
+        #     error["status"] = -1
 
-    return render_template('change.html', Y=Y)
+        error["status"] = status;
+        return render_template('change.html', Y=Y,error=error)
+    else:
+        error={};
+        error["a"]=2;
+        return render_template('login.html',error=error)
+
 
 
 @app.route('/changeMeal', methods=['POST'])
 def change_meal_date():
+
     date_range = request.form['date_range']
     if date_range == '':
-        return render_template('error.html')
+        return change(3)
     try:
         breakfast = request.form['breakfast']
         breakfast = True
@@ -864,7 +899,7 @@ def change_meal_date():
         mess_number = 3
     print(mess, mess_number)
     if not (breakfast or lunch or dinner):
-        return render_template('error.html')
+        return change(2)
     user = User.query.filter(and_(User.rollNo == session['rollNo'])).first()
     dic = json.loads(user.json)
     start_date_str, end_date_str = date_range.split(' - ')
@@ -898,14 +933,15 @@ def change_meal_date():
     json_mod = json.dumps(dic)
     user.json = json_mod
     db.session.commit()
-    return redirect(url_for('index'))
+    return change(0)
 
 
 @app.route('/change_meal_month', methods=['POST'])
 def change_meal_month():
+    error = {};
     month = request.form['select_month']
     if month == '':
-        return render_template('error.html')
+        return change(1)
     else:
         month_string, year_string = month.split(', ')
         month_dict = {'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6, 'July': 7, 'August': 8,
@@ -940,7 +976,7 @@ def change_meal_month():
     elif mess == 'Yuktahar':
         mess_number = 3
     if not (breakfast or lunch or dinner):
-        return render_template('error.html')
+        return change(2)
 
     user = User.query.filter(and_(User.rollNo == session['rollNo'])).first()
     dic = json.loads(user.json)
@@ -970,7 +1006,7 @@ def change_meal_month():
     json_mod = json.dumps(dic)
     user.json = json_mod
     db.session.commit()
-    return redirect(url_for('index'))
+    return change(0)
 
 
 @app.after_request
@@ -988,12 +1024,17 @@ def registerNext():
         db.session.add(user)
         db.session.commit()
     except:
-        return "Error: Please check your Email ID or Roll No"
+        error = {};
+        error["a"] = 3;
+        return render_template('login.html', error=error)
     return redirect(url_for('index'))
 
 
 @app.route('/loginNext', methods=['GET', 'POST'])
 def loginNext():
+    error = {};
+    error["a"] = 1;
+    print(error["a"]);
     if request.method == "POST":
         rollNo = request.form['rollNo']
         password = request.form['loginPassword']
@@ -1006,7 +1047,7 @@ def loginNext():
                 session['rollNo'] = user.rollNo
                 session['email'] = user.email
                 return redirect(url_for('index'))
-    return "Invalid Username or Password"
+    return render_template('login.html', error=error)
 
 
 @app.route('/logout', methods=['POST', 'GET'])
@@ -1027,7 +1068,8 @@ def adminIndex():
     if 'username' in session:
         return render_template('adminChange.html')
     else:
-        return render_template('adminLogin.html')
+        error = {};
+        return render_template('adminLogin.html',error=error)
 
 
 @app.route('/admin/registerNext', methods=['GET', 'POST'])
@@ -1068,7 +1110,7 @@ def adminLogout():
         email = session.pop('email')
         mess = session.pop('mess')
         adminID = session.pop('adminID')
-    return redirect(url_for('adminIndex'))  
+    return redirect(url_for('adminIndex'))
 
 
 
