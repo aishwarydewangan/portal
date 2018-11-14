@@ -4,34 +4,50 @@
             <h1 style="font-size: 90px; font-family: 'Open Sans', sans-serif;">Today's Meal</h1>
             <br /><br />
 
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm">
-                        <div class="card" style="background-image: linear-gradient(to top left, #E1F5FE, #ffffff);">
+                        <div class="card" style="background-image: linear-gradient(to top left, #E1F5FE, #ffffff);" id="bcard">
                             <div class="card-body">
                                 <h5 class="card-title" id = "breakfast_mess">Breakfast -</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">07:30 - 09:30</h6>
+                                <h6 class="card-subtitle mb-2 text-muted"><i class="far fa-clock" id="bclk"></i> 07:30 - 09:30</h6>
                                 <p class="card-text" id = "b_menu">-</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm">
-                        <div class="card" style="background-image: linear-gradient(to top left, #90D1FF, #ffffff);">
+                        <div class="card" style="background-image: linear-gradient(to top left, #90D1FF, #ffffff);" id="lcard">
                             <div class="card-body">
                                 <h5 class="card-title" id = "lunch_mess">Lunch -</h5>
-                                <h6 class="card-subtitle mb-2 text-muted"><i class="far fa-clock"></i> 12:30 - 14:30</h6>
+                                <h6 class="card-subtitle mb-2 text-muted"><i class="far fa-clock" id="lclk"></i> 12:30 - 14:30</h6>
                                 <p class="card-text" id = "l_menu">-</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm">
-                        <div class="card" style="background-image: linear-gradient(to top left, #E1F5FE, #ffffff);">
+                        <div class="card" style="background-image: linear-gradient(to top left, #E1F5FE, #ffffff);" id="dcard">
                             <div class="card-body">
                                 <h5 class="card-title" id = "dinner_mess">Dinner -</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">19:30 - 21:30</h6>
+                                <h6 class="card-subtitle mb-2 text-muted"><i class="far fa-clock" id="dclk"></i> 19:30 - 21:30</h6>
                                 <p class="card-text" id ="d_menu">-</p>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm">
+                        <a href="/north"><button class="btn btn-primary">North</button></a>
+                    </div>
+                    <div class="col-sm">
+                        <a href="/south"><button class="btn btn-primary">South</button></a>
+                    </div>
+                    <div class="col-sm">
+                        <a href="/yuktahar"><button class="btn btn-primary">Yuktahar</button></a>
+                    </div>
+                    <div class="col-sm">
+                        <a href="/kadamb"><button class="btn btn-primary">Kadamb</button></a>
                     </div>
                 </div>
             </div>
@@ -54,6 +70,38 @@
                 if("{{send_data.dinner}}" != "cancelled")
                 {
                   document.getElementById('d_menu').innerHTML = "{{dinner.item1}} , " + "{{dinner.item2}} , "+"{{dinner.item3}} , "+"{{dinner.item4}} , "+"{{dinner.item5}} , "+"{{dinner.item6}} , "+"{{dinner.item7}} , "+"{{dinner.item8}} , "+"{{dinner.item9}} , " + "{{dinner.item10}} , "+"{{dinner.item11}} , "+"{{dinner.item12}}";
+                }
+
+                var today = new Date();
+
+                if(today.getHours() >= 7 && today.getHours() <= 9) {
+                    document.getElementById('bcard').style.backgroundImage = "linear-gradient(to top left, #90D1FF, #ffffff)";
+                    document.getElementById('lcard').style.backgroundImage = "linear-gradient(to top left, #E1F5FE, #ffffff)";
+                    document.getElementById('dcard').style.backgroundImage = "linear-gradient(to top left, #E1F5FE, #ffffff)";
+                    document.getElementById('bclk').style.display = "inline";
+                    document.getElementById('lclk').style.display = "none";
+                    document.getElementById('dclk').style.display = "none";
+                } else if(today.getHours() >= 12 && today.getHours() <= 14) {
+                    document.getElementById('bcard').style.backgroundImage = "linear-gradient(to top left, #E1F5FE, #ffffff)";
+                    document.getElementById('lcard').style.backgroundImage = "linear-gradient(to top left, #90D1FF, #ffffff)";
+                    document.getElementById('dcard').style.backgroundImage = "linear-gradient(to top left, #E1F5FE, #ffffff)";
+                    document.getElementById('bclk').style.display = "none";
+                    document.getElementById('lclk').style.display = "inline";
+                    document.getElementById('dclk').style.display = "none";
+                } else if(today.getHours() >= 19 && today.getHours() <= 21) {
+                    document.getElementById('bcard').style.backgroundImage = "linear-gradient(to top left, #E1F5FE, #ffffff)";
+                    document.getElementById('lcard').style.backgroundImage = "linear-gradient(to top left, #E1F5FE, #ffffff)";
+                    document.getElementById('dcard').style.backgroundImage = "linear-gradient(to top left, #90D1FF, #ffffff)";
+                    document.getElementById('bclk').style.display = "none";
+                    document.getElementById('lclk').style.display = "none";
+                    document.getElementById('dclk').style.display = "inline";
+                } else {
+                    document.getElementById('bcard').style.backgroundImage = "linear-gradient(to top left, #E1F5FE, #ffffff)";
+                    document.getElementById('lcard').style.backgroundImage = "linear-gradient(to top left, #E1F5FE, #ffffff)";
+                    document.getElementById('dcard').style.backgroundImage = "linear-gradient(to top left, #E1F5FE, #ffffff)";
+                    document.getElementById('bclk').style.display = "none";
+                    document.getElementById('lclk').style.display = "none";
+                    document.getElementById('dclk').style.display = "none";
                 }
 
             </script>
