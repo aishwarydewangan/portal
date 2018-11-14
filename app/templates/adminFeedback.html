@@ -1,0 +1,39 @@
+{% extends "adminBase.html" %}
+{% block content %}
+
+<fieldset>
+    <legend>Feedback</legend>
+    <table border = 1 cellspacing=5 width=100% height=50px>
+        <tr>
+            <th>No.</th>
+            <th>Mess</th>
+            <th>Date of Issue</th>
+            <th>Issue/Suggestion</th>
+            <th>Description</th>
+            <th>Roll No</th>
+            <th>Name</th>
+            <th>Image</th>
+        </tr>
+        {% for feed in feedback if feed["id"]%}
+        <tr>
+            <td> {{loop.index}}</td>
+            <td>{{ feed.mess}}</td>
+            <td>{{ feed.date_of_issue}}</td>
+            <td>{{ feed.issue}}</td>
+            <td>{{ feed.description}}</td>
+            <td>{{ feed.rollNo}}</td>
+            <td>{{ feed.firstname}}</td>
+            <td><img src="feed.image" alt="No image found"></td>
+        </tr>
+        {% else %}
+        <h1>No feedback found!</h1>
+        {% endfor %}
+    </table>
+</fieldset> 
+
+{% endblock %}
+
+
+
+
+

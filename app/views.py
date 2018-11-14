@@ -1112,6 +1112,27 @@ def adminLogout():
         adminID = session.pop('adminID')
     return redirect(url_for('adminIndex'))
 
+# @app.route('/img/<int:img_id>')
+# def serve_img(img_id):
+#     pass 
+
+@app.route('/admin/feedback', methods=['POST', 'GET'])
+def adminFeedback():
+    if session['mess']:
+        feed=Feedback.query.filter(Feedback.mess==session['mess']).all()
+        for f in feed:
+            f.rollNo=User.query.filter(User.id==f.user_id).first().rollNo
+            f.firstname=User.query.filter(User.id==f.user_id).first().firstname
+            if f.image:
+                f.image=f.image.decode('base64')
+        return render_template('adminFeedback.html',feedback=feed)
+    else:
+        return redirect(url_for('adminIndex'))
+
+# file_data=Feedback.query.filter_by(id=1).first()
+# return send_file(BytesIO(file_data.image),attachment_filename='abc.jpg',as_attachment=True)
+
+
 
 
 @app.route('/admin/change')
