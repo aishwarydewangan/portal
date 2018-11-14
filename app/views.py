@@ -1101,7 +1101,7 @@ def adminLoginNext():
                 session['firstName'] = admin.firstname
                 session['mess'] = admin.mess
                 session['adminID'] = admin.adminID
-                session['email'] = admin.email
+                session['adminEmail'] = admin.email
                 return redirect(url_for('adminIndex'))
         return "Invalid Username or Password"
 
@@ -1110,7 +1110,7 @@ def adminLoginNext():
 def adminLogout():
     if 'adminID' in session:
         name = session.pop('firstName')
-        email = session.pop('email')
+        email = session.pop('adminEmail')
         mess = session.pop('mess')
         adminID = session.pop('adminID')
     return redirect(url_for('adminIndex'))
