@@ -1289,6 +1289,7 @@ def logout():
 @app.route('/admin/dashboard')
 @app.route('/admin/')
 def adminIndex():
+    error = {}
     if 'adminID' in session:
 
         day = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
@@ -1303,7 +1304,7 @@ def adminIndex():
 
         return render_template('dashboard.html', menus=menus)
     else:
-        error = {}
+
         return render_template('adminLogin.html', error=error)
 
 
@@ -1316,12 +1317,14 @@ def adminRegisterNext():
         db.session.add(admin)
         db.session.commit()
     except:
-        return "Error: Please check for following errors: <br />1. Email<br />2.Admin ID"
+        error = {"a": 3}
+        return render_template('login.html', error=error)
     return redirect(url_for('adminIndex'))
 
 
 @app.route('/admin/loginNext', methods=['GET', 'POST'])
 def adminLoginNext():
+    error = {"a": 1}
     if request.method == "POST":
         adminID = request.form['adminID']
         password = request.form['loginPassword']
@@ -1335,7 +1338,7 @@ def adminLoginNext():
                 session['adminID'] = admin.adminID
                 session['adminEmail'] = admin.email
                 return redirect(url_for('adminIndex'))
-        return "Invalid Username or Password"
+        return render_template('login.html', error=error)
 
 
 @app.route('/admin/logout', methods=['POST', 'GET'])
@@ -1375,39 +1378,45 @@ def adminChange():
     # 			db.session.commit()
 
     menus = Menu.query.filter(Menu.mess == session['mess']).all()
-
-    return render_template('adminChange.html', menus=menus)
+    msg = {}
+    msg["status"] = 0
+    return render_template('adminChange.html', menus=menus, msg=msg)
 
 
 @app.route('/admin/changeMenu', methods=['GET', 'POST'])
 def adminChangeMenu():
-    menu = Menu.query.filter((Menu.time == request.form['time']) and (Menu.day == request.form['day']) and (
-            Menu.mess == session['mess'])).first()
+    if 'adminID' in session:
+        menu = Menu.query.filter((Menu.time == request.form['time']) and (Menu.day == request.form['day']) and (
+                Menu.mess == session['mess'])).first()
 
-    menu.item1 = request.form['item1']
-    menu.item2 = request.form['item2']
+        menu.item1 = request.form['item1']
+        menu.item2 = request.form['item2']
 
-    if request.form['time'] == "snacks":
-        menu.item3 = menu.item4 = menu.item5 = menu.item6 = menu.item7 = "NA"
-        menu.item8 = menu.item9 = menu.item10 = menu.item11 = menu.item12 = "NA"
-    else:
-        menu.item3 = request.form['item3']
-        menu.item4 = request.form['item4']
-        menu.item5 = request.form['item5']
-        menu.item6 = request.form['item6']
-        menu.item7 = request.form['item7']
-        menu.item8 = request.form['item8']
-        if request.form['time'] == "breakfast":
-            menu.item9 = menu.item10 = menu.item11 = menu.item12 = "NA"
+        if request.form['time'] == "snacks":
+            menu.item3 = menu.item4 = menu.item5 = menu.item6 = menu.item7 = "NA"
+            menu.item8 = menu.item9 = menu.item10 = menu.item11 = menu.item12 = "NA"
         else:
-            menu.item9 = request.form['item9']
-            menu.item10 = request.form['item10']
-            menu.item11 = request.form['item11']
-            menu.item12 = request.form['item12']
+            menu.item3 = request.form['item3']
+            menu.item4 = request.form['item4']
+            menu.item5 = request.form['item5']
+            menu.item6 = request.form['item6']
+            menu.item7 = request.form['item7']
+            menu.item8 = request.form['item8']
+            if request.form['time'] == "breakfast":
+                menu.item9 = menu.item10 = menu.item11 = menu.item12 = "NA"
+            else:
+                menu.item9 = request.form['item9']
+                menu.item10 = request.form['item10']
+                menu.item11 = request.form['item11']
+                menu.item12 = request.form['item12']
 
-    db.session.commit()
-
-    return "Menu Changed successfully"
+        db.session.commit()
+        menus = Menu.query.filter(Menu.mess == session['mess']).all()
+        msg = {}
+        msg["status"] = 0
+        return render_template('adminChange.html', menus=menus, msg=msg)
+    else:
+        return redirect(url_for('adminIndex'))
 
 
 @app.route('/admin/rates')
@@ -1424,6 +1433,8 @@ def adminRates():
 
     rates = Rates.query.filter(Rates.mess == session['mess']).all()
 
+    msg={};
+    msg["ret"] = -1;
     return render_template('adminRates.html', rates=rates)
 
 
@@ -1439,7 +1450,9 @@ def adminChangeRates():
 
     print(len(user))
 
-    return "Rate Changed successfully"
+    msg={};
+    msg["ret"] = 0;
+    return render_template('adminRates.html',msg = msg)
 
 
 @app.route('/north')

@@ -40,6 +40,10 @@
 
     <script type="text/javascript">
 
+    if("{{msg.ret}}" == 0)
+    {
+      alert("Rate Changed successfully");
+    }
         var breakfastPrice = "0";
         var lunchPrice = "0";
         var snacksPrice = "0";
@@ -105,7 +109,7 @@
 
             return true;
         }
-        
+
     </script>
 
 {% endblock %}
