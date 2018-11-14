@@ -1065,7 +1065,7 @@ def logout():
 @app.route('/admin/index')
 @app.route('/admin/')
 def adminIndex():
-    if 'username' in session:
+    if 'adminID' in session:
         return render_template('adminChange.html')
     else:
         error = {};
@@ -1095,7 +1095,7 @@ def adminLoginNext():
 
         if admin:
             if sha256_crypt.verify(password, admin.password):
-                session['username'] = admin.firstname
+                session['firstName'] = admin.firstname
                 session['mess'] = admin.mess
                 session['adminID'] = admin.adminID
                 session['email'] = admin.email
@@ -1105,8 +1105,8 @@ def adminLoginNext():
 
 @app.route('/admin/logout', methods=['POST', 'GET'])
 def adminLogout():
-    if 'username' in session:
-        name = session.pop('username')
+    if 'adminID' in session:
+        name = session.pop('firstName')
         email = session.pop('email')
         mess = session.pop('mess')
         adminID = session.pop('adminID')
@@ -1118,7 +1118,7 @@ def adminLogout():
 
 @app.route('/admin/feedback', methods=['POST', 'GET'])
 def adminFeedback():
-    if session['mess']:
+    if 'adminID' in session:
         feed=Feedback.query.filter(Feedback.mess==session['mess']).all()
         for f in feed:
             f.rollNo=User.query.filter(User.id==f.user_id).first().rollNo
