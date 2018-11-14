@@ -1,4 +1,5 @@
-from flask import render_template
+from io import BytesIO
+from flask import render_template,send_file
 from sqlalchemy import and_
 from flask import url_for, redirect, request, make_response, flash
 from flask import session
@@ -103,12 +104,10 @@ def index():
     else:
         return render_template('login.html', error=error)
 
-
-# @app.route('/download')
-# def download():
-# 	file_data=Feedback.query.filter_by(id=1).first()
-# 	return send_file(BytesIO(file_data.image),attachment_filename='abc.jpg',as_attachment=True)
-
+@app.route('/download/<int:id>', methods=['GET','POST'])
+def download(id):
+	file_data=Feedback.query.filter_by(id=id).first()
+	return send_file(BytesIO(file_data.image),attachment_filename='abc.jpg',as_attachment=True)
 
 @app.route('/feedback')
 def feedback():
@@ -1180,7 +1179,7 @@ def adminLoginNext():
                 session['firstName'] = admin.firstname
                 session['mess'] = admin.mess
                 session['adminID'] = admin.adminID
-                session['email'] = admin.email
+                session['adminEmail'] = admin.email
                 return redirect(url_for('adminIndex'))
         return "Invalid Username or Password"
 
@@ -1189,15 +1188,13 @@ def adminLoginNext():
 def adminLogout():
     if 'adminID' in session:
         name = session.pop('firstName')
-        email = session.pop('email')
+        email = session.pop('adminEmail')
         mess = session.pop('mess')
         adminID = session.pop('adminID')
     return redirect(url_for('adminIndex'))
 
 
-# @app.route('/img/<int:img_id>')
-# def serve_img(img_id):
-#     pass
+
 
 @app.route('/admin/feedback', methods=['POST', 'GET'])
 def adminFeedback():
@@ -1206,15 +1203,9 @@ def adminFeedback():
         for f in feed:
             f.rollNo = User.query.filter(User.id == f.user_id).first().rollNo
             f.firstname = User.query.filter(User.id == f.user_id).first().firstname
-            if f.image:
-                f.image = f.image.decode('base64')
         return render_template('adminFeedback.html', feedback=feed)
     else:
         return redirect(url_for('adminIndex'))
-
-
-# file_data=Feedback.query.filter_by(id=1).first()
-# return send_file(BytesIO(file_data.image),attachment_filename='abc.jpg',as_attachment=True)
 
 
 @app.route('/admin/change')

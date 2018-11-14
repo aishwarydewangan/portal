@@ -23,7 +23,11 @@
             <td>{{ feed.description}}</td>
             <td>{{ feed.rollNo}}</td>
             <td>{{ feed.firstname}}</td>
-            <td><img src="feed.image" alt="No image found"></td>
+            {% if feed["image"] %}
+            <td><a href="/download/{{feed.id}}">Get Image</a></td>
+            {% else %}
+            <td>No uploaded Image</td>
+            {% endif %}
         </tr>
         {% else %}
         <h1>No feedback found!</h1>
