@@ -384,7 +384,7 @@ def view():
                     dinner_dict[new_date_str] = i
             # print(breakfast_dict)
             date_count -= 1
-        print(breakfast_dict['12/10/2018'])
+        # print(breakfast_dict['12/10/2018'])
         return render_template('view.html', breakfast_dict=breakfast_dict, lunch_dict=lunch_dict,
                                dinner_dict=dinner_dict)
     else:
