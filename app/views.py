@@ -2,7 +2,7 @@ from flask import render_template
 from sqlalchemy import and_
 from flask import url_for, redirect, request, make_response, flash
 from flask import session
-from app.models import User, Admin, Menu, Feedback
+from app.models import User, Admin, Menu, Feedback, Rates
 from app import app, db
 from passlib.hash import sha256_crypt
 import datetime
@@ -132,21 +132,21 @@ def daywise():
         wed_breakfast = False
     else:
         wed_b_mess = encode[wed_breakfast]
-        wed_breakfast = False
+        wed_breakfast = True
 
     wed_lunch = request.form['wed_lunch']
     if wed_lunch == '-1':
         wed_lunch = False
     else:
         wed_l_mess = encode[wed_lunch]
-        wed_lunch = False
+        wed_lunch = True
 
     wed_dinner = request.form['wed_dinner']
     if wed_dinner == '-1':
         wed_dinner = False
     else:
         wed_d_mess = encode[wed_dinner]
-        wed_dinner = False
+        wed_dinner = True
 
     thu_breakfast = request.form['thu_breakfast']
     if thu_breakfast == '-1':
@@ -211,7 +211,395 @@ def daywise():
         sat_d_mess = encode[sat_dinner]
         sat_dinner = True
 
-    return render_template('home.html')
+    if not (sun_breakfast or sun_lunch or sun_dinner or mon_breakfast or mon_dinner or mon_lunch or tue_breakfast or tue_lunch or tue_dinner or wed_breakfast or wed_lunch or wed_dinner or thu_breakfast or thu_lunch or thu_dinner or fri_breakfast or fri_lunch or fri_dinner or sat_breakfast or sat_lunch or sat_dinner):
+        return render_template('error.html')
+
+    user = User.query.filter(and_(User.rollNo == session['rollNo'])).first()
+    dic = json.loads(user.json)
+
+    if mon_breakfast:
+        day_needed = 1
+        day_got = datetime.datetime(2019, 6, 30).isoweekday()
+        diff = day_got - day_needed
+        start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
+        end_date = datetime.datetime(2018, 7, 1).date()
+        while start_date_needed >= end_date:
+            date_str = start_date_needed.strftime('%Y-%m-%d')
+            print(start_date_needed)
+            print(dic[date_str][0][0])
+            for i in range(len(dic[date_str][0][0])):
+                if dic[date_str][0][0][i] == 1:
+                    dic[date_str][0][0][i] = 0
+            dic[date_str][0][0][mon_b_mess] = 1
+            print(dic[date_str][0][0])
+            new_date = start_date_needed - datetime.timedelta(days=7)
+            start_date_needed = new_date
+
+    if mon_lunch:
+        day_needed = 1
+        day_got = datetime.datetime(2019, 6, 30).isoweekday()
+        diff = day_got - day_needed
+        start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
+        end_date = datetime.datetime(2018, 7, 1).date()
+        while start_date_needed >= end_date:
+            date_str = start_date_needed.strftime('%Y-%m-%d')
+            print(start_date_needed)
+            print(dic[date_str][0][1])
+            for i in range(len(dic[date_str][0][1])):
+                if dic[date_str][0][1][i] == 1:
+                    dic[date_str][0][1][i] = 0
+            dic[date_str][0][1][mon_l_mess] = 1
+            print(dic[date_str][0][1])
+            new_date = start_date_needed - datetime.timedelta(days=7)
+            start_date_needed = new_date
+
+    if mon_dinner:
+        day_needed = 1
+        day_got = datetime.datetime(2019, 6, 30).isoweekday()
+        diff = day_got - day_needed
+        start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
+        end_date = datetime.datetime(2018, 7, 1).date()
+        while start_date_needed >= end_date:
+            date_str = start_date_needed.strftime('%Y-%m-%d')
+            print(start_date_needed)
+            print(dic[date_str][0][3])
+            for i in range(len(dic[date_str][0][3])):
+                if dic[date_str][0][3][i] == 1:
+                    dic[date_str][0][3][i] = 0
+            dic[date_str][0][3][mon_d_mess] = 1
+            print(dic[date_str][0][3])
+            new_date = start_date_needed - datetime.timedelta(days=7)
+            start_date_needed = new_date
+
+    if tue_breakfast:
+        day_needed = 2
+        day_got = datetime.datetime(2019, 6, 30).isoweekday()
+        diff = day_got - day_needed
+        start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
+        end_date = datetime.datetime(2018, 7, 1).date()
+        while start_date_needed >= end_date:
+            date_str = start_date_needed.strftime('%Y-%m-%d')
+            print(start_date_needed)
+            print(dic[date_str][0][0])
+            for i in range(len(dic[date_str][0][0])):
+                if dic[date_str][0][0][i] == 1:
+                    dic[date_str][0][0][i] = 0
+            dic[date_str][0][0][tue_b_mess] = 1
+            print(dic[date_str][0][0])
+            new_date = start_date_needed - datetime.timedelta(days=7)
+            start_date_needed = new_date
+
+    if tue_lunch:
+        day_needed = 2
+        day_got = datetime.datetime(2019, 6, 30).isoweekday()
+        diff = day_got - day_needed
+        start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
+        end_date = datetime.datetime(2018, 7, 1).date()
+        while start_date_needed >= end_date:
+            date_str = start_date_needed.strftime('%Y-%m-%d')
+            print(start_date_needed)
+            print(dic[date_str][0][1])
+            for i in range(len(dic[date_str][0][1])):
+                if dic[date_str][0][1][i] == 1:
+                    dic[date_str][0][1][i] = 0
+            dic[date_str][0][1][tue_l_mess] = 1
+            print(dic[date_str][0][1])
+            new_date = start_date_needed - datetime.timedelta(days=7)
+            start_date_needed = new_date
+
+    if tue_dinner:
+        day_needed = 2
+        day_got = datetime.datetime(2019, 6, 30).isoweekday()
+        diff = day_got - day_needed
+        start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
+        end_date = datetime.datetime(2018, 7, 1).date()
+        while start_date_needed >= end_date:
+            date_str = start_date_needed.strftime('%Y-%m-%d')
+            print(start_date_needed)
+            print(dic[date_str][0][3])
+            for i in range(len(dic[date_str][0][3])):
+                if dic[date_str][0][3][i] == 1:
+                    dic[date_str][0][3][i] = 0
+            dic[date_str][0][3][tue_d_mess] = 1
+            print(dic[date_str][0][3])
+            new_date = start_date_needed - datetime.timedelta(days=7)
+            start_date_needed = new_date
+
+    if wed_breakfast:
+        day_needed = 3
+        day_got = datetime.datetime(2019, 6, 30).isoweekday()
+        diff = day_got - day_needed
+        start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
+        end_date = datetime.datetime(2018, 7, 1).date()
+        while start_date_needed >= end_date:
+            date_str = start_date_needed.strftime('%Y-%m-%d')
+            print(start_date_needed)
+            print(dic[date_str][0][0])
+            for i in range(len(dic[date_str][0][0])):
+                if dic[date_str][0][0][i] == 1:
+                    dic[date_str][0][0][i] = 0
+            dic[date_str][0][0][wed_b_mess] = 1
+            print(dic[date_str][0][0])
+            new_date = start_date_needed - datetime.timedelta(days=7)
+            start_date_needed = new_date
+
+    if wed_lunch:
+        day_needed = 3
+        day_got = datetime.datetime(2019, 6, 30).isoweekday()
+        diff = day_got - day_needed
+        start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
+        end_date = datetime.datetime(2018, 7, 1).date()
+        while start_date_needed >= end_date:
+            date_str = start_date_needed.strftime('%Y-%m-%d')
+            print(start_date_needed)
+            print(dic[date_str][0][1])
+            for i in range(len(dic[date_str][0][1])):
+                if dic[date_str][0][1][i] == 1:
+                    dic[date_str][0][1][i] = 0
+            dic[date_str][0][1][wed_l_mess] = 1
+            print(dic[date_str][0][1])
+            new_date = start_date_needed - datetime.timedelta(days=7)
+            start_date_needed = new_date
+
+    if wed_dinner:
+        day_needed = 3
+        day_got = datetime.datetime(2019, 6, 30).isoweekday()
+        diff = day_got - day_needed
+        start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
+        end_date = datetime.datetime(2018, 7, 1).date()
+        while start_date_needed >= end_date:
+            date_str = start_date_needed.strftime('%Y-%m-%d')
+            print(start_date_needed)
+            print(dic[date_str][0][3])
+            for i in range(len(dic[date_str][0][3])):
+                if dic[date_str][0][3][i] == 1:
+                    dic[date_str][0][3][i] = 0
+            dic[date_str][0][3][wed_d_mess] = 1
+            print(dic[date_str][0][3])
+            new_date = start_date_needed - datetime.timedelta(days=7)
+            start_date_needed = new_date
+
+    if thu_breakfast:
+        day_needed = 4
+        day_got = datetime.datetime(2019, 6, 30).isoweekday()
+        diff = day_got - day_needed
+        start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
+        end_date = datetime.datetime(2018, 7, 1).date()
+        while start_date_needed >= end_date:
+            date_str = start_date_needed.strftime('%Y-%m-%d')
+            print(start_date_needed)
+            print(dic[date_str][0][0])
+            for i in range(len(dic[date_str][0][0])):
+                if dic[date_str][0][0][i] == 1:
+                    dic[date_str][0][0][i] = 0
+            dic[date_str][0][0][thu_b_mess] = 1
+            print(dic[date_str][0][0])
+            new_date = start_date_needed - datetime.timedelta(days=7)
+            start_date_needed = new_date
+
+    if thu_lunch:
+        day_needed = 4
+        day_got = datetime.datetime(2019, 6, 30).isoweekday()
+        diff = day_got - day_needed
+        start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
+        end_date = datetime.datetime(2018, 7, 1).date()
+        while start_date_needed >= end_date:
+            date_str = start_date_needed.strftime('%Y-%m-%d')
+            print(start_date_needed)
+            print(dic[date_str][0][1])
+            for i in range(len(dic[date_str][0][1])):
+                if dic[date_str][0][1][i] == 1:
+                    dic[date_str][0][1][i] = 0
+            dic[date_str][0][1][thu_l_mess] = 1
+            print(dic[date_str][0][1])
+            new_date = start_date_needed - datetime.timedelta(days=7)
+            start_date_needed = new_date
+
+    if thu_dinner:
+        day_needed = 4
+        day_got = datetime.datetime(2019, 6, 30).isoweekday()
+        diff = day_got - day_needed
+        start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
+        end_date = datetime.datetime(2018, 7, 1).date()
+        while start_date_needed >= end_date:
+            date_str = start_date_needed.strftime('%Y-%m-%d')
+            print(start_date_needed)
+            print(dic[date_str][0][3])
+            for i in range(len(dic[date_str][0][3])):
+                if dic[date_str][0][3][i] == 1:
+                    dic[date_str][0][3][i] = 0
+            dic[date_str][0][3][thu_d_mess] = 1
+            print(dic[date_str][0][3])
+            new_date = start_date_needed - datetime.timedelta(days=7)
+            start_date_needed = new_date
+
+    if fri_breakfast:
+        day_needed = 5
+        day_got = datetime.datetime(2019, 6, 30).isoweekday()
+        diff = day_got - day_needed
+        start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
+        end_date = datetime.datetime(2018, 7, 1).date()
+        while start_date_needed >= end_date:
+            date_str = start_date_needed.strftime('%Y-%m-%d')
+            print(start_date_needed)
+            print(dic[date_str][0][0])
+            for i in range(len(dic[date_str][0][0])):
+                if dic[date_str][0][0][i] == 1:
+                    dic[date_str][0][0][i] = 0
+            dic[date_str][0][0][fri_b_mess] = 1
+            print(dic[date_str][0][0])
+            new_date = start_date_needed - datetime.timedelta(days=7)
+            start_date_needed = new_date
+
+    if fri_lunch:
+        day_needed = 5
+        day_got = datetime.datetime(2019, 6, 30).isoweekday()
+        diff = day_got - day_needed
+        start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
+        end_date = datetime.datetime(2018, 7, 1).date()
+        while start_date_needed >= end_date:
+            date_str = start_date_needed.strftime('%Y-%m-%d')
+            print(start_date_needed)
+            print(dic[date_str][0][1])
+            for i in range(len(dic[date_str][0][1])):
+                if dic[date_str][0][1][i] == 1:
+                    dic[date_str][0][1][i] = 0
+            dic[date_str][0][1][fri_l_mess] = 1
+            print(dic[date_str][0][1])
+            new_date = start_date_needed - datetime.timedelta(days=7)
+            start_date_needed = new_date
+
+    if fri_dinner:
+        day_needed = 5
+        day_got = datetime.datetime(2019, 6, 30).isoweekday()
+        diff = day_got - day_needed
+        start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
+        end_date = datetime.datetime(2018, 7, 1).date()
+        while start_date_needed >= end_date:
+            date_str = start_date_needed.strftime('%Y-%m-%d')
+            print(start_date_needed)
+            print(dic[date_str][0][3])
+            for i in range(len(dic[date_str][0][3])):
+                if dic[date_str][0][3][i] == 1:
+                    dic[date_str][0][3][i] = 0
+            dic[date_str][0][3][fri_d_mess] = 1
+            print(dic[date_str][0][3])
+            new_date = start_date_needed - datetime.timedelta(days=7)
+            start_date_needed = new_date
+
+    if sat_breakfast:
+        day_needed = 6
+        day_got = datetime.datetime(2019, 6, 30).isoweekday()
+        diff = day_got - day_needed
+        start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
+        end_date = datetime.datetime(2018, 7, 1).date()
+        while start_date_needed >= end_date:
+            date_str = start_date_needed.strftime('%Y-%m-%d')
+            print(start_date_needed)
+            print(dic[date_str][0][0])
+            for i in range(len(dic[date_str][0][0])):
+                if dic[date_str][0][0][i] == 1:
+                    dic[date_str][0][0][i] = 0
+            dic[date_str][0][0][sat_b_mess] = 1
+            print(dic[date_str][0][0])
+            new_date = start_date_needed - datetime.timedelta(days=7)
+            start_date_needed = new_date
+
+    if sat_lunch:
+        day_needed = 6
+        day_got = datetime.datetime(2019, 6, 30).isoweekday()
+        diff = day_got - day_needed
+        start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
+        end_date = datetime.datetime(2018, 7, 1).date()
+        while start_date_needed >= end_date:
+            date_str = start_date_needed.strftime('%Y-%m-%d')
+            print(start_date_needed)
+            print(dic[date_str][0][1])
+            for i in range(len(dic[date_str][0][1])):
+                if dic[date_str][0][1][i] == 1:
+                    dic[date_str][0][1][i] = 0
+            dic[date_str][0][1][sat_l_mess] = 1
+            print(dic[date_str][0][1])
+            new_date = start_date_needed - datetime.timedelta(days=7)
+            start_date_needed = new_date
+
+    if sat_dinner:
+        day_needed = 6
+        day_got = datetime.datetime(2019, 6, 30).isoweekday()
+        diff = day_got - day_needed
+        start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
+        end_date = datetime.datetime(2018, 7, 1).date()
+        while start_date_needed >= end_date:
+            date_str = start_date_needed.strftime('%Y-%m-%d')
+            print(start_date_needed)
+            print(dic[date_str][0][3])
+            for i in range(len(dic[date_str][0][3])):
+                if dic[date_str][0][3][i] == 1:
+                    dic[date_str][0][3][i] = 0
+            dic[date_str][0][3][sat_d_mess] = 1
+            print(dic[date_str][0][3])
+            new_date = start_date_needed - datetime.timedelta(days=7)
+            start_date_needed = new_date
+
+    if sun_breakfast:
+        day_needed = 7
+        day_got = datetime.datetime(2019, 6, 30).isoweekday()
+        diff = day_got - day_needed
+        start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
+        end_date = datetime.datetime(2018, 7, 1).date()
+        while start_date_needed >= end_date:
+            date_str = start_date_needed.strftime('%Y-%m-%d')
+            print(start_date_needed)
+            print(dic[date_str][0][0])
+            for i in range(len(dic[date_str][0][0])):
+                if dic[date_str][0][0][i] == 1:
+                    dic[date_str][0][0][i] = 0
+            dic[date_str][0][0][sun_b_mess] = 1
+            print(dic[date_str][0][0])
+            new_date = start_date_needed - datetime.timedelta(days=7)
+            start_date_needed = new_date
+
+    if sun_lunch:
+        day_needed = 7
+        day_got = datetime.datetime(2019, 6, 30).isoweekday()
+        diff = day_got - day_needed
+        start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
+        end_date = datetime.datetime(2018, 7, 1).date()
+        while start_date_needed >= end_date:
+            date_str = start_date_needed.strftime('%Y-%m-%d')
+            print(start_date_needed)
+            print(dic[date_str][0][1])
+            for i in range(len(dic[date_str][0][1])):
+                if dic[date_str][0][1][i] == 1:
+                    dic[date_str][0][1][i] = 0
+            dic[date_str][0][1][sun_l_mess] = 1
+            print(dic[date_str][0][1])
+            new_date = start_date_needed - datetime.timedelta(days=7)
+            start_date_needed = new_date
+
+    if sun_dinner:
+        day_needed = 7
+        day_got = datetime.datetime(2019, 6, 30).isoweekday()
+        diff = day_got - day_needed
+        start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
+        end_date = datetime.datetime(2018, 7, 1).date()
+        while start_date_needed >= end_date:
+            date_str = start_date_needed.strftime('%Y-%m-%d')
+            print(start_date_needed)
+            print(dic[date_str][0][3])
+            for i in range(len(dic[date_str][0][3])):
+                if dic[date_str][0][3][i] == 1:
+                    dic[date_str][0][3][i] = 0
+            dic[date_str][0][3][sun_d_mess] = 1
+            print(dic[date_str][0][3])
+            new_date = start_date_needed - datetime.timedelta(days=7)
+            start_date_needed = new_date
+
+    json_mod = json.dumps(dic)
+    user.json = json_mod
+    db.session.commit()
+
+    return redirect(url_for('index'))
 
 
 def init_json():
@@ -562,17 +950,20 @@ def change_meal_month():
         date_str = date.strftime('%Y-%m-%d')
         if breakfast:
             for i in range(len(dic[date_str][0][0])):
-                dic[date_str][0][0][i] = 0
+                if dic[date_str][0][0][i] == 1:
+                    dic[date_str][0][0][i] = 0
             dic[date_str][0][0][mess_number] = 1
 
         if lunch:
             for i in range(len(dic[date_str][0][1])):
-                dic[date_str][0][1][i] = 0
+                if dic[date_str][0][1][i] == 1:
+                    dic[date_str][0][1][i] = 0
             dic[date_str][0][1][mess_number] = 1
 
         if dinner:
             for i in range(len(dic[date_str][0][3])):
-                dic[date_str][0][3][i] = 0
+                if dic[date_str][0][3][i] == 1:
+                    dic[date_str][0][3][i] = 0
             dic[date_str][0][3][mess_number] = 1
         date_count -= 1
 
@@ -633,7 +1024,10 @@ def logout():
 @app.route('/admin/index')
 @app.route('/admin/')
 def adminIndex():
-    return render_template('adminLogin.html')
+    if 'username' in session:
+        return render_template('adminChange.html')
+    else:
+        return render_template('adminLogin.html')
 
 
 @app.route('/admin/registerNext', methods=['GET', 'POST'])
@@ -641,13 +1035,12 @@ def adminRegisterNext():
     try:
         admin = Admin(firstname=request.form["fname"], lastname=request.form["lname"], email=request.form["email"],
                       mess=request.form["mess"], adminID=request.form["adminID"],
-                      password=request.form['loginPassword'])
+                      password=sha256_crypt.encrypt(request.form['loginPassword']))
         db.session.add(admin)
         db.session.commit()
-        return "Admin added"
     except:
         return "Error: Please check for following errors: <br />1. Email<br />2.Admin ID"
-    # return redirect(url_for('dashboard'))
+    return redirect(url_for('adminIndex'))
 
 
 @app.route('/admin/loginNext', methods=['GET', 'POST'])
@@ -659,12 +1052,24 @@ def adminLoginNext():
         admin = Admin.query.filter(Admin.adminID == adminID).first()
 
         if admin:
-            session['username'] = admin.firstname
-            session['mess'] = admin.mess
-            session['adminID'] = admin.adminID
-            session['email'] = admin.email
-            return "Login Successful"
-        return "Password Error"
+            if sha256_crypt.verify(password, admin.password):
+                session['username'] = admin.firstname
+                session['mess'] = admin.mess
+                session['adminID'] = admin.adminID
+                session['email'] = admin.email
+                return redirect(url_for('adminIndex'))
+        return "Invalid Username or Password"
+
+
+@app.route('/admin/logout', methods=['POST', 'GET'])
+def adminLogout():
+    if 'username' in session:
+        name = session.pop('username')
+        email = session.pop('email')
+        mess = session.pop('mess')
+        adminID = session.pop('adminID')
+    return redirect(url_for('adminIndex'))  
+
 
 
 @app.route('/admin/change')
@@ -714,3 +1119,18 @@ def adminChangeMenu():
     db.session.commit()
 
     return "Menu Changed successfully"
+
+
+@app.route('/admin/rates')
+def adminRates():
+    # mess = ["north", "south", "yuktahar", "kadamb"]
+    # time = ["breakfast", "lunch", "snacks", "dinner"]
+    # rate = ["30", "50", "20", "50"]
+
+    # for m in mess:
+    #     for i in range(0, len(time)):
+    #         r = Rates(mess=m, time=time[i], rate=rate[i])
+    #         db.session.add(r)
+    #         db.session.commit()
+
+    return "Rates Table Updated"
