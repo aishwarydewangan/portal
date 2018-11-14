@@ -950,17 +950,20 @@ def change_meal_month():
         date_str = date.strftime('%Y-%m-%d')
         if breakfast:
             for i in range(len(dic[date_str][0][0])):
-                dic[date_str][0][0][i] = 0
+                if dic[date_str][0][0][i] == 1:
+                    dic[date_str][0][0][i] = 0
             dic[date_str][0][0][mess_number] = 1
 
         if lunch:
             for i in range(len(dic[date_str][0][1])):
-                dic[date_str][0][1][i] = 0
+                if dic[date_str][0][1][i] == 1:
+                    dic[date_str][0][1][i] = 0
             dic[date_str][0][1][mess_number] = 1
 
         if dinner:
             for i in range(len(dic[date_str][0][3])):
-                dic[date_str][0][3][i] = 0
+                if dic[date_str][0][3][i] == 1:
+                    dic[date_str][0][3][i] = 0
             dic[date_str][0][3][mess_number] = 1
         date_count -= 1
 
