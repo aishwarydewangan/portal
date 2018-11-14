@@ -2,7 +2,7 @@ from flask import render_template
 from sqlalchemy import and_
 from flask import url_for, redirect, request, make_response, flash
 from flask import session
-from app.models import User, Admin, Menu, Feedback
+from app.models import User, Admin, Menu, Feedback, Rates
 from app import app, db
 from passlib.hash import sha256_crypt
 import datetime
@@ -714,3 +714,18 @@ def adminChangeMenu():
     db.session.commit()
 
     return "Menu Changed successfully"
+
+
+@app.route('/admin/rates')
+def adminRates():
+    # mess = ["north", "south", "yuktahar", "kadamb"]
+    # time = ["breakfast", "lunch", "snacks", "dinner"]
+    # rate = ["30", "50", "20", "50"]
+
+    # for m in mess:
+    #     for i in range(0, len(time)):
+    #         r = Rates(mess=m, time=time[i], rate=rate[i])
+    #         db.session.add(r)
+    #         db.session.commit()
+
+    return "Rates Table Updated"
