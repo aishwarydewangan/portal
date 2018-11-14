@@ -17,7 +17,7 @@
                         <br />
                         <br />
 
-                        <button type="submit" class="btn btn-primary" onclick="cancelMeal();">View Bill</button>
+                        <button type="submit" class="btn btn-primary">View Bill</button>
                     </form>
                 </div>
             </div>
@@ -33,7 +33,6 @@
 
     <script type="text/javascript">
 
-    alert(moment());
     error_code = "{{error.status}}";
     if(error_code == 0)
     {
@@ -56,15 +55,12 @@
       alert("No meal selected for change");
     }
 
+    else if(error_code == 5){
+        val = "{{error.bill}}";
+        console.log(val);
+        document.getElementById("bill_amount").innerHTML = "BILL AMOUNT : " + val;
+    }
 
-
-        function cancelMeal() {
-            document.getElementById('cancelForm').action = "/cancelMeal";
-        }
-
-        function uncancelMeal() {
-            document.getElementById('cancelForm').action = "/uncancelMeal";
-        }
     </script>
 
 
