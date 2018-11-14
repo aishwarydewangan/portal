@@ -13,7 +13,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <select class="form-control" name="time" onchange="changeItems()" id="time">
+                                    <select class="form-control" name="time" onchange="changeItems()" id="time" onload="changeItems()">
                                         <option value="lunch">Lunch</option>
                                         <option value="breakfast">Breakfast</option>
                                         <option value="snacks">Snacks</option>
@@ -23,7 +23,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <select class="form-control" name="day">
+                                    <select class="form-control" name="day" onchange="changeItems()" id="day" onload="changeItems()">
                                         <option value="sunday">Sunday</option>
                                         <option value="monday">Monday</option>
                                         <option value="tuesday">Tuesday</option>
@@ -121,11 +121,375 @@
     </div>
 
     <script type="text/javascript">
+
+        var breakfastSun = [];
+        var breakfastMon = [];
+        var breakfastTue = [];
+        var breakfastWed = [];
+        var breakfastThr = [];
+        var breakfastFri = [];
+        var breakfastSat = [];
+
+        {% for menu in menus %}
+            {% if menu.day == "sunday" and menu.time == "breakfast" %}
+                breakfastSun.push('{{ menu.item1 }}');
+                breakfastSun.push('{{ menu.item2 }}');
+                breakfastSun.push('{{ menu.item3 }}');
+                breakfastSun.push('{{ menu.item4 }}');
+                breakfastSun.push('{{ menu.item5 }}');
+                breakfastSun.push('{{ menu.item6 }}');
+                breakfastSun.push('{{ menu.item7 }}');
+                breakfastSun.push('{{ menu.item8 }}');
+            {% endif %}
+
+            {% if menu.day == "monday" and menu.time == "breakfast" %}
+                breakfastMon.push('{{ menu.item1 }}');
+                breakfastMon.push('{{ menu.item2 }}');
+                breakfastMon.push('{{ menu.item3 }}');
+                breakfastMon.push('{{ menu.item4 }}');
+                breakfastMon.push('{{ menu.item5 }}');
+                breakfastMon.push('{{ menu.item6 }}');
+                breakfastMon.push('{{ menu.item7 }}');
+                breakfastMon.push('{{ menu.item8 }}');
+            {% endif %}
+
+            {% if menu.day == "tuesday" and menu.time == "breakfast" %}
+                breakfastTue.push('{{ menu.item1 }}');
+                breakfastTue.push('{{ menu.item2 }}');
+                breakfastTue.push('{{ menu.item3 }}');
+                breakfastTue.push('{{ menu.item4 }}');
+                breakfastTue.push('{{ menu.item5 }}');
+                breakfastTue.push('{{ menu.item6 }}');
+                breakfastTue.push('{{ menu.item7 }}');
+                breakfastTue.push('{{ menu.item8 }}');
+            {% endif %}
+
+            {% if menu.day == "wednesday" and menu.time == "breakfast" %}
+                breakfastWed.push('{{ menu.item1 }}');
+                breakfastWed.push('{{ menu.item2 }}');
+                breakfastWed.push('{{ menu.item3 }}');
+                breakfastWed.push('{{ menu.item4 }}');
+                breakfastWed.push('{{ menu.item5 }}');
+                breakfastWed.push('{{ menu.item6 }}');
+                breakfastWed.push('{{ menu.item7 }}');
+                breakfastWed.push('{{ menu.item8 }}');
+            {% endif %}
+
+            {% if menu.day == "thursday" and menu.time == "breakfast" %}
+                breakfastThr.push('{{ menu.item1 }}');
+                breakfastThr.push('{{ menu.item2 }}');
+                breakfastThr.push('{{ menu.item3 }}');
+                breakfastThr.push('{{ menu.item4 }}');
+                breakfastThr.push('{{ menu.item5 }}');
+                breakfastThr.push('{{ menu.item6 }}');
+                breakfastThr.push('{{ menu.item7 }}');
+                breakfastThr.push('{{ menu.item8 }}');
+            {% endif %}
+
+            {% if menu.day == "friday" and menu.time == "breakfast" %}
+                breakfastFri.push('{{ menu.item1 }}');
+                breakfastFri.push('{{ menu.item2 }}');
+                breakfastFri.push('{{ menu.item3 }}');
+                breakfastFri.push('{{ menu.item4 }}');
+                breakfastFri.push('{{ menu.item5 }}');
+                breakfastFri.push('{{ menu.item6 }}');
+                breakfastFri.push('{{ menu.item7 }}');
+                breakfastFri.push('{{ menu.item8 }}');
+            {% endif %}
+
+            {% if menu.day == "saturday" and menu.time == "breakfast" %}
+                breakfastSat.push('{{ menu.item1 }}');
+                breakfastSat.push('{{ menu.item2 }}');
+                breakfastSat.push('{{ menu.item3 }}');
+                breakfastSat.push('{{ menu.item4 }}');
+                breakfastSat.push('{{ menu.item5 }}');
+                breakfastSat.push('{{ menu.item6 }}');
+                breakfastSat.push('{{ menu.item7 }}');
+                breakfastSat.push('{{ menu.item8 }}');
+            {% endif %}
+        {% endfor %}
+
+        var lunchSun = [];
+        var lunchMon = [];
+        var lunchTue = [];
+        var lunchWed = [];
+        var lunchThr = [];
+        var lunchFri = [];
+        var lunchSat = [];
+
+        {% for menu in menus %}
+            {% if menu.day == "sunday" and menu.time == "lunch" %}
+                lunchSun.push('{{ menu.item1 }}');
+                lunchSun.push('{{ menu.item2 }}');
+                lunchSun.push('{{ menu.item3 }}');
+                lunchSun.push('{{ menu.item4 }}');
+                lunchSun.push('{{ menu.item5 }}');
+                lunchSun.push('{{ menu.item6 }}');
+                lunchSun.push('{{ menu.item7 }}');
+                lunchSun.push('{{ menu.item8 }}');
+                lunchSun.push('{{ menu.item9 }}');
+                lunchSun.push('{{ menu.item10 }}');
+                lunchSun.push('{{ menu.item11 }}');
+                lunchSun.push('{{ menu.item12 }}');
+            {% endif %}
+
+            {% if menu.day == "monday" and menu.time == "lunch" %}
+                lunchMon.push('{{ menu.item1 }}');
+                lunchMon.push('{{ menu.item2 }}');
+                lunchMon.push('{{ menu.item3 }}');
+                lunchMon.push('{{ menu.item4 }}');
+                lunchMon.push('{{ menu.item5 }}');
+                lunchMon.push('{{ menu.item6 }}');
+                lunchMon.push('{{ menu.item7 }}');
+                lunchMon.push('{{ menu.item8 }}');
+                lunchMon.push('{{ menu.item9 }}');
+                lunchMon.push('{{ menu.item10 }}');
+                lunchMon.push('{{ menu.item11 }}');
+                lunchMon.push('{{ menu.item12 }}');
+            {% endif %}
+
+            {% if menu.day == "tuesday" and menu.time == "lunch" %}
+                lunchTue.push('{{ menu.item1 }}');
+                lunchTue.push('{{ menu.item2 }}');
+                lunchTue.push('{{ menu.item3 }}');
+                lunchTue.push('{{ menu.item4 }}');
+                lunchTue.push('{{ menu.item5 }}');
+                lunchTue.push('{{ menu.item6 }}');
+                lunchTue.push('{{ menu.item7 }}');
+                lunchTue.push('{{ menu.item8 }}');
+                lunchTue.push('{{ menu.item9 }}');
+                lunchTue.push('{{ menu.item10 }}');
+                lunchTue.push('{{ menu.item11 }}');
+                lunchTue.push('{{ menu.item12 }}');
+            {% endif %}
+
+            {% if menu.day == "wednesday" and menu.time == "lunch" %}
+                lunchWed.push('{{ menu.item1 }}');
+                lunchWed.push('{{ menu.item2 }}');
+                lunchWed.push('{{ menu.item3 }}');
+                lunchWed.push('{{ menu.item4 }}');
+                lunchWed.push('{{ menu.item5 }}');
+                lunchWed.push('{{ menu.item6 }}');
+                lunchWed.push('{{ menu.item7 }}');
+                lunchWed.push('{{ menu.item8 }}');
+                lunchWed.push('{{ menu.item9 }}');
+                lunchWed.push('{{ menu.item10 }}');
+                lunchWed.push('{{ menu.item11 }}');
+                lunchWed.push('{{ menu.item12 }}');
+            {% endif %}
+
+            {% if menu.day == "thursday" and menu.time == "lunch" %}
+                lunchThr.push('{{ menu.item1 }}');
+                lunchThr.push('{{ menu.item2 }}');
+                lunchThr.push('{{ menu.item3 }}');
+                lunchThr.push('{{ menu.item4 }}');
+                lunchThr.push('{{ menu.item5 }}');
+                lunchThr.push('{{ menu.item6 }}');
+                lunchThr.push('{{ menu.item7 }}');
+                lunchThr.push('{{ menu.item8 }}');
+                lunchThr.push('{{ menu.item9 }}');
+                lunchThr.push('{{ menu.item10 }}');
+                lunchThr.push('{{ menu.item11 }}');
+                lunchThr.push('{{ menu.item12 }}');
+            {% endif %}
+
+            {% if menu.day == "friday" and menu.time == "lunch" %}
+                lunchFri.push('{{ menu.item1 }}');
+                lunchFri.push('{{ menu.item2 }}');
+                lunchFri.push('{{ menu.item3 }}');
+                lunchFri.push('{{ menu.item4 }}');
+                lunchFri.push('{{ menu.item5 }}');
+                lunchFri.push('{{ menu.item6 }}');
+                lunchFri.push('{{ menu.item7 }}');
+                lunchFri.push('{{ menu.item8 }}');
+                lunchFri.push('{{ menu.item9 }}');
+                lunchFri.push('{{ menu.item10 }}');
+                lunchFri.push('{{ menu.item11 }}');
+                lunchFri.push('{{ menu.item12 }}');
+            {% endif %}
+
+            {% if menu.day == "saturday" and menu.time == "lunch" %}
+                lunchSat.push('{{ menu.item1 }}');
+                lunchSat.push('{{ menu.item2 }}');
+                lunchSat.push('{{ menu.item3 }}');
+                lunchSat.push('{{ menu.item4 }}');
+                lunchSat.push('{{ menu.item5 }}');
+                lunchSat.push('{{ menu.item6 }}');
+                lunchSat.push('{{ menu.item7 }}');
+                lunchSat.push('{{ menu.item8 }}');
+                lunchSat.push('{{ menu.item9 }}');
+                lunchSat.push('{{ menu.item10 }}');
+                lunchSat.push('{{ menu.item11 }}');
+                lunchSat.push('{{ menu.item12 }}');
+            {% endif %}
+        {% endfor %}
+
+        var snacksSun = [];
+        var snacksMon = [];
+        var snacksTue = [];
+        var snacksWed = [];
+        var snacksThr = [];
+        var snacksFri = [];
+        var snacksSat = [];
+
+        {% for menu in menus %}
+            {% if menu.day == "sunday" and menu.time == "snacks" %}
+                snacksSun.push('{{ menu.item1 }}');
+                snacksSun.push('{{ menu.item2 }}');
+            {% endif %}
+
+            {% if menu.day == "monday" and menu.time == "snacks" %}
+                snacksMon.push('{{ menu.item1 }}');
+                snacksMon.push('{{ menu.item2 }}');
+            {% endif %}
+
+            {% if menu.day == "tuesday" and menu.time == "snacks" %}
+                snacksTue.push('{{ menu.item1 }}');
+                snacksTue.push('{{ menu.item2 }}');
+            {% endif %}
+
+            {% if menu.day == "wednesday" and menu.time == "snacks" %}
+                snacksWed.push('{{ menu.item1 }}');
+                snacksWed.push('{{ menu.item2 }}');
+            {% endif %}
+
+            {% if menu.day == "thursday" and menu.time == "snacks" %}
+                snacksThr.push('{{ menu.item1 }}');
+                snacksThr.push('{{ menu.item2 }}');
+            {% endif %}
+
+            {% if menu.day == "friday" and menu.time == "snacks" %}
+                snacksFri.push('{{ menu.item1 }}');
+                snacksFri.push('{{ menu.item2 }}');
+            {% endif %}
+
+            {% if menu.day == "saturday" and menu.time == "snacks" %}
+                snacksSat.push('{{ menu.item1 }}');
+                snacksSat.push('{{ menu.item2 }}');
+            {% endif %}
+        {% endfor %}
+
+        var dinnerSun = [];
+        var dinnerMon = [];
+        var dinnerTue = [];
+        var dinnerWed = [];
+        var dinnerThr = [];
+        var dinnerFri = [];
+        var dinnerSat = [];
+
+        {% for menu in menus %}
+            {% if menu.day == "sunday" and menu.time == "dinner" %}
+                dinnerSun.push('{{ menu.item1 }}');
+                dinnerSun.push('{{ menu.item2 }}');
+                dinnerSun.push('{{ menu.item3 }}');
+                dinnerSun.push('{{ menu.item4 }}');
+                dinnerSun.push('{{ menu.item5 }}');
+                dinnerSun.push('{{ menu.item6 }}');
+                dinnerSun.push('{{ menu.item7 }}');
+                dinnerSun.push('{{ menu.item8 }}');
+                dinnerSun.push('{{ menu.item9 }}');
+                dinnerSun.push('{{ menu.item10 }}');
+                dinnerSun.push('{{ menu.item11 }}');
+                dinnerSun.push('{{ menu.item12 }}');
+            {% endif %}
+
+            {% if menu.day == "monday" and menu.time == "dinner" %}
+                dinnerMon.push('{{ menu.item1 }}');
+                dinnerMon.push('{{ menu.item2 }}');
+                dinnerMon.push('{{ menu.item3 }}');
+                dinnerMon.push('{{ menu.item4 }}');
+                dinnerMon.push('{{ menu.item5 }}');
+                dinnerMon.push('{{ menu.item6 }}');
+                dinnerMon.push('{{ menu.item7 }}');
+                dinnerMon.push('{{ menu.item8 }}');
+                dinnerMon.push('{{ menu.item9 }}');
+                dinnerMon.push('{{ menu.item10 }}');
+                dinnerMon.push('{{ menu.item11 }}');
+                dinnerMon.push('{{ menu.item12 }}');
+            {% endif %}
+
+            {% if menu.day == "tuesday" and menu.time == "dinner" %}
+                dinnerTue.push('{{ menu.item1 }}');
+                dinnerTue.push('{{ menu.item2 }}');
+                dinnerTue.push('{{ menu.item3 }}');
+                dinnerTue.push('{{ menu.item4 }}');
+                dinnerTue.push('{{ menu.item5 }}');
+                dinnerTue.push('{{ menu.item6 }}');
+                dinnerTue.push('{{ menu.item7 }}');
+                dinnerTue.push('{{ menu.item8 }}');
+                dinnerTue.push('{{ menu.item9 }}');
+                dinnerTue.push('{{ menu.item10 }}');
+                dinnerTue.push('{{ menu.item11 }}');
+                dinnerTue.push('{{ menu.item12 }}');
+            {% endif %}
+
+            {% if menu.day == "wednesday" and menu.time == "dinner" %}
+                dinnerWed.push('{{ menu.item1 }}');
+                dinnerWed.push('{{ menu.item2 }}');
+                dinnerWed.push('{{ menu.item3 }}');
+                dinnerWed.push('{{ menu.item4 }}');
+                dinnerWed.push('{{ menu.item5 }}');
+                dinnerWed.push('{{ menu.item6 }}');
+                dinnerWed.push('{{ menu.item7 }}');
+                dinnerWed.push('{{ menu.item8 }}');
+                dinnerWed.push('{{ menu.item9 }}');
+                dinnerWed.push('{{ menu.item10 }}');
+                dinnerWed.push('{{ menu.item11 }}');
+                dinnerWed.push('{{ menu.item12 }}');
+            {% endif %}
+
+            {% if menu.day == "thursday" and menu.time == "dinner" %}
+                dinnerThr.push('{{ menu.item1 }}');
+                dinnerThr.push('{{ menu.item2 }}');
+                dinnerThr.push('{{ menu.item3 }}');
+                dinnerThr.push('{{ menu.item4 }}');
+                dinnerThr.push('{{ menu.item5 }}');
+                dinnerThr.push('{{ menu.item6 }}');
+                dinnerThr.push('{{ menu.item7 }}');
+                dinnerThr.push('{{ menu.item8 }}');
+                dinnerThr.push('{{ menu.item9 }}');
+                dinnerThr.push('{{ menu.item10 }}');
+                dinnerThr.push('{{ menu.item11 }}');
+                dinnerThr.push('{{ menu.item12 }}');
+            {% endif %}
+
+            {% if menu.day == "friday" and menu.time == "dinner" %}
+                dinnerFri.push('{{ menu.item1 }}');
+                dinnerFri.push('{{ menu.item2 }}');
+                dinnerFri.push('{{ menu.item3 }}');
+                dinnerFri.push('{{ menu.item4 }}');
+                dinnerFri.push('{{ menu.item5 }}');
+                dinnerFri.push('{{ menu.item6 }}');
+                dinnerFri.push('{{ menu.item7 }}');
+                dinnerFri.push('{{ menu.item8 }}');
+                dinnerFri.push('{{ menu.item9 }}');
+                dinnerFri.push('{{ menu.item10 }}');
+                dinnerFri.push('{{ menu.item11 }}');
+                dinnerFri.push('{{ menu.item12 }}');
+            {% endif %}
+
+            {% if menu.day == "saturday" and menu.time == "dinner" %}
+                dinnerSat.push('{{ menu.item1 }}');
+                dinnerSat.push('{{ menu.item2 }}');
+                dinnerSat.push('{{ menu.item3 }}');
+                dinnerSat.push('{{ menu.item4 }}');
+                dinnerSat.push('{{ menu.item5 }}');
+                dinnerSat.push('{{ menu.item6 }}');
+                dinnerSat.push('{{ menu.item7 }}');
+                dinnerSat.push('{{ menu.item8 }}');
+                dinnerSat.push('{{ menu.item9 }}');
+                dinnerSat.push('{{ menu.item10 }}');
+                dinnerSat.push('{{ menu.item11 }}');
+                dinnerSat.push('{{ menu.item12 }}');
+            {% endif %}
+        {% endfor %}
+
         function changeItems() {
 
-            var op = document.getElementById('time').value;
+            var t = document.getElementById('time').value;
+            var d = document.getElementById('day').value;
 
-            if(op == "breakfast") {
+            if(t == "breakfast") {
                 document.getElementById('item3').style.display = 'block';
                 document.getElementById('item4').style.display = 'block';
                 document.getElementById('item5').style.display = 'block';
@@ -136,9 +500,51 @@
                 document.getElementById('item10').style.display = 'none';
                 document.getElementById('item11').style.display = 'none';
                 document.getElementById('item12').style.display = 'none';
+
+                if(d == "sunday") {
+                    for (var i = 0; i < breakfastSun.length; i++) {
+                        document.getElementById('item' + (i+1)).value = breakfastSun[i];
+                    }    
+                }
+
+                if(d == "monday") {
+                    for (var i = 0; i < breakfastMon.length; i++) {
+                        document.getElementById('item' + (i+1)).value = breakfastMon[i];
+                    }    
+                }
+
+                if(d == "tuesday") {
+                    for (var i = 0; i < breakfastTue.length; i++) {
+                        document.getElementById('item' + (i+1)).value = breakfastTue[i];
+                    }    
+                }
+
+                if(d == "wednesday") {
+                    for (var i = 0; i < breakfastWed.length; i++) {
+                        document.getElementById('item' + (i+1)).value = breakfastWed[i];
+                    }    
+                }
+
+                if(d == "thursday") {
+                    for (var i = 0; i < breakfastThr.length; i++) {
+                        document.getElementById('item' + (i+1)).value = breakfastThr[i];
+                    }    
+                }
+
+                if(d == "friday") {
+                    for (var i = 0; i < breakfastFri.length; i++) {
+                        document.getElementById('item' + (i+1)).value = breakfastFri[i];
+                    }    
+                }
+
+                if(d == "saturday") {
+                    for (var i = 0; i < breakfastSat.length; i++) {
+                        document.getElementById('item' + (i+1)).value = breakfastSat[i];
+                    }    
+                }
             }
 
-            if(op == "lunch") {
+            if(t == "lunch") {
                 document.getElementById('item3').style.display = 'block';
                 document.getElementById('item4').style.display = 'block';
                 document.getElementById('item5').style.display = 'block';
@@ -149,9 +555,51 @@
                 document.getElementById('item10').style.display = 'block';
                 document.getElementById('item11').style.display = 'block';
                 document.getElementById('item12').style.display = 'block';
+
+                if(d == "sunday") {
+                    for (var i = 0; i < lunchSun.length; i++) {
+                        document.getElementById('item' + (i+1)).value = lunchSun[i];
+                    }    
+                }
+
+                if(d == "monday") {
+                    for (var i = 0; i < lunchMon.length; i++) {
+                        document.getElementById('item' + (i+1)).value = lunchMon[i];
+                    }    
+                }
+
+                if(d == "tuesday") {
+                    for (var i = 0; i < lunchTue.length; i++) {
+                        document.getElementById('item' + (i+1)).value = lunchTue[i];
+                    }    
+                }
+
+                if(d == "wednesday") {
+                    for (var i = 0; i < lunchWed.length; i++) {
+                        document.getElementById('item' + (i+1)).value = lunchWed[i];
+                    }    
+                }
+
+                if(d == "thursday") {
+                    for (var i = 0; i < lunchThr.length; i++) {
+                        document.getElementById('item' + (i+1)).value = lunchThr[i];
+                    }    
+                }
+
+                if(d == "friday") {
+                    for (var i = 0; i < lunchFri.length; i++) {
+                        document.getElementById('item' + (i+1)).value = lunchFri[i];
+                    }    
+                }
+
+                if(d == "saturday") {
+                    for (var i = 0; i < lunchSat.length; i++) {
+                        document.getElementById('item' + (i+1)).value = lunchSat[i];
+                    }    
+                }
             }
 
-            if(op == "snacks") {
+            if(t == "snacks") {
                 document.getElementById('item3').style.display = 'none';
                 document.getElementById('item4').style.display = 'none';
                 document.getElementById('item5').style.display = 'none';
@@ -162,9 +610,51 @@
                 document.getElementById('item10').style.display = 'none';
                 document.getElementById('item11').style.display = 'none';
                 document.getElementById('item12').style.display = 'none';
+
+                if(d == "sunday") {
+                    for (var i = 0; i < snacksSun.length; i++) {
+                        document.getElementById('item' + (i+1)).value = snacksSun[i];
+                    }    
+                }
+
+                if(d == "monday") {
+                    for (var i = 0; i < snacksMon.length; i++) {
+                        document.getElementById('item' + (i+1)).value = snacksMon[i];
+                    }    
+                }
+
+                if(d == "tuesday") {
+                    for (var i = 0; i < snacksTue.length; i++) {
+                        document.getElementById('item' + (i+1)).value = snacksTue[i];
+                    }    
+                }
+
+                if(d == "wednesday") {
+                    for (var i = 0; i < snacksWed.length; i++) {
+                        document.getElementById('item' + (i+1)).value = snacksWed[i];
+                    }    
+                }
+
+                if(d == "thursday") {
+                    for (var i = 0; i < snacksThr.length; i++) {
+                        document.getElementById('item' + (i+1)).value = snacksThr[i];
+                    }    
+                }
+
+                if(d == "friday") {
+                    for (var i = 0; i < snacksFri.length; i++) {
+                        document.getElementById('item' + (i+1)).value = snacksFri[i];
+                    }    
+                }
+
+                if(d == "saturday") {
+                    for (var i = 0; i < snacksSat.length; i++) {
+                        document.getElementById('item' + (i+1)).value = snacksSat[i];
+                    }    
+                }
             }
 
-            if(op == "dinner") {
+            if(t == "dinner") {
                 document.getElementById('item3').style.display = 'block';
                 document.getElementById('item4').style.display = 'block';
                 document.getElementById('item5').style.display = 'block';
@@ -175,6 +665,48 @@
                 document.getElementById('item10').style.display = 'block';
                 document.getElementById('item11').style.display = 'block';
                 document.getElementById('item12').style.display = 'block';
+
+                if(d == "sunday") {
+                    for (var i = 0; i < dinnerSun.length; i++) {
+                        document.getElementById('item' + (i+1)).value = dinnerSun[i];
+                    }    
+                }
+
+                if(d == "monday") {
+                    for (var i = 0; i < dinnerMon.length; i++) {
+                        document.getElementById('item' + (i+1)).value = dinnerMon[i];
+                    }    
+                }
+
+                if(d == "tuesday") {
+                    for (var i = 0; i < dinnerTue.length; i++) {
+                        document.getElementById('item' + (i+1)).value = dinnerTue[i];
+                    }    
+                }
+
+                if(d == "wednesday") {
+                    for (var i = 0; i < dinnerWed.length; i++) {
+                        document.getElementById('item' + (i+1)).value = dinnerWed[i];
+                    }    
+                }
+
+                if(d == "thursday") {
+                    for (var i = 0; i < dinnerThr.length; i++) {
+                        document.getElementById('item' + (i+1)).value = dinnerThr[i];
+                    }    
+                }
+
+                if(d == "friday") {
+                    for (var i = 0; i < dinnerFri.length; i++) {
+                        document.getElementById('item' + (i+1)).value = dinnerFri[i];
+                    }    
+                }
+
+                if(d == "saturday") {
+                    for (var i = 0; i < dinnerSat.length; i++) {
+                        document.getElementById('item' + (i+1)).value = dinnerSat[i];
+                    }    
+                }
             }
         }
 
