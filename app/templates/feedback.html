@@ -7,7 +7,7 @@
     <br /><br />
 
     <div class="container">
-        <form action="/feedbackform" method="post" id="form1">
+        <form action="/feedbackform" method="post" id="form1" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="usr">Mess:</label>
                 <!-- <input type="text" class="form-control" id="mess" name="mess"> -->
@@ -30,6 +30,9 @@
                 <label for="comment">Description:</label>
                 <textarea class="form-control" rows="5" id="description" name="description"></textarea>
             </div>
+
+            <input type="file" name="upload_file"><br><br>
+
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>

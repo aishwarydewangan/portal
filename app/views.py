@@ -25,21 +25,32 @@ def index():
 		return render_template('login.html')
 
 
+# @app.route('/download')
+# def download():
+# 	file_data=Feedback.query.filter_by(id=1).first()
+# 	return send_file(BytesIO(file_data.image),attachment_filename='abc.jpg',as_attachment=True)	
+
+
 @app.route('/feedback')
 def feedback():
 	return render_template('feedback.html')
 
-
 @app.route('/feedbackform', methods=['POST'])
 def feedback_form():
 	try:
+		file=request.files["upload_file"]
 		user = User.query.filter(User.rollNo == session['rollNo']).first()
-		feed = Feedback(mess=request.form["mess"], date_of_issue=datetime.datetime.now(), issue=request.form["issue"], description=request.form["description"], user_id=user.id)
+		feed = Feedback(mess=request.form["mess"],date_of_issue=datetime.date.today() , issue=request.form["issue"], description=request.form["description"], user_id=user.id, image=file.read())
 		db.session.add(feed)
 		db.session.commit()
-	except:
-		return "Error"
-	return "Feedback added successfully"
+		return "Feedback added successfully"
+
+	except exceptions.BadRequestKeyError:
+		user = User.query.filter(User.rollNo == session['rollNo']).first()
+		feed = Feedback(mess=request.form["mess"],date_of_issue=datetime.date.today() , issue=request.form["issue"], description=request.form["description"], user_id=user.id)
+		db.session.add(feed)
+		db.session.commit()
+		return "Feedback added successfully"
 
 
 @app.route('/daywise', methods=['POST'])
@@ -208,7 +219,7 @@ def change():
 
 	for menu in menus:
 		st = "item" + str(d) + str(t) + str(m)
-		print (menu, end ="" )
+		# print (menu, end ="" )
 		s = st + str(1)
 		Y[s] = menu.item1
 		s = st + str(2)
