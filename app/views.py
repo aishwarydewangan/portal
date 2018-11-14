@@ -633,7 +633,10 @@ def logout():
 @app.route('/admin/index')
 @app.route('/admin/')
 def adminIndex():
-    return render_template('adminLogin.html')
+    if 'username' in session:
+        return render_template('adminChange.html')
+    else:
+        return render_template('adminLogin.html')
 
 
 @app.route('/admin/registerNext', methods=['GET', 'POST'])
@@ -641,13 +644,12 @@ def adminRegisterNext():
     try:
         admin = Admin(firstname=request.form["fname"], lastname=request.form["lname"], email=request.form["email"],
                       mess=request.form["mess"], adminID=request.form["adminID"],
-                      password=request.form['loginPassword'])
+                      password=sha256_crypt.encrypt(request.form['loginPassword']))
         db.session.add(admin)
         db.session.commit()
-        return "Admin added"
     except:
         return "Error: Please check for following errors: <br />1. Email<br />2.Admin ID"
-    # return redirect(url_for('dashboard'))
+    return redirect(url_for('adminIndex'))
 
 
 @app.route('/admin/loginNext', methods=['GET', 'POST'])
@@ -659,12 +661,24 @@ def adminLoginNext():
         admin = Admin.query.filter(Admin.adminID == adminID).first()
 
         if admin:
-            session['username'] = admin.firstname
-            session['mess'] = admin.mess
-            session['adminID'] = admin.adminID
-            session['email'] = admin.email
-            return "Login Successful"
-        return "Password Error"
+            if sha256_crypt.verify(password, admin.password):
+                session['username'] = admin.firstname
+                session['mess'] = admin.mess
+                session['adminID'] = admin.adminID
+                session['email'] = admin.email
+                return redirect(url_for('adminIndex'))
+        return "Invalid Username or Password"
+
+
+@app.route('/admin/logout', methods=['POST', 'GET'])
+def adminLogout():
+    if 'username' in session:
+        name = session.pop('username')
+        email = session.pop('email')
+        mess = session.pop('mess')
+        adminID = session.pop('adminID')
+    return redirect(url_for('adminIndex'))  
+
 
 
 @app.route('/admin/change')
