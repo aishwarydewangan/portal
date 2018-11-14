@@ -33,33 +33,30 @@ def index():
 
 @app.route('/feedback')
 def feedback():
-    return render_template('feedback.html')
+    if 'username' in session:
+        return render_template('feedback.html')
+    else:
+        return render_template('login.html')
+
 
 @app.route('/feedbackform', methods=['POST'])
 def feedback_form():
-	try:
-		file=request.files["upload_file"]
-		user = User.query.filter(User.rollNo == session['rollNo']).first()
-		feed = Feedback(mess=request.form["mess"],date_of_issue=datetime.date.today() , issue=request.form["issue"], description=request.form["description"], user_id=user.id, image=file.read())
-		db.session.add(feed)
-		db.session.commit()
-		return "Feedback added successfully"
     try:
+        file = request.files["upload_file"]
         user = User.query.filter(User.rollNo == session['rollNo']).first()
-        feed = Feedback(mess=request.form["mess"], date_of_issue=datetime.datetime.now(), issue=request.form["issue"],
+        feed = Feedback(mess=request.form["mess"], date_of_issue=datetime.date.today(), issue=request.form["issue"],
+                        description=request.form["description"], user_id=user.id, image=file.read())
+        db.session.add(feed)
+        db.session.commit()
+        return "Feedback added successfully"
+
+    except exceptions.BadRequestKeyError:
+        user = User.query.filter(User.rollNo == session['rollNo']).first()
+        feed = Feedback(mess=request.form["mess"], date_of_issue=datetime.date.today(), issue=request.form["issue"],
                         description=request.form["description"], user_id=user.id)
         db.session.add(feed)
         db.session.commit()
-    except:
-        return "Error"
     return "Feedback added successfully"
-
-	except exceptions.BadRequestKeyError:
-		user = User.query.filter(User.rollNo == session['rollNo']).first()
-		feed = Feedback(mess=request.form["mess"],date_of_issue=datetime.date.today() , issue=request.form["issue"], description=request.form["description"], user_id=user.id)
-		db.session.add(feed)
-		db.session.commit()
-		return "Feedback added successfully"
 
 
 @app.route('/daywise', methods=['POST'])
@@ -68,147 +65,147 @@ def daywise():
 
     encode = {'0': 0, '1': 1, '2': 2, '3': 3}
     sun_breakfast = request.form['sun_breakfast']
-    if sun_breakfast == -1:
+    if sun_breakfast == '-1':
         sun_breakfast = False
     else:
         sun_b_mess = encode[sun_breakfast]
         sun_breakfast = True
 
     sun_lunch = request.form['sun_lunch']
-    if sun_lunch == -1:
+    if sun_lunch == '-1':
         sun_lunch = False
     else:
         sun_l_mess = encode[sun_lunch]
         sun_lunch = True
 
     sun_dinner = request.form['sun_dinner']
-    if sun_dinner == -1:
+    if sun_dinner == '-1':
         sun_dinner = False
     else:
         sun_d_mess = encode[sun_dinner]
         sun_dinner = True
 
     mon_breakfast = request.form['mon_breakfast']
-    if mon_breakfast == -1:
+    if mon_breakfast == '-1':
         mon_breakfast = False
     else:
         mon_b_mess = encode[mon_breakfast]
         mon_breakfast = True
 
     mon_lunch = request.form['mon_lunch']
-    if mon_lunch == -1:
+    if mon_lunch == '-1':
         mon_lunch = False
     else:
         mon_l_mess = encode[mon_lunch]
         mon_lunch = True
 
     mon_dinner = request.form['mon_dinner']
-    if mon_dinner == -1:
+    if mon_dinner == '-1':
         mon_dinner = False
     else:
         mon_d_mess = encode[mon_dinner]
         mon_dinner = True
 
     tue_breakfast = request.form['tue_breakfast']
-    if tue_breakfast == -1:
+    if tue_breakfast == '-1':
         tue_breakfast = False
     else:
         tue_b_mess = encode[tue_breakfast]
         tue_breakfast = True
 
     tue_lunch = request.form['tue_lunch']
-    if tue_lunch == -1:
+    if tue_lunch == '-1':
         tue_lunch = False
     else:
         tue_l_mess = encode[tue_lunch]
         tue_lunch = True
 
     tue_dinner = request.form['tue_dinner']
-    if tue_dinner == -1:
+    if tue_dinner == '-1':
         tue_dinner = False
     else:
         tue_d_mess = encode[tue_dinner]
         tue_dinner = True
 
     wed_breakfast = request.form['wed_breakfast']
-    if wed_breakfast == -1:
+    if wed_breakfast == '-1':
         wed_breakfast = False
     else:
         wed_b_mess = encode[wed_breakfast]
         wed_breakfast = False
 
     wed_lunch = request.form['wed_lunch']
-    if wed_lunch == -1:
+    if wed_lunch == '-1':
         wed_lunch = False
     else:
         wed_l_mess = encode[wed_lunch]
         wed_lunch = False
 
     wed_dinner = request.form['wed_dinner']
-    if wed_dinner == -1:
+    if wed_dinner == '-1':
         wed_dinner = False
     else:
         wed_d_mess = encode[wed_dinner]
         wed_dinner = False
 
     thu_breakfast = request.form['thu_breakfast']
-    if thu_breakfast == -1:
+    if thu_breakfast == '-1':
         thu_breakfast = False
     else:
         thu_b_mess = encode[thu_breakfast]
         thu_breakfast = True
 
     thu_lunch = request.form['thu_lunch']
-    if thu_lunch == -1:
+    if thu_lunch == '-1':
         thu_lunch = False
     else:
         thu_l_mess = encode[thu_lunch]
         thu_lunch = True
 
     thu_dinner = request.form['thu_dinner']
-    if thu_dinner == -1:
+    if thu_dinner == '-1':
         thu_dinner = False
     else:
         thu_d_mess = encode[thu_dinner]
         thu_dinner = True
 
     fri_breakfast = request.form['fri_breakfast']
-    if fri_breakfast == -1:
+    if fri_breakfast == '-1':
         fri_breakfast = False
     else:
         fri_b_mess = encode[fri_breakfast]
         fri_breakfast = True
 
     fri_lunch = request.form['fri_lunch']
-    if fri_lunch == -1:
+    if fri_lunch == '-1':
         fri_lunch = False
     else:
         fri_l_mess = encode[fri_lunch]
         fri_lunch = True
 
     fri_dinner = request.form['fri_dinner']
-    if fri_dinner == -1:
+    if fri_dinner == '-1':
         fri_dinner = False
     else:
         fri_d_mess = encode[fri_dinner]
         fri_dinner = True
 
     sat_breakfast = request.form['sat_breakfast']
-    if sat_breakfast == -1:
+    if sat_breakfast == '-1':
         sat_breakfast = False
     else:
         sat_b_mess = encode[sat_breakfast]
         sat_breakfast = True
 
     sat_lunch = request.form['sat_lunch']
-    if sat_lunch == -1:
+    if sat_lunch == '-1':
         sat_lunch = False
     else:
         sat_l_mess = encode[sat_lunch]
         sat_lunch = True
 
     sat_dinner = request.form['sat_dinner']
-    if sat_dinner == -1:
+    if sat_dinner == '-1':
         sat_dinner = False
     else:
         sat_d_mess = encode[sat_dinner]
@@ -231,7 +228,10 @@ def init_json():
 
 @app.route('/cancel')
 def cancel():
-    return render_template('cancel.html')
+    if 'username' in session:
+        return render_template('cancel.html')
+    else:
+        return render_template('login.html')
 
 
 @app.route('/uncancelMeal', methods=['POST'])
@@ -357,34 +357,38 @@ def cancel_meal():
 
 @app.route('/view')
 def view():
-    user = User.query.filter(and_(User.rollNo == session['rollNo'])).first()
-    dic = json.loads(user.json)
-    breakfast_dict = {}
-    lunch_dict = {}
-    dinner_dict = {}
+    if 'username' in session:
+        user = User.query.filter(and_(User.rollNo == session['rollNo'])).first()
+        dic = json.loads(user.json)
+        breakfast_dict = {}
+        lunch_dict = {}
+        dinner_dict = {}
 
-    start_date_str = '01/07/2018'
-    start_date = start_date = datetime.datetime.strptime(start_date_str, '%d/%m/%Y').date()
-    date_count = 364
-    while date_count > -1:
-        date = start_date + datetime.timedelta(days=date_count)
-        date_str = date.strftime('%Y-%m-%d')
-        new_date_str = date.strftime('%m/%d/%Y')
-        for i in range(len(dic[date_str][0][0])):
-            if dic[date_str][0][0][i] == 1:
-                breakfast_dict[new_date_str] = i
+        start_date_str = '01/07/2018'
+        start_date = start_date = datetime.datetime.strptime(start_date_str, '%d/%m/%Y').date()
+        date_count = 364
+        while date_count > -1:
+            date = start_date + datetime.timedelta(days=date_count)
+            date_str = date.strftime('%Y-%m-%d')
+            new_date_str = date.strftime('%m/%d/%Y')
+            for i in range(len(dic[date_str][0][0])):
+                if dic[date_str][0][0][i] == 1:
+                    breakfast_dict[new_date_str] = i
 
-        for i in range(len(dic[date_str][0][1])):
-            if dic[date_str][0][1][i] == 1:
-                lunch_dict[new_date_str] = i
+            for i in range(len(dic[date_str][0][1])):
+                if dic[date_str][0][1][i] == 1:
+                    lunch_dict[new_date_str] = i
 
-        for i in range(len(dic[date_str][0][3])):
-            if dic[date_str][0][3][i] == 1:
-                dinner_dict[new_date_str] = i
-        # print(breakfast_dict)
-        date_count -= 1
-    print(breakfast_dict['12/10/2018'])
-    return render_template('view.html', breakfast_dict=breakfast_dict, lunch_dict=lunch_dict, dinner_dict=dinner_dict)
+            for i in range(len(dic[date_str][0][3])):
+                if dic[date_str][0][3][i] == 1:
+                    dinner_dict[new_date_str] = i
+            # print(breakfast_dict)
+            date_count -= 1
+        print(breakfast_dict['12/10/2018'])
+        return render_template('view.html', breakfast_dict=breakfast_dict, lunch_dict=lunch_dict,
+                               dinner_dict=dinner_dict)
+    else:
+        return render_template('login.html')
 
 
 # @app.route('/change')
@@ -404,43 +408,41 @@ def change():
     d = 0
     m = 0
 
-	for menu in menus:
-		st = "item" + str(d) + str(t) + str(m)
-		# print (menu, end ="" )
-		s = st + str(1)
-		Y[s] = menu.item1
-		s = st + str(2)
-		Y[s] = menu.item2
-		s = st + str(3)
-		Y[s] = menu.item3
-		s = st + str(4)
-		Y[s] = menu.item4
-		s = st + str(5)
-		Y[s] = menu.item5
-		s = st + str(6)
-		Y[s] = menu.item6
-		s = st + str(7)
-		Y[s] = menu.item7
-		s = st + str(8)
-		Y[s] = menu.item8
-		s = st + str(9)
-		Y[s] = menu.item9
-		s = st + str(10)
-		Y[s] = menu.item10
-		s = st + str(11)
-		Y[s] = menu.item11
-		s = st + str(12)
-		Y[s] = menu.item12
-		m = m + 1
-		if m == 4:
-			m = 0
-			t = t + 1
-		if t == 4:
-			t = 0
-			d  = d + 1
-		print(" ", Y[s])
+    for menu in menus:
+        st = "item" + str(d) + str(t) + str(m)
+        s = st + str(1)
+        Y[s] = menu.item1
+        s = st + str(2)
+        Y[s] = menu.item2
+        s = st + str(3)
+        Y[s] = menu.item3
+        s = st + str(4)
+        Y[s] = menu.item4
+        s = st + str(5)
+        Y[s] = menu.item5
+        s = st + str(6)
+        Y[s] = menu.item6
+        s = st + str(7)
+        Y[s] = menu.item7
+        s = st + str(8)
+        Y[s] = menu.item8
+        s = st + str(9)
+        Y[s] = menu.item9
+        s = st + str(10)
+        Y[s] = menu.item10
+        s = st + str(11)
+        Y[s] = menu.item11
+        s = st + str(12)
+        Y[s] = menu.item12
+        m = m + 1
+        if m == 4:
+            m = 0
+            t = t + 1
+        if t == 4:
+            t = 0
+            d = d + 1
 
-    return render_template('change.html', title='change', Y=Y, menus=menus)
+    return render_template('change.html', Y=Y)
 
 
 @app.route('/changeMeal', methods=['POST'])
@@ -586,14 +588,6 @@ def after_request(response):
     return response
 
 
-@app.route('/admin/register')
-@app.route('/admin/login')
-@app.route('/admin/index')
-@app.route('/admin/')
-def adminIndex():
-    return render_template('adminLogin.html')
-
-
 @app.route('/registerNext', methods=['GET', 'POST'])
 def registerNext():
     try:
@@ -604,6 +598,42 @@ def registerNext():
     except:
         return "Error: Please check your Email ID or Roll No"
     return redirect(url_for('index'))
+
+
+@app.route('/loginNext', methods=['GET', 'POST'])
+def loginNext():
+
+    if request.method == "POST":
+        rollNo = request.form['rollNo']
+        password = request.form['loginPassword']
+
+        user = User.query.filter(User.rollNo == rollNo).first()
+
+        if user:
+            if sha256_crypt.verify(password,user.password):
+                session['username'] = user.firstname
+                session['rollNo'] = user.rollNo
+                session['email'] = user.email
+                return redirect(url_for('index'))
+    return "Invalid Username or Password"
+
+
+@app.route('/logout', methods=['POST', 'GET'])
+def logout():
+    if 'username' in session:
+        name = session.pop('username')
+        email = session.pop('email')
+        roll_no = session.pop('rollNo')
+
+    return redirect(url_for('index'))
+
+
+@app.route('/admin/register')
+@app.route('/admin/login')
+@app.route('/admin/index')
+@app.route('/admin/')
+def adminIndex():
+    return render_template('adminLogin.html')
 
 
 @app.route('/admin/registerNext', methods=['GET', 'POST'])
@@ -618,22 +648,6 @@ def adminRegisterNext():
     except:
         return "Error: Please check for following errors: <br />1. Email<br />2.Admin ID"
     return redirect(url_for('dashboard'))
-
-
-@app.route('/loginNext', methods=['GET', 'POST'])
-def loginNext():
-    if request.method == "POST":
-        rollNo = request.form['rollNo']
-        password = request.form['loginPassword']
-
-        user = User.query.filter(User.rollNo == rollNo).first()
-
-        if user:
-            session['username'] = user.firstname
-            session['rollNo'] = user.rollNo
-            session['email'] = user.email
-            return redirect(url_for('index'))
-        return "Password Error"
 
 
 @app.route('/admin/loginNext', methods=['GET', 'POST'])
@@ -699,14 +713,4 @@ def adminChangeMenu():
 
     db.session.commit()
 
-    return "Menu Changed successfully";
-
-
-@app.route('/logout', methods=['POST', 'GET'])
-def logout():
-    if 'username' in session:
-        name = session.pop('username')
-        email = session.pop('email')
-        roll_no = session.pop('rollNo')
-
-    return redirect(url_for('index'))
+    return "Menu Changed successfully"
