@@ -44,7 +44,7 @@ window.onload = function () {
 new Lightpick({
     field: document.getElementById('demo-6'),
     singleDate: false,
-    minDate: moment().add(1, 'day'),
+    minDate: moment().add(-4, 'month'),
     maxDate: moment().add(6, 'month').endOf('month'),
     onSelect: function(start, end){
         document.getElementById('result-6').innerHTML = rangeText(start, end);

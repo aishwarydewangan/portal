@@ -1,5 +1,5 @@
 from io import BytesIO
-from flask import render_template,send_file
+from flask import render_template, send_file
 from sqlalchemy import and_
 from flask import url_for, redirect, request, make_response, flash
 from flask import session
@@ -34,7 +34,7 @@ def index():
                     send_data["breakfast"] = 'north'
                     flag = 1
                 elif i == 1:
-                    send_data["breakfast"]= 'south'
+                    send_data["breakfast"] = 'south'
                     flag = 1
                 elif i == 2:
                     send_data["breakfast"] = 'kadamb'
@@ -81,59 +81,54 @@ def index():
             elif dic[date][0][3][i] == -1 or flag == 0:
                 send_data["dinner"] = 'cancelled'
 
-
-
         day = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 
         today = day[datetime.datetime.today().weekday()]
-        if (send_data["breakfast"] != "cancelled"):
+        if send_data["breakfast"] != "cancelled":
             breakfastMenu = Menu.query.filter(Menu.mess == send_data["breakfast"]).all()
-        if (send_data["lunch"] != "cancelled"):
+        if send_data["lunch"] != "cancelled":
             lunchMenu = Menu.query.filter(Menu.mess == send_data["lunch"]).all()
-        if (send_data["dinner"] != "cancelled"):
+        if send_data["dinner"] != "cancelled":
             dinnerMenu = Menu.query.filter(Menu.mess == send_data["dinner"]).all()
 
-
-
-
-
-
-        if (send_data["breakfast"]!="cancelled"):
+        if send_data["breakfast"] != "cancelled":
             for m in breakfastMenu[:]:
                 if str(today) != str(m.day) or m.time != "breakfast":
                     breakfastMenu.remove(m)
 
             for menu in breakfastMenu:
-                 breakfast = menu;
+                breakfast = menu
         else:
             breakfast = {}
 
-        if (send_data["lunch"]!="cancelled"):
+        if send_data["lunch"] != "cancelled":
             for m in lunchMenu[:]:
                 if str(today) != str(m.day) and m.time != "lunch":
                     lunchMenu.remove(m)
             for menu in lunchMenu:
-                lunch = menu;
+                lunch = menu
         else:
             lunch = {}
-        if (send_data["lunch"]!="cancelled"):
+        if send_data["lunch"] != "cancelled":
             for menu in dinnerMenu:
-                dinner = menu;
+                dinner = menu
             for m in dinnerMenu[:]:
                 if str(today) != str(m.day) and m.time != "dinner":
                     dinnerMenu.remove(m)
         else:
             dinner = {}
 
-        return render_template('home.html',send_data=send_data, breakfast=breakfast, lunch=lunch, dinner=dinner)
+        return render_template('home.html', send_data=send_data, breakfast=breakfast, lunch=lunch, dinner=dinner)
         # return render_template('home.html')
     else:
         return render_template('login.html', error=error)
 
-@app.route('/download/<int:id>', methods=['GET','POST'])
+
+@app.route('/download/<int:id>', methods=['GET', 'POST'])
 def download(id):
-	file_data=Feedback.query.filter_by(id=id).first()
-	return send_file(BytesIO(file_data.image),attachment_filename='abc.jpg',as_attachment=True)
+    file_data = Feedback.query.filter_by(id=id).first()
+    return send_file(BytesIO(file_data.image), attachment_filename='abc.jpg', as_attachment=True)
+
 
 @app.route('/feedback')
 def feedback():
@@ -164,7 +159,7 @@ def feedback_form():
     return "Feedback added successfully"
 
 
-def calculate_mess_bill(user_dict):
+def calculate_mess_bill(user_dict, mode=False):
     # Encode = 0 - B, 1 - D, 2 - L, 3 - S
     north_rates = []
     south_rates = []
@@ -188,9 +183,17 @@ def calculate_mess_bill(user_dict):
     for r in rates_yuktahar:
         yuktahar_rates.append(int(r.rate))
 
-    start_date_str = '01/07/2018'
-    start_date = datetime.datetime.strptime(start_date_str, '%d/%m/%Y').date()
-    date_count = 364
+    if not mode:
+        start_date_str = '01/07/2018'
+        start_date = datetime.datetime.strptime(start_date_str, '%d/%m/%Y').date()
+        date_count = 364
+
+    elif mode:
+        start_date = datetime.datetime.today().date()
+        end_date_str = '30/06/2019'
+        end_date = datetime.datetime.strptime(end_date_str, '%d/%m/%Y').date()
+        date_count = (end_date - start_date).days - 1
+
     while date_count > -1:
         bill_of_date = 0
         date = start_date + datetime.timedelta(days=date_count)
@@ -199,66 +202,94 @@ def calculate_mess_bill(user_dict):
         for i in range(len(user_dict[date_str][0][0])):
             if user_dict[date_str][0][0][0] == 1:
                 bill_of_date += north_rates[0]
+                break
             if user_dict[date_str][0][0][1] == 1:
                 bill_of_date += south_rates[0]
+                break
             if user_dict[date_str][0][0][2] == 1:
                 bill_of_date += kadamb_rates[0]
+                break
             if user_dict[date_str][0][0][3] == 1:
                 bill_of_date += yuktahar_rates[0]
+                break
             if user_dict[date_str][0][0][0] == -1:
                 bill_of_date -= north_rates[0]
+                break
             if user_dict[date_str][0][0][1] == -1:
                 bill_of_date -= south_rates[0]
+                break
             if user_dict[date_str][0][0][2] == -1:
                 bill_of_date -= kadamb_rates[0]
+                break
             if user_dict[date_str][0][0][3] == -1:
                 bill_of_date -= yuktahar_rates[0]
+                break
         # lunch
         for i in range(len(user_dict[date_str][0][1])):
             if user_dict[date_str][0][1][0] == 1:
                 bill_of_date += north_rates[2]
+                break
             if user_dict[date_str][0][1][1] == 1:
                 bill_of_date += south_rates[2]
+                break
             if user_dict[date_str][0][1][2] == 1:
                 bill_of_date += kadamb_rates[2]
+                break
             if user_dict[date_str][0][1][3] == 1:
                 bill_of_date += yuktahar_rates[2]
+                break
             if user_dict[date_str][0][1][0] == -1:
                 bill_of_date -= north_rates[2]
+                break
             if user_dict[date_str][0][1][1] == -1:
                 bill_of_date -= south_rates[2]
+                break
             if user_dict[date_str][0][1][2] == -1:
                 bill_of_date -= kadamb_rates[2]
+                break
             if user_dict[date_str][0][1][3] == -1:
                 bill_of_date -= yuktahar_rates[2]
+                break
         # dinner
         for i in range(len(user_dict[date_str][0][3])):
             if user_dict[date_str][0][3][0] == 1:
                 bill_of_date += north_rates[1]
+                break
             if user_dict[date_str][0][3][1] == 1:
                 bill_of_date += south_rates[1]
+                break
             if user_dict[date_str][0][3][2] == 1:
                 bill_of_date += kadamb_rates[1]
+                break
             if user_dict[date_str][0][3][3] == 1:
                 bill_of_date += yuktahar_rates[1]
+                break
             if user_dict[date_str][0][3][0] == -1:
                 bill_of_date += north_rates[1]
+                break
             if user_dict[date_str][0][3][1] == -1:
                 bill_of_date += south_rates[1]
+                break
             if user_dict[date_str][0][3][2] == -1:
                 bill_of_date += kadamb_rates[1]
+                break
             if user_dict[date_str][0][3][3] == -1:
                 bill_of_date += yuktahar_rates[1]
+                break
         # snacks
         for i in range(len(user_dict[date_str][0][2])):
             if user_dict[date_str][0][2][0] == 1:
                 bill_of_date += north_rates[3]
+                break
             if user_dict[date_str][0][2][1] == 1:
                 bill_of_date += south_rates[3]
+                break
             if user_dict[date_str][0][2][2] == 1:
                 bill_of_date += kadamb_rates[3]
+                break
             if user_dict[date_str][0][2][3] == 1:
                 bill_of_date += yuktahar_rates[3]
+                break
 
         user_dict[date_str][1] = bill_of_date
 
@@ -417,7 +448,8 @@ def daywise():
         sat_d_mess = encode[sat_dinner]
         sat_dinner = True
 
-    if not (sun_breakfast or sun_lunch or sun_dinner or mon_breakfast or mon_dinner or mon_lunch or tue_breakfast or tue_lunch or tue_dinner or wed_breakfast or wed_lunch or wed_dinner or thu_breakfast or thu_lunch or thu_dinner or fri_breakfast or fri_lunch or fri_dinner or sat_breakfast or sat_lunch or sat_dinner):
+    if not (
+            sun_breakfast or sun_lunch or sun_dinner or mon_breakfast or mon_dinner or mon_lunch or tue_breakfast or tue_lunch or tue_dinner or wed_breakfast or wed_lunch or wed_dinner or thu_breakfast or thu_lunch or thu_dinner or fri_breakfast or fri_lunch or fri_dinner or sat_breakfast or sat_lunch or sat_dinner):
         return change(4)
 
     user = User.query.filter(and_(User.rollNo == session['rollNo'])).first()
@@ -431,13 +463,10 @@ def daywise():
         end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
-            print(start_date_needed)
-            print(dic[date_str][0][0])
             for i in range(len(dic[date_str][0][0])):
                 if dic[date_str][0][0][i] == 1:
                     dic[date_str][0][0][i] = 0
             dic[date_str][0][0][mon_b_mess] = 1
-            print(dic[date_str][0][0])
             new_date = start_date_needed - datetime.timedelta(days=7)
             start_date_needed = new_date
 
@@ -449,13 +478,10 @@ def daywise():
         end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
-            print(start_date_needed)
-            print(dic[date_str][0][1])
             for i in range(len(dic[date_str][0][1])):
                 if dic[date_str][0][1][i] == 1:
                     dic[date_str][0][1][i] = 0
             dic[date_str][0][1][mon_l_mess] = 1
-            print(dic[date_str][0][1])
             new_date = start_date_needed - datetime.timedelta(days=7)
             start_date_needed = new_date
 
@@ -467,13 +493,10 @@ def daywise():
         end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
-            print(start_date_needed)
-            print(dic[date_str][0][3])
             for i in range(len(dic[date_str][0][3])):
                 if dic[date_str][0][3][i] == 1:
                     dic[date_str][0][3][i] = 0
             dic[date_str][0][3][mon_d_mess] = 1
-            print(dic[date_str][0][3])
             new_date = start_date_needed - datetime.timedelta(days=7)
             start_date_needed = new_date
 
@@ -485,13 +508,10 @@ def daywise():
         end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
-            print(start_date_needed)
-            print(dic[date_str][0][0])
             for i in range(len(dic[date_str][0][0])):
                 if dic[date_str][0][0][i] == 1:
                     dic[date_str][0][0][i] = 0
             dic[date_str][0][0][tue_b_mess] = 1
-            print(dic[date_str][0][0])
             new_date = start_date_needed - datetime.timedelta(days=7)
             start_date_needed = new_date
 
@@ -503,13 +523,10 @@ def daywise():
         end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
-            print(start_date_needed)
-            print(dic[date_str][0][1])
             for i in range(len(dic[date_str][0][1])):
                 if dic[date_str][0][1][i] == 1:
                     dic[date_str][0][1][i] = 0
             dic[date_str][0][1][tue_l_mess] = 1
-            print(dic[date_str][0][1])
             new_date = start_date_needed - datetime.timedelta(days=7)
             start_date_needed = new_date
 
@@ -521,13 +538,10 @@ def daywise():
         end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
-            print(start_date_needed)
-            print(dic[date_str][0][3])
             for i in range(len(dic[date_str][0][3])):
                 if dic[date_str][0][3][i] == 1:
                     dic[date_str][0][3][i] = 0
             dic[date_str][0][3][tue_d_mess] = 1
-            print(dic[date_str][0][3])
             new_date = start_date_needed - datetime.timedelta(days=7)
             start_date_needed = new_date
 
@@ -539,13 +553,10 @@ def daywise():
         end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
-            print(start_date_needed)
-            print(dic[date_str][0][0])
             for i in range(len(dic[date_str][0][0])):
                 if dic[date_str][0][0][i] == 1:
                     dic[date_str][0][0][i] = 0
             dic[date_str][0][0][wed_b_mess] = 1
-            print(dic[date_str][0][0])
             new_date = start_date_needed - datetime.timedelta(days=7)
             start_date_needed = new_date
 
@@ -557,13 +568,10 @@ def daywise():
         end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
-            print(start_date_needed)
-            print(dic[date_str][0][1])
             for i in range(len(dic[date_str][0][1])):
                 if dic[date_str][0][1][i] == 1:
                     dic[date_str][0][1][i] = 0
             dic[date_str][0][1][wed_l_mess] = 1
-            print(dic[date_str][0][1])
             new_date = start_date_needed - datetime.timedelta(days=7)
             start_date_needed = new_date
 
@@ -575,13 +583,10 @@ def daywise():
         end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
-            print(start_date_needed)
-            print(dic[date_str][0][3])
             for i in range(len(dic[date_str][0][3])):
                 if dic[date_str][0][3][i] == 1:
                     dic[date_str][0][3][i] = 0
             dic[date_str][0][3][wed_d_mess] = 1
-            print(dic[date_str][0][3])
             new_date = start_date_needed - datetime.timedelta(days=7)
             start_date_needed = new_date
 
@@ -593,13 +598,10 @@ def daywise():
         end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
-            print(start_date_needed)
-            print(dic[date_str][0][0])
             for i in range(len(dic[date_str][0][0])):
                 if dic[date_str][0][0][i] == 1:
                     dic[date_str][0][0][i] = 0
             dic[date_str][0][0][thu_b_mess] = 1
-            print(dic[date_str][0][0])
             new_date = start_date_needed - datetime.timedelta(days=7)
             start_date_needed = new_date
 
@@ -611,13 +613,10 @@ def daywise():
         end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
-            print(start_date_needed)
-            print(dic[date_str][0][1])
             for i in range(len(dic[date_str][0][1])):
                 if dic[date_str][0][1][i] == 1:
                     dic[date_str][0][1][i] = 0
             dic[date_str][0][1][thu_l_mess] = 1
-            print(dic[date_str][0][1])
             new_date = start_date_needed - datetime.timedelta(days=7)
             start_date_needed = new_date
 
@@ -629,13 +628,10 @@ def daywise():
         end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
-            print(start_date_needed)
-            print(dic[date_str][0][3])
             for i in range(len(dic[date_str][0][3])):
                 if dic[date_str][0][3][i] == 1:
                     dic[date_str][0][3][i] = 0
             dic[date_str][0][3][thu_d_mess] = 1
-            print(dic[date_str][0][3])
             new_date = start_date_needed - datetime.timedelta(days=7)
             start_date_needed = new_date
 
@@ -647,13 +643,10 @@ def daywise():
         end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
-            print(start_date_needed)
-            print(dic[date_str][0][0])
             for i in range(len(dic[date_str][0][0])):
                 if dic[date_str][0][0][i] == 1:
                     dic[date_str][0][0][i] = 0
             dic[date_str][0][0][fri_b_mess] = 1
-            print(dic[date_str][0][0])
             new_date = start_date_needed - datetime.timedelta(days=7)
             start_date_needed = new_date
 
@@ -665,13 +658,10 @@ def daywise():
         end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
-            print(start_date_needed)
-            print(dic[date_str][0][1])
             for i in range(len(dic[date_str][0][1])):
                 if dic[date_str][0][1][i] == 1:
                     dic[date_str][0][1][i] = 0
             dic[date_str][0][1][fri_l_mess] = 1
-            print(dic[date_str][0][1])
             new_date = start_date_needed - datetime.timedelta(days=7)
             start_date_needed = new_date
 
@@ -683,13 +673,10 @@ def daywise():
         end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
-            print(start_date_needed)
-            print(dic[date_str][0][3])
             for i in range(len(dic[date_str][0][3])):
                 if dic[date_str][0][3][i] == 1:
                     dic[date_str][0][3][i] = 0
             dic[date_str][0][3][fri_d_mess] = 1
-            print(dic[date_str][0][3])
             new_date = start_date_needed - datetime.timedelta(days=7)
             start_date_needed = new_date
 
@@ -701,13 +688,10 @@ def daywise():
         end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
-            print(start_date_needed)
-            print(dic[date_str][0][0])
             for i in range(len(dic[date_str][0][0])):
                 if dic[date_str][0][0][i] == 1:
                     dic[date_str][0][0][i] = 0
             dic[date_str][0][0][sat_b_mess] = 1
-            print(dic[date_str][0][0])
             new_date = start_date_needed - datetime.timedelta(days=7)
             start_date_needed = new_date
 
@@ -719,13 +703,10 @@ def daywise():
         end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
-            print(start_date_needed)
-            print(dic[date_str][0][1])
             for i in range(len(dic[date_str][0][1])):
                 if dic[date_str][0][1][i] == 1:
                     dic[date_str][0][1][i] = 0
             dic[date_str][0][1][sat_l_mess] = 1
-            print(dic[date_str][0][1])
             new_date = start_date_needed - datetime.timedelta(days=7)
             start_date_needed = new_date
 
@@ -826,6 +807,35 @@ def messbill():
     else:
         return render_template('login.html', error=error)
 
+
+@app.route('/viewbill', methods=['POST'])
+def view_bill():
+    error = {}
+    date_range = request.form['date_range']
+    if date_range == '':
+        error["status"] = 2
+        return render_template('messbill.html', error=error)
+    else:
+        user = User.query.filter(and_(User.rollNo == session['rollNo'])).first()
+        dic = json.loads(user.json)
+        start_date_str, end_date_str = date_range.split(' - ')
+        if end_date_str == start_date_str or end_date_str == '...':
+            start_date = datetime.datetime.strptime(start_date_str, '%d/%m/%Y').date()
+            date_count = 0
+        else:
+            start_date = datetime.datetime.strptime(start_date_str, '%d/%m/%Y').date()
+            end_date = datetime.datetime.strptime(end_date_str, '%d/%m/%Y').date()
+            date_count = float((end_date - start_date).days)
+
+        total_bill = 0
+        while date_count > -1:
+            date = start_date + datetime.timedelta(days=date_count)
+            date_str = date.strftime('%Y-%m-%d')
+            total_bill += dic[date_str][1]
+            date_count -= 1
+        error["status"] = 5
+        error["bill"] = total_bill
+        return render_template("/messbill.html", error=error)
 
 
 @app.route('/uncancelMeal', methods=['POST'])
@@ -1016,7 +1026,6 @@ def view():
                     dinner_dict[new_date_str] = 'Dinner - Cancelled'
 
             date_count -= 1
-        # print(breakfast_dict['12/15/2018'], "asdasdas")
         return render_template('view.html', breakfast_dict=breakfast_dict, lunch_dict=lunch_dict,
                                dinner_dict=dinner_dict)
     else:
@@ -1031,7 +1040,6 @@ def view():
 @app.route('/change')
 def change(status=-1):
     if 'username' in session:
-        print(status)
         Y = {}
 
         time = ["breakfast", "lunch", "snacks", "dinner"]
@@ -1121,7 +1129,6 @@ def change_meal_date():
         mess_number = 2
     elif mess == 'Yuktahar':
         mess_number = 3
-    print(mess, mess_number)
     if not (breakfast or lunch or dinner):
         return change(2)
     user = User.query.filter(and_(User.rollNo == session['rollNo'])).first()
@@ -1258,7 +1265,6 @@ def registerNext():
 @app.route('/loginNext', methods=['GET', 'POST'])
 def loginNext():
     error = {"a": 1}
-    print(error["a"])
     if request.method == "POST":
         rollNo = request.form['rollNo']
         password = request.form['loginPassword']
@@ -1289,6 +1295,7 @@ def logout():
 @app.route('/admin/dashboard')
 @app.route('/admin/')
 def adminIndex():
+    error = {}
     if 'adminID' in session:
 
         day = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
@@ -1303,7 +1310,7 @@ def adminIndex():
 
         return render_template('dashboard.html', menus=menus)
     else:
-        error = {}
+
         return render_template('adminLogin.html', error=error)
 
 
@@ -1316,12 +1323,14 @@ def adminRegisterNext():
         db.session.add(admin)
         db.session.commit()
     except:
-        return "Error: Please check for following errors: <br />1. Email<br />2.Admin ID"
+        error = {"a": 3}
+        return render_template('login.html', error=error)
     return redirect(url_for('adminIndex'))
 
 
 @app.route('/admin/loginNext', methods=['GET', 'POST'])
 def adminLoginNext():
+    error = {"a": 1}
     if request.method == "POST":
         adminID = request.form['adminID']
         password = request.form['loginPassword']
@@ -1335,7 +1344,7 @@ def adminLoginNext():
                 session['adminID'] = admin.adminID
                 session['adminEmail'] = admin.email
                 return redirect(url_for('adminIndex'))
-        return "Invalid Username or Password"
+        return render_template('login.html', error=error)
 
 
 @app.route('/admin/logout', methods=['POST', 'GET'])
@@ -1348,11 +1357,10 @@ def adminLogout():
     return redirect(url_for('adminIndex'))
 
 
-
 @app.route('/admin/feedback', methods=['POST', 'GET'])
 def adminFeedback():
     if 'adminID' in session:
-        feed=Feedback.query.filter(Feedback.mess==session['mess']).all()
+        feed = Feedback.query.filter(Feedback.mess == session['mess']).all()
         for f in feed:
             f.rollNo = User.query.filter(User.id == f.user_id).first().rollNo
             f.firstname = User.query.filter(User.id == f.user_id).first().firstname
@@ -1375,39 +1383,45 @@ def adminChange():
     # 			db.session.commit()
 
     menus = Menu.query.filter(Menu.mess == session['mess']).all()
-
-    return render_template('adminChange.html', menus=menus)
+    msg = {}
+    msg["status"] = -1
+    return render_template('adminChange.html', menus=menus, msg=msg)
 
 
 @app.route('/admin/changeMenu', methods=['GET', 'POST'])
 def adminChangeMenu():
-    menu = Menu.query.filter((Menu.time == request.form['time']) and (Menu.day == request.form['day']) and (
-            Menu.mess == session['mess'])).first()
+    if 'adminID' in session:
+        menu = Menu.query.filter((Menu.time == request.form['time']) and (Menu.day == request.form['day']) and (
+                Menu.mess == session['mess'])).first()
 
-    menu.item1 = request.form['item1']
-    menu.item2 = request.form['item2']
+        menu.item1 = request.form['item1']
+        menu.item2 = request.form['item2']
 
-    if request.form['time'] == "snacks":
-        menu.item3 = menu.item4 = menu.item5 = menu.item6 = menu.item7 = "NA"
-        menu.item8 = menu.item9 = menu.item10 = menu.item11 = menu.item12 = "NA"
-    else:
-        menu.item3 = request.form['item3']
-        menu.item4 = request.form['item4']
-        menu.item5 = request.form['item5']
-        menu.item6 = request.form['item6']
-        menu.item7 = request.form['item7']
-        menu.item8 = request.form['item8']
-        if request.form['time'] == "breakfast":
-            menu.item9 = menu.item10 = menu.item11 = menu.item12 = "NA"
+        if request.form['time'] == "snacks":
+            menu.item3 = menu.item4 = menu.item5 = menu.item6 = menu.item7 = "NA"
+            menu.item8 = menu.item9 = menu.item10 = menu.item11 = menu.item12 = "NA"
         else:
-            menu.item9 = request.form['item9']
-            menu.item10 = request.form['item10']
-            menu.item11 = request.form['item11']
-            menu.item12 = request.form['item12']
+            menu.item3 = request.form['item3']
+            menu.item4 = request.form['item4']
+            menu.item5 = request.form['item5']
+            menu.item6 = request.form['item6']
+            menu.item7 = request.form['item7']
+            menu.item8 = request.form['item8']
+            if request.form['time'] == "breakfast":
+                menu.item9 = menu.item10 = menu.item11 = menu.item12 = "NA"
+            else:
+                menu.item9 = request.form['item9']
+                menu.item10 = request.form['item10']
+                menu.item11 = request.form['item11']
+                menu.item12 = request.form['item12']
 
-    db.session.commit()
-
-    return "Menu Changed successfully"
+        db.session.commit()
+        menus = Menu.query.filter(Menu.mess == session['mess']).all()
+        msg = {}
+        msg["status"] = 0
+        return render_template('adminChange.html', menus=menus, msg=msg)
+    else:
+        return redirect(url_for('adminIndex'))
 
 
 @app.route('/admin/rates')
@@ -1424,6 +1438,8 @@ def adminRates():
 
     rates = Rates.query.filter(Rates.mess == session['mess']).all()
 
+    msg={};
+    msg["ret"] = -1;
     return render_template('adminRates.html', rates=rates)
 
 
@@ -1437,9 +1453,18 @@ def adminChangeRates():
 
     user = User.query.filter(True).all()
 
-    print(len(user))
+    for i in user:
+        dic = json.loads(i.json)
+        calculate_mess_bill(dic, True)
+        json_mod = json.dumps(dic)
+        i.json = json_mod
+        db.session.commit()
 
-    return "Rate Changed successfully"
+    db.session.commit()
+
+    msg={};
+    msg["ret"] = 0;
+    return render_template('adminRates.html',msg = msg)
 
 
 @app.route('/north')
