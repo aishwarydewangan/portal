@@ -14,11 +14,37 @@
     </div>
 
     <script type="text/javascript">
+
+        // start_date_str = '01/07/2018'
+        // end_date = '30/06/2019'
+        // format - YYYY-MM-DD
+
         // $(function() {
+        var d = new Date(2018, 11, 10);
+        str = new Array(2);
+        str[0] = d.toLocaleDateString();
+        console.log(str[0]);
+        // console.l{{breakfast_dict['12/10/2018']}}og(val);
 
         $('#calendar').fullCalendar({
-            defaultView: 'month'
-        });
+            defaultView: 'month',
+            events: [
+                {
+                    title  : 'event2',
+                    start  : '2018-11-14'
+                },
+                {
+                    title  : 'event2',
+                    start  : '2018-11-15'
+                },
+                {
+                    title  : 'event2',
+                    start  : '2018-11-16'
+                }
+            ],
+
+            textColor : 'white'
+        }, 'renderEvent');
 
         // })();
     </script>
