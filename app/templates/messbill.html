@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <br /><br />
+    <h1 style="font-size: 60px; font-family: 'Open Sans', sans-serif;">Mess Bill</h1>
+    <br /><br />
+
+    <div class="container">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-body">
+                    <p id="result-6">&nbsp Select Date(s):</p>
+                    <form method="POST" action="/viewbill" id="cancelForm">
+                        <input type="text" id="demo-6" name="date_range" class="form-control form-control-sm"/>
+                        <br />
+                        <p id="bill_amount">&nbsp;</p>
+                        <br />
+                        <br />
+
+                        <button type="submit" class="btn btn-primary" onclick="cancelMeal();">View Bill</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script async src="https://buttons.github.io/buttons.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+
+    <script src="{{ url_for('static',filename = 'lightpick.js') }}"></script>
+    <script src="{{ url_for('static',filename = 'messbill.js') }}"></script>
+
+    <script type="text/javascript">
+
+    alert(moment());
+    error_code = "{{error.status}}";
+    if(error_code == 0)
+    {
+      alert("Cancel Successfull");
+    }
+    else if(error_code == 1)
+    {
+        alert("Uncancel Successfull");
+    }
+    else if (error_code == 3)
+    {
+      alert("Select atleast one meal");
+    }
+    else if(error_code == 2)
+    {
+      alert("Incorrect range of date");
+    }
+    else if(error_code == 4)
+    {
+      alert("No meal selected for change");
+    }
+
+
+
+        function cancelMeal() {
+            document.getElementById('cancelForm').action = "/cancelMeal";
+        }
+
+        function uncancelMeal() {
+            document.getElementById('cancelForm').action = "/uncancelMeal";
+        }
+    </script>
+
+
+
+{% endblock %}

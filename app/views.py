@@ -27,43 +27,58 @@ def index():
         date = datetime.date.today()
         date = date.strftime('%Y-%m-%d')
         send_data = {}
+        flag = 0
         for i in range(len(dic[date][0][0])):
             if dic[date][0][0][i] == 1:
                 if i == 0:
                     send_data["breakfast"] = 'north'
+                    flag = 1
                 elif i == 1:
                     send_data["breakfast"]= 'south'
+                    flag = 1
                 elif i == 2:
                     send_data["breakfast"] = 'kadamb'
+                    flag = 1
                 elif i == 3:
                     send_data["breakfast"] = 'yuktahar'
-            elif dic[date][0][0][i] == -1:
+                    flag = 1
+            elif dic[date][0][0][i] == -1 or flag == 0:
                 send_data["breakfast"] = 'cancelled'
 
+        flag = 0
         for i in range(len(dic[date][0][1])):
             if dic[date][0][1][i] == 1:
                 if i == 0:
                     send_data["lunch"] = 'north'
+                    flag = 1
                 elif i == 1:
+                    flag = 1
                     send_data["lunch"] = 'south'
                 elif i == 2:
+                    flag = 1
                     send_data["lunch"] = 'kadamb'
                 elif i == 3:
+                    flag = 1
                     send_data["lunch"] = 'yuktahar'
-            elif dic[date][0][1][i] == -1:
+            elif dic[date][0][1][i] == -1 or flag == 0:
                 send_data["lunch"] = 'cancelled'
 
+        flag = 0
         for i in range(len(dic[date][0][3])):
             if dic[date][0][3][i] == 1:
                 if i == 0:
                     send_data["dinner"] = 'north'
+                    flag = 1
                 elif i == 1:
+                    flag = 1
                     send_data["dinner"] = 'south'
                 elif i == 2:
+                    flag = 1
                     send_data["dinner"] = 'kadamb'
                 elif i == 3:
+                    flag = 1
                     send_data["dinner"] = 'yuktahar'
-            elif dic[date][0][3][i] == -1:
+            elif dic[date][0][3][i] == -1 or flag == 0:
                 send_data["dinner"] = 'cancelled'
 
 
@@ -78,29 +93,40 @@ def index():
         if (send_data["dinner"] != "cancelled"):
             dinnerMenu = Menu.query.filter(Menu.mess == send_data["dinner"]).all()
 
-        for m in breakfastMenu[:]:
-            if str(today) != str(m.day) or m.time != "breakfast":
-                breakfastMenu.remove(m)
 
-        for m in lunchMenu[:]:
-            if str(today) != str(m.day) and m.time != "lunch":
-                lunchMenu.remove(m)
 
-        for m in dinnerMenu[:]:
-            if str(today) != str(m.day) and m.time != "dinner":
-                dinnerMenu.remove(m)
 
-        for menu in breakfastMenu:
-             breakfast = menu;
 
-        for menu in lunchMenu:
-            lunch = menu;
-        for menu in dinnerMenu:
-            dinner = menu;
 
-        print(lunch.item8);
+        if (send_data["breakfast"]!="cancelled"):
+            for m in breakfastMenu[:]:
+                if str(today) != str(m.day) or m.time != "breakfast":
+                    breakfastMenu.remove(m)
+
+            for menu in breakfastMenu:
+                 breakfast = menu;
+        else:
+            breakfast = {}
+
+        if (send_data["lunch"]!="cancelled"):
+            for m in lunchMenu[:]:
+                if str(today) != str(m.day) and m.time != "lunch":
+                    lunchMenu.remove(m)
+            for menu in lunchMenu:
+                lunch = menu;
+        else:
+            lunch = {}
+        if (send_data["lunch"]!="cancelled"):
+            for menu in dinnerMenu:
+                dinner = menu;
+            for m in dinnerMenu[:]:
+                if str(today) != str(m.day) and m.time != "dinner":
+                    dinnerMenu.remove(m)
+        else:
+            dinner = {}
 
         return render_template('home.html',send_data=send_data, breakfast=breakfast, lunch=lunch, dinner=dinner)
+        # return render_template('home.html')
     else:
         return render_template('login.html', error=error)
 
@@ -690,6 +716,16 @@ def cancel():
         return render_template('login.html', error=error)
 
 
+@app.route('/messbill')
+def messbill():
+    error = {"a": 2, "status": -1}
+    if 'username' in session:
+        return render_template('messbill.html', error=error)
+    else:
+        return render_template('login.html', error=error)
+
+
+
 @app.route('/uncancelMeal', methods=['POST'])
 def uncancel_meal():
     error = {}
@@ -1192,7 +1228,6 @@ def adminLogout():
         mess = session.pop('mess')
         adminID = session.pop('adminID')
     return redirect(url_for('adminIndex'))
-
 
 
 

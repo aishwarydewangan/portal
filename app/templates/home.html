@@ -43,11 +43,18 @@
                 document.getElementById('lunch_mess').innerHTML = val;
                 val = "Dinner - " + "{{send_data.dinner}}";
                 document.getElementById('dinner_mess').innerHTML = val;
-
-                document.getElementById('b_menu').innerHTML = "{{breakfast.item1}} , " + "{{breakfast.item2}} , "+"{{breakfast.item3}} , "+"{{breakfast.item4}} , "+"{{breakfast.item5}} , "+"{{breakfast.item6}} , "+"{{breakfast.item7}} , "+"{{breakfast.item8}}";
-                document.getElementById('l_menu').innerHTML = "{{lunch.item1}} , " + "{{lunch.item2}} , "+"{{lunch.item3}} , "+"{{lunch.item4}} , "+"{{lunch.item5}} , "+"{{lunch.item6}} , "+"{{lunch.item7}} , "+"{{lunch.item8}} , "+"{{lunch.item9}} , " + "{{lunch.item10}} , "+"{{lunch.item11}} , "+"{{lunch.item12}}";
-                document.getElementById('d_menu').innerHTML = "{{dinner.item1}} , " + "{{dinner.item2}} , "+"{{dinner.item3}} , "+"{{dinner.item4}} , "+"{{dinner.item5}} , "+"{{dinner.item6}} , "+"{{dinner.item7}} , "+"{{dinner.item8}} , "+"{{dinner.item9}} , " + "{{dinner.item10}} , "+"{{dinner.item11}} , "+"{{dinner.item12}}";
-
+                if("{{send_data.breakfast}}" != "cancelled")
+                {
+                  document.getElementById('b_menu').innerHTML = "{{breakfast.item1}} , " + "{{breakfast.item2}} , "+"{{breakfast.item3}} , "+"{{breakfast.item4}} , "+"{{breakfast.item5}} , "+"{{breakfast.item6}} , "+"{{breakfast.item7}} , "+"{{breakfast.item8}}";
+                }
+                if("{{send_data.lunch}}" != "cancelled")
+                {
+                  document.getElementById('l_menu').innerHTML = "{{lunch.item1}} , " + "{{lunch.item2}} , "+"{{lunch.item3}} , "+"{{lunch.item4}} , "+"{{lunch.item5}} , "+"{{lunch.item6}} , "+"{{lunch.item7}} , "+"{{lunch.item8}} , "+"{{lunch.item9}} , " + "{{lunch.item10}} , "+"{{lunch.item11}} , "+"{{lunch.item12}}";
+                }
+                if("{{send_data.dinner}}" != "cancelled")
+                {
+                  document.getElementById('d_menu').innerHTML = "{{dinner.item1}} , " + "{{dinner.item2}} , "+"{{dinner.item3}} , "+"{{dinner.item4}} , "+"{{dinner.item5}} , "+"{{dinner.item6}} , "+"{{dinner.item7}} , "+"{{dinner.item8}} , "+"{{dinner.item9}} , " + "{{dinner.item10}} , "+"{{dinner.item11}} , "+"{{dinner.item12}}";
+                }
 
             </script>
 {% endblock %}
