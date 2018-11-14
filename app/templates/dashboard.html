@@ -1,0 +1,141 @@
+{% extends "adminBase.html" %}
+{% block content %}
+            <br /><br />
+            <h1 style="font-size: 90px; font-family: 'Open Sans', sans-serif;">Dashboard</h1>
+            <br /><br />
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="card" style="background-image: linear-gradient(to top left, #E1F5FE, #ffffff);" id="bcard">
+                            <div class="card-body">
+                                <h5 class="card-title">Breakfast</h5>
+                                <h6 class="card-subtitle mb-2 text-muted"><i class="far fa-clock" id="bclk"></i> 07:30 - 09:30</h6>
+                                <p class="card-text" id="breakfast">Idli Dosa</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="card" style="background-image: linear-gradient(to top left, #90D1FF, #ffffff);" id="lcard">
+                            <div class="card-body">
+                                <h5 class="card-title">Lunch</h5>
+                                <h6 class="card-subtitle mb-2 text-muted"><i class="far fa-clock" id="lclk"></i> 12:30 - 14:30</h6>
+                                <p class="card-text" id="lunch">Paneer</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="card" style="background-image: linear-gradient(to top left, #E1F5FE, #ffffff);" id="dcard">
+                            <div class="card-body">
+                                <h5 class="card-title">Dinner</h5>
+                                <h6 class="card-subtitle mb-2 text-muted"><i class="far fa-clock" id="dclk"></i> 19:30 - 21:30</h6>
+                                <p class="card-text" id="dinner">Dal</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script type="text/javascript">
+                var breakfast = [];
+                var lunch = [];
+                var dinner = [];
+
+                {% for menu in menus %}
+                    {% if menu.time == "breakfast" %}
+                        breakfast.push('{{ menu.item1 }}');
+                        breakfast.push('{{ menu.item2 }}');
+                        breakfast.push('{{ menu.item3 }}');
+                        breakfast.push('{{ menu.item4 }}');
+                        breakfast.push('{{ menu.item5 }}');
+                        breakfast.push('{{ menu.item6 }}');
+                        breakfast.push('{{ menu.item7 }}');
+                        breakfast.push('{{ menu.item8 }}');
+                    {% endif %}
+                    {% if menu.time == "lunch" %}
+                        lunch.push('{{ menu.item1 }}');
+                        lunch.push('{{ menu.item2 }}');
+                        lunch.push('{{ menu.item3 }}');
+                        lunch.push('{{ menu.item4 }}');
+                        lunch.push('{{ menu.item5 }}');
+                        lunch.push('{{ menu.item6 }}');
+                        lunch.push('{{ menu.item7 }}');
+                        lunch.push('{{ menu.item8 }}');
+                        lunch.push('{{ menu.item9 }}');
+                        lunch.push('{{ menu.item10 }}');
+                        lunch.push('{{ menu.item11 }}');
+                        lunch.push('{{ menu.item12 }}');
+                    {% endif %}
+                    {% if menu.time == "dinner" %}
+                        dinner.push('{{ menu.item1 }}');
+                        dinner.push('{{ menu.item2 }}');
+                        dinner.push('{{ menu.item3 }}');
+                        dinner.push('{{ menu.item4 }}');
+                        dinner.push('{{ menu.item5 }}');
+                        dinner.push('{{ menu.item6 }}');
+                        dinner.push('{{ menu.item7 }}');
+                        dinner.push('{{ menu.item8 }}');
+                        dinner.push('{{ menu.item9 }}');
+                        dinner.push('{{ menu.item10 }}');
+                        dinner.push('{{ menu.item11 }}');
+                        dinner.push('{{ menu.item12 }}');
+                    {% endif %}
+                {% endfor %}
+
+                    var b = breakfast[0];
+
+                    for (var i = 1; i < breakfast.length; i++) {
+                        b = b + " , " + breakfast[i];
+                    }
+
+                    var l = lunch[0];
+
+                    for (var i = 1; i < lunch.length; i++) {
+                        l = l + " , " + lunch[i];
+                    }
+
+                    var d = dinner[0];
+
+                    for (var i = 1; i < dinner.length; i++) {
+                        d = d + " , " + dinner[i];
+                    }
+
+                    var today = new Date();
+
+                    console.log(today.getHours());
+
+                    document.getElementById('breakfast').innerHTML = b;
+                    document.getElementById('lunch').innerHTML = l;
+                    document.getElementById('dinner').innerHTML = d;
+
+                    if(today.getHours() >= 7 && today.getHours() <= 9) {
+                        document.getElementById('bcard').style.backgroundImage = "linear-gradient(to top left, #90D1FF, #ffffff)";
+                        document.getElementById('lcard').style.backgroundImage = "linear-gradient(to top left, #E1F5FE, #ffffff)";
+                        document.getElementById('dcard').style.backgroundImage = "linear-gradient(to top left, #E1F5FE, #ffffff)";
+                        document.getElementById('bclk').style.display = "inline";
+                        document.getElementById('lclk').style.display = "none";
+                        document.getElementById('dclk').style.display = "none";
+                    } else if(today.getHours() >= 12 && today.getHours() <= 14) {
+                        document.getElementById('bcard').style.backgroundImage = "linear-gradient(to top left, #E1F5FE, #ffffff)";
+                        document.getElementById('lcard').style.backgroundImage = "linear-gradient(to top left, #90D1FF, #ffffff)";
+                        document.getElementById('dcard').style.backgroundImage = "linear-gradient(to top left, #E1F5FE, #ffffff)";
+                        document.getElementById('bclk').style.display = "none";
+                        document.getElementById('lclk').style.display = "inline";
+                        document.getElementById('dclk').style.display = "none";
+                    } else if(today.getHours() >= 19 && today.getHours() <= 21) {
+                        document.getElementById('bcard').style.backgroundImage = "linear-gradient(to top left, #E1F5FE, #ffffff)";
+                        document.getElementById('lcard').style.backgroundImage = "linear-gradient(to top left, #E1F5FE, #ffffff)";
+                        document.getElementById('dcard').style.backgroundImage = "linear-gradient(to top left, #90D1FF, #ffffff)";
+                        document.getElementById('bclk').style.display = "none";
+                        document.getElementById('lclk').style.display = "none";
+                        document.getElementById('dclk').style.display = "inline";
+                    } else {
+                        document.getElementById('bcard').style.backgroundImage = "linear-gradient(to top left, #E1F5FE, #ffffff)";
+                        document.getElementById('lcard').style.backgroundImage = "linear-gradient(to top left, #90D1FF, #ffffff)";
+                        document.getElementById('dcard').style.backgroundImage = "linear-gradient(to top left, #E1F5FE, #ffffff)";
+                        document.getElementById('bclk').style.display = "none";
+                        document.getElementById('lclk').style.display = "none";
+                        document.getElementById('dclk').style.display = "none";
+                    }
+            </script>
+{% endblock %}

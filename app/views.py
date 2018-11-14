@@ -1062,11 +1062,22 @@ def logout():
 
 @app.route('/admin/register')
 @app.route('/admin/login')
-@app.route('/admin/index')
+@app.route('/admin/dashboard')
 @app.route('/admin/')
 def adminIndex():
     if 'username' in session:
-        return render_template('adminChange.html')
+
+        day = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+
+        today = day[datetime.datetime.today().weekday()]
+
+        menus = Menu.query.filter(Menu.mess == session['mess']).all()
+
+        for m in menus[:]:
+            if str(m.day) != str(today):
+                menus.remove(m)
+
+        return render_template('dashboard.html', menus=menus)
     else:
         error = {};
         return render_template('adminLogin.html',error=error)
@@ -1210,3 +1221,38 @@ def adminChangeRates():
     db.session.commit()
 
     return "Rate Changed successfully"
+
+
+@app.route('/north')
+def northMenu():
+    menus = Menu.query.filter(Menu.mess == "north").all()
+
+    return render_template('north.html', menus=menus)
+
+
+@app.route('/south')
+def southMenu():
+    menus = Menu.query.filter(Menu.mess == "south").all()
+
+    return render_template('south.html', menus=menus)
+
+
+@app.route('/yuktahar')
+def yuktaharMenu():
+    menus = Menu.query.filter(Menu.mess == "yuktahar").all()
+
+    return render_template('yuktahar.html', menus=menus)
+
+
+@app.route('/kadamb')
+def kadambMenu():
+    menus = Menu.query.filter(Menu.mess == "kadamb").all()
+
+    return render_template('kadamb.html', menus=menus)
+
+
+@app.route('/admin/view')
+def adminView():
+    menus = Menu.query.filter(Menu.mess == session['mess']).all()
+
+    return render_template('adminView.html', menus=menus)
