@@ -9,30 +9,52 @@
                     <div class="col-sm">
                         <div class="card" style="background-image: linear-gradient(to top left, #E1F5FE, #ffffff);">
                             <div class="card-body">
-                                <h5 class="card-title">Breakfast - South</h5>
+                                <h5 class="card-title" id = "breakfast_mess">Breakfast -</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">07:30 - 09:30</h6>
-                                <p class="card-text">Idli Dosa</p>
+                                <p class="card-text" id = "b_menu">-</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm">
                         <div class="card" style="background-image: linear-gradient(to top left, #90D1FF, #ffffff);">
                             <div class="card-body">
-                                <h5 class="card-title">Lunch - North</h5>
+                                <h5 class="card-title" id = "lunch_mess">Lunch -</h5>
                                 <h6 class="card-subtitle mb-2 text-muted"><i class="far fa-clock"></i> 12:30 - 14:30</h6>
-                                <p class="card-text">Paneer</p>
+                                <p class="card-text" id = "l_menu">-</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm">
                         <div class="card" style="background-image: linear-gradient(to top left, #E1F5FE, #ffffff);">
                             <div class="card-body">
-                                <h5 class="card-title">Dinner - North</h5>
+                                <h5 class="card-title" id = "dinner_mess">Dinner -</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">19:30 - 21:30</h6>
-                                <p class="card-text">Dal</p>
+                                <p class="card-text" id ="d_menu">-</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <script type="text/javascript">
+                var val ="Breakfast - " + "{{send_data.breakfast}}";
+                document.getElementById('breakfast_mess').innerHTML = val;
+                val = "Lunch - " + "{{send_data.lunch}}";
+                document.getElementById('lunch_mess').innerHTML = val;
+                val = "Dinner - " + "{{send_data.dinner}}";
+                document.getElementById('dinner_mess').innerHTML = val;
+                if("{{send_data.breakfast}}" != "cancelled")
+                {
+                  document.getElementById('b_menu').innerHTML = "{{breakfast.item1}} , " + "{{breakfast.item2}} , "+"{{breakfast.item3}} , "+"{{breakfast.item4}} , "+"{{breakfast.item5}} , "+"{{breakfast.item6}} , "+"{{breakfast.item7}} , "+"{{breakfast.item8}}";
+                }
+                if("{{send_data.lunch}}" != "cancelled")
+                {
+                  document.getElementById('l_menu').innerHTML = "{{lunch.item1}} , " + "{{lunch.item2}} , "+"{{lunch.item3}} , "+"{{lunch.item4}} , "+"{{lunch.item5}} , "+"{{lunch.item6}} , "+"{{lunch.item7}} , "+"{{lunch.item8}} , "+"{{lunch.item9}} , " + "{{lunch.item10}} , "+"{{lunch.item11}} , "+"{{lunch.item12}}";
+                }
+                if("{{send_data.dinner}}" != "cancelled")
+                {
+                  document.getElementById('d_menu').innerHTML = "{{dinner.item1}} , " + "{{dinner.item2}} , "+"{{dinner.item3}} , "+"{{dinner.item4}} , "+"{{dinner.item5}} , "+"{{dinner.item6}} , "+"{{dinner.item7}} , "+"{{dinner.item8}} , "+"{{dinner.item9}} , " + "{{dinner.item10}} , "+"{{dinner.item11}} , "+"{{dinner.item12}}";
+                }
+
+            </script>
 {% endblock %}
