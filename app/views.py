@@ -21,7 +21,85 @@ app.secret_key = 'MKhJHJH798798kjhkjhkjGHh'
 def index():
     error = {}
     if 'username' in session:
-        return render_template('home.html')
+        user = User.query.filter(and_(User.rollNo == session['rollNo'])).first()
+        dic = json.loads(user.json)
+        date = datetime.date.today()
+        date = date.strftime('%Y-%m-%d')
+        send_data = {}
+        for i in range(len(dic[date][0][0])):
+            if dic[date][0][0][i] == 1:
+                if i == 0:
+                    send_data["breakfast"] = 'north'
+                elif i == 1:
+                    send_data["breakfast"]= 'south'
+                elif i == 2:
+                    send_data["breakfast"] = 'kadamb'
+                elif i == 3:
+                    send_data["breakfast"] = 'yuktahar'
+            elif dic[date][0][0][i] == -1:
+                send_data["breakfast"] = 'cancelled'
+
+        for i in range(len(dic[date][0][1])):
+            if dic[date][0][1][i] == 1:
+                if i == 0:
+                    send_data["lunch"] = 'north'
+                elif i == 1:
+                    send_data["lunch"] = 'south'
+                elif i == 2:
+                    send_data["lunch"] = 'kadamb'
+                elif i == 3:
+                    send_data["lunch"] = 'yuktahar'
+            elif dic[date][0][1][i] == -1:
+                send_data["lunch"] = 'cancelled'
+
+        for i in range(len(dic[date][0][3])):
+            if dic[date][0][3][i] == 1:
+                if i == 0:
+                    send_data["dinner"] = 'north'
+                elif i == 1:
+                    send_data["dinner"] = 'south'
+                elif i == 2:
+                    send_data["dinner"] = 'kadamb'
+                elif i == 3:
+                    send_data["dinner"] = 'yuktahar'
+            elif dic[date][0][3][i] == -1:
+                send_data["dinner"] = 'cancelled'
+
+
+
+        day = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+
+        today = day[datetime.datetime.today().weekday()]
+        if (send_data["breakfast"] != "cancelled"):
+            breakfastMenu = Menu.query.filter(Menu.mess == send_data["breakfast"]).all()
+        if (send_data["lunch"] != "cancelled"):
+            lunchMenu = Menu.query.filter(Menu.mess == send_data["lunch"]).all()
+        if (send_data["dinner"] != "cancelled"):
+            dinnerMenu = Menu.query.filter(Menu.mess == send_data["dinner"]).all()
+
+        for m in breakfastMenu[:]:
+            if str(today) != str(m.day) or m.time != "breakfast":
+                breakfastMenu.remove(m)
+
+        for m in lunchMenu[:]:
+            if str(today) != str(m.day) and m.time != "lunch":
+                lunchMenu.remove(m)
+
+        for m in dinnerMenu[:]:
+            if str(today) != str(m.day) and m.time != "dinner":
+                dinnerMenu.remove(m)
+
+        for menu in breakfastMenu:
+             breakfast = menu;
+
+        for menu in lunchMenu:
+            lunch = menu;
+        for menu in dinnerMenu:
+            dinner = menu;
+
+        print(lunch.item8);
+
+        return render_template('home.html',send_data=send_data, breakfast=breakfast, lunch=lunch, dinner=dinner)
     else:
         return render_template('login.html', error=error)
 
@@ -1119,7 +1197,7 @@ def adminLogout():
 
 # @app.route('/img/<int:img_id>')
 # def serve_img(img_id):
-#     pass 
+#     pass
 
 @app.route('/admin/feedback', methods=['POST', 'GET'])
 def adminFeedback():
