@@ -50,7 +50,7 @@ class Rates(db.Model):
 	time = db.Column(db.String(30), primary_key=True, nullable=False)
 	rate = db.Column(db.String(30), nullable=False)
 
-#pic
+
 class Feedback(db.Model):
 	id =db.Column(db.Integer, primary_key=True)
 	mess=db.Column(db.String(60), nullable=False)
@@ -58,7 +58,8 @@ class Feedback(db.Model):
 	issue=db.Column(db.Text,nullable=False)
 	description=db.Column(db.Text,nullable=False)
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
-	
+	image=db.Column(db.LargeBinary,nullable=True)
+
 	def __repr__(self):
 		return "Feedback('{self.content}')"
 
