@@ -188,9 +188,25 @@ def view():
 	return render_template('view.html')
 
 
+# @app.route('/change')
+# def change():
+# 	return render_template('change.html')
+
 @app.route('/change')
 def change():
-	return render_template('change.html')
+	Y = {'item1': 'item1'}
+
+	time = ["breakfast", "lunch", "snacks", "dinner"]
+	day = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
+	mess = ["north", "south", "yuktahar", "kadamb"]
+
+	for t in time:
+		for d in day:
+			for m in mess:
+				menu = Menu.query.filter((Menu.time == t) and (Menu.day == d) and (Menu.mess == m)).first()
+				print(menu)
+
+	return render_template('change.html',title='change', Y=Y)
 
 
 @app.route('/changeMeal', methods=['POST'])
