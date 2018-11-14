@@ -33,7 +33,11 @@ def index():
 
 @app.route('/feedback')
 def feedback():
-	return render_template('feedback.html')
+	if 'username' in session:
+		return render_template('feedback.html')
+	else:
+		return render_template('login.html')
+	
 
 @app.route('/feedbackform', methods=['POST'])
 def feedback_form():
@@ -71,8 +75,11 @@ def init_json():
 
 @app.route('/cancel')
 def cancel():
-	return render_template('cancel.html')
-
+	if 'username' in session:
+		return render_template('cancel.html')
+	else:
+		return render_template('login.html')
+	
 
 @app.route('/uncancelMeal', methods=['POST'])
 def uncancel_meal():
@@ -197,7 +204,10 @@ def cancel_meal():
 
 @app.route('/view')
 def view():
-	return render_template('view.html')
+	if 'username' in session:
+		return render_template('view.html')
+	else:
+		return render_template('login.html')
 
 
 # @app.route('/change')
@@ -401,23 +411,52 @@ def after_request(response):
 	return response
 
 
+
+@app.route('/registerNext', methods=['GET', 'POST'])
+def registerNext():
+	try:
+		user = User(firstname=request.form["fname"], lastname=request.form["lname"], email=request.form["email"], rollNo=request.form["rollNo"], password=sha256_crypt.encrypt(request.form['loginPassword']), json=init_json())
+		db.session.add(user)
+		db.session.commit()
+	except:
+		return "Error: Please check your Email ID or Roll No"
+	return redirect(url_for('index'))
+
+
+@app.route('/loginNext', methods=['GET', 'POST'])
+def loginNext():
+
+	if request.method == "POST":
+		rollNo = request.form['rollNo']
+		password = request.form['loginPassword']
+
+		user = User.query.filter(User.rollNo == rollNo).first()
+		
+		if user:
+			if sha256_crypt.verify(password,user.password):
+				session['username'] = user.firstname
+				session['rollNo'] = user.rollNo
+				session['email'] = user.email
+				return redirect(url_for('index'))
+		return "Invalid Username or Password"
+
+
+@app.route('/logout', methods=['POST', 'GET'])
+def logout():
+	if 'username' in session:
+		name = session.pop('username')
+		email = session.pop('email')
+		roll_no = session.pop('rollNo')
+
+	return redirect(url_for('index'))
+
+
 @app.route('/admin/register')
 @app.route('/admin/login')
 @app.route('/admin/index')
 @app.route('/admin/')
 def adminIndex():
 	return render_template('adminLogin.html')
-
-
-@app.route('/registerNext', methods=['GET', 'POST'])
-def registerNext():
-	try:
-		user = User(firstname=request.form["fname"], lastname=request.form["lname"], email=request.form["email"], rollNo=request.form["rollNo"], password=request.form['loginPassword'], json=init_json())
-		db.session.add(user)
-		db.session.commit()
-	except:
-		return "Error: Please check your Email ID or Roll No"
-	return redirect(url_for('index'))
 
 
 @app.route('/admin/registerNext', methods=['GET', 'POST'])
@@ -430,24 +469,6 @@ def adminRegisterNext():
 	except:
 		return "Error: Please check for following errors: <br />1. Email<br />2.Admin ID"
 	return redirect(url_for('dashboard'))
-
-
-@app.route('/loginNext', methods=['GET', 'POST'])
-def loginNext():
-
-	if request.method == "POST":
-		rollNo = request.form['rollNo']
-		password = request.form['loginPassword']
-
-		user = User.query.filter(User.rollNo == rollNo).first()
-
-		if user:
-			session['username'] = user.firstname
-			session['rollNo'] = user.rollNo
-			session['email'] = user.email
-			return redirect(url_for('index'))
-		return "Password Error"
-
 
 @app.route('/admin/loginNext', methods=['GET', 'POST'])
 def adminLoginNext():
@@ -516,11 +537,4 @@ def adminChangeMenu():
 	return "Menu Changed successfully";
 
 
-@app.route('/logout', methods=['POST', 'GET'])
-def logout():
-	if 'username' in session:
-		name = session.pop('username')
-		email = session.pop('email')
-		roll_no = session.pop('rollNo')
 
-	return redirect(url_for('index'))
