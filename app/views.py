@@ -1384,7 +1384,7 @@ def adminChange():
 
     menus = Menu.query.filter(Menu.mess == session['mess']).all()
     msg = {}
-    msg["status"] = 0
+    msg["status"] = -1
     return render_template('adminChange.html', menus=menus, msg=msg)
 
 
