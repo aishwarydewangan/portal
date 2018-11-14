@@ -19,11 +19,11 @@ app.secret_key = 'MKhJHJH798798kjhkjhkjGHh'
 @app.route('/home')
 @app.route('/')
 def index():
-    error={};
+    error = {}
     if 'username' in session:
         return render_template('home.html')
     else:
-        return render_template('login.html',error=error)
+        return render_template('login.html', error=error)
 
 
 # @app.route('/download')
@@ -34,12 +34,11 @@ def index():
 
 @app.route('/feedback')
 def feedback():
-    error={};
-    error["a"]=2;
+    error = {"a": 2}
     if 'username' in session:
         return render_template('feedback.html')
     else:
-        return render_template('login.html',error = error)
+        return render_template('login.html', error=error)
 
 
 @app.route('/feedbackform', methods=['POST'])
@@ -225,7 +224,7 @@ def daywise():
         day_got = datetime.datetime(2019, 6, 30).isoweekday()
         diff = day_got - day_needed
         start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
-        end_date = datetime.datetime(2018, 7, 1).date()
+        end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
             print(start_date_needed)
@@ -243,7 +242,7 @@ def daywise():
         day_got = datetime.datetime(2019, 6, 30).isoweekday()
         diff = day_got - day_needed
         start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
-        end_date = datetime.datetime(2018, 7, 1).date()
+        end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
             print(start_date_needed)
@@ -261,7 +260,7 @@ def daywise():
         day_got = datetime.datetime(2019, 6, 30).isoweekday()
         diff = day_got - day_needed
         start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
-        end_date = datetime.datetime(2018, 7, 1).date()
+        end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
             print(start_date_needed)
@@ -279,7 +278,7 @@ def daywise():
         day_got = datetime.datetime(2019, 6, 30).isoweekday()
         diff = day_got - day_needed
         start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
-        end_date = datetime.datetime(2018, 7, 1).date()
+        end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
             print(start_date_needed)
@@ -297,7 +296,7 @@ def daywise():
         day_got = datetime.datetime(2019, 6, 30).isoweekday()
         diff = day_got - day_needed
         start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
-        end_date = datetime.datetime(2018, 7, 1).date()
+        end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
             print(start_date_needed)
@@ -315,7 +314,7 @@ def daywise():
         day_got = datetime.datetime(2019, 6, 30).isoweekday()
         diff = day_got - day_needed
         start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
-        end_date = datetime.datetime(2018, 7, 1).date()
+        end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
             print(start_date_needed)
@@ -333,7 +332,7 @@ def daywise():
         day_got = datetime.datetime(2019, 6, 30).isoweekday()
         diff = day_got - day_needed
         start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
-        end_date = datetime.datetime(2018, 7, 1).date()
+        end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
             print(start_date_needed)
@@ -351,7 +350,7 @@ def daywise():
         day_got = datetime.datetime(2019, 6, 30).isoweekday()
         diff = day_got - day_needed
         start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
-        end_date = datetime.datetime(2018, 7, 1).date()
+        end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
             print(start_date_needed)
@@ -369,7 +368,7 @@ def daywise():
         day_got = datetime.datetime(2019, 6, 30).isoweekday()
         diff = day_got - day_needed
         start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
-        end_date = datetime.datetime(2018, 7, 1).date()
+        end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
             print(start_date_needed)
@@ -387,7 +386,7 @@ def daywise():
         day_got = datetime.datetime(2019, 6, 30).isoweekday()
         diff = day_got - day_needed
         start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
-        end_date = datetime.datetime(2018, 7, 1).date()
+        end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
             print(start_date_needed)
@@ -405,7 +404,7 @@ def daywise():
         day_got = datetime.datetime(2019, 6, 30).isoweekday()
         diff = day_got - day_needed
         start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
-        end_date = datetime.datetime(2018, 7, 1).date()
+        end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
             print(start_date_needed)
@@ -423,7 +422,7 @@ def daywise():
         day_got = datetime.datetime(2019, 6, 30).isoweekday()
         diff = day_got - day_needed
         start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
-        end_date = datetime.datetime(2018, 7, 1).date()
+        end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
             print(start_date_needed)
@@ -441,7 +440,7 @@ def daywise():
         day_got = datetime.datetime(2019, 6, 30).isoweekday()
         diff = day_got - day_needed
         start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
-        end_date = datetime.datetime(2018, 7, 1).date()
+        end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
             print(start_date_needed)
@@ -459,7 +458,7 @@ def daywise():
         day_got = datetime.datetime(2019, 6, 30).isoweekday()
         diff = day_got - day_needed
         start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
-        end_date = datetime.datetime(2018, 7, 1).date()
+        end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
             print(start_date_needed)
@@ -477,7 +476,7 @@ def daywise():
         day_got = datetime.datetime(2019, 6, 30).isoweekday()
         diff = day_got - day_needed
         start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
-        end_date = datetime.datetime(2018, 7, 1).date()
+        end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
             print(start_date_needed)
@@ -495,7 +494,7 @@ def daywise():
         day_got = datetime.datetime(2019, 6, 30).isoweekday()
         diff = day_got - day_needed
         start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
-        end_date = datetime.datetime(2018, 7, 1).date()
+        end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
             print(start_date_needed)
@@ -513,7 +512,7 @@ def daywise():
         day_got = datetime.datetime(2019, 6, 30).isoweekday()
         diff = day_got - day_needed
         start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
-        end_date = datetime.datetime(2018, 7, 1).date()
+        end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
             print(start_date_needed)
@@ -531,16 +530,13 @@ def daywise():
         day_got = datetime.datetime(2019, 6, 30).isoweekday()
         diff = day_got - day_needed
         start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
-        end_date = datetime.datetime(2018, 7, 1).date()
+        end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
-            print(start_date_needed)
-            print(dic[date_str][0][3])
             for i in range(len(dic[date_str][0][3])):
                 if dic[date_str][0][3][i] == 1:
                     dic[date_str][0][3][i] = 0
             dic[date_str][0][3][sat_d_mess] = 1
-            print(dic[date_str][0][3])
             new_date = start_date_needed - datetime.timedelta(days=7)
             start_date_needed = new_date
 
@@ -549,16 +545,13 @@ def daywise():
         day_got = datetime.datetime(2019, 6, 30).isoweekday()
         diff = day_got - day_needed
         start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
-        end_date = datetime.datetime(2018, 7, 1).date()
+        end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
-            print(start_date_needed)
-            print(dic[date_str][0][0])
             for i in range(len(dic[date_str][0][0])):
                 if dic[date_str][0][0][i] == 1:
                     dic[date_str][0][0][i] = 0
             dic[date_str][0][0][sun_b_mess] = 1
-            print(dic[date_str][0][0])
             new_date = start_date_needed - datetime.timedelta(days=7)
             start_date_needed = new_date
 
@@ -567,16 +560,13 @@ def daywise():
         day_got = datetime.datetime(2019, 6, 30).isoweekday()
         diff = day_got - day_needed
         start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
-        end_date = datetime.datetime(2018, 7, 1).date()
+        end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
-            print(start_date_needed)
-            print(dic[date_str][0][1])
             for i in range(len(dic[date_str][0][1])):
                 if dic[date_str][0][1][i] == 1:
                     dic[date_str][0][1][i] = 0
             dic[date_str][0][1][sun_l_mess] = 1
-            print(dic[date_str][0][1])
             new_date = start_date_needed - datetime.timedelta(days=7)
             start_date_needed = new_date
 
@@ -585,16 +575,13 @@ def daywise():
         day_got = datetime.datetime(2019, 6, 30).isoweekday()
         diff = day_got - day_needed
         start_date_needed = (datetime.datetime(2019, 6, 30) - datetime.timedelta(days=diff)).date()
-        end_date = datetime.datetime(2018, 7, 1).date()
+        end_date = datetime.datetime.today().date()
         while start_date_needed >= end_date:
             date_str = start_date_needed.strftime('%Y-%m-%d')
-            print(start_date_needed)
-            print(dic[date_str][0][3])
             for i in range(len(dic[date_str][0][3])):
                 if dic[date_str][0][3][i] == 1:
                     dic[date_str][0][3][i] = 0
             dic[date_str][0][3][sun_d_mess] = 1
-            print(dic[date_str][0][3])
             new_date = start_date_needed - datetime.timedelta(days=7)
             start_date_needed = new_date
 
@@ -602,7 +589,7 @@ def daywise():
     user.json = json_mod
     db.session.commit()
 
-    return change(0);
+    return change(0)
 
 
 def init_json():
@@ -619,22 +606,20 @@ def init_json():
 
 @app.route('/cancel')
 def cancel():
-    error={};
-    error["a"]=2;
-    error["status"] = -1;
+    error = {"a": 2, "status": -1}
     if 'username' in session:
-        return render_template('cancel.html',error = error)
+        return render_template('cancel.html', error=error)
     else:
-        return render_template('login.html',error = error)
+        return render_template('login.html', error=error)
 
 
 @app.route('/uncancelMeal', methods=['POST'])
 def uncancel_meal():
-    error = {};
+    error = {}
     date_range = request.form['date_range']
     if date_range == '':
-        error["status"] = 2;
-        return render_template('cancel.html',error = error)
+        error["status"] = 2
+        return render_template('cancel.html', error=error)
     try:
         breakfast = request.form['breakfast']
         breakfast = True
@@ -651,8 +636,8 @@ def uncancel_meal():
     except exceptions.BadRequestKeyError:
         dinner = False
     if not (breakfast or lunch or dinner):
-        error["status"] = 3;
-        return render_template('cancel.html',error = error)
+        error["status"] = 3
+        return render_template('cancel.html', error=error)
     else:
         user = User.query.filter(and_(User.rollNo == session['rollNo'])).first()
         dic = json.loads(user.json)
@@ -689,18 +674,17 @@ def uncancel_meal():
         user.json = json_mod
         db.session.commit()
 
-
-        error["status"] = 1;
-        return render_template('cancel.html',error = error)
+        error["status"] = 1
+        return render_template('cancel.html', error=error)
 
 
 @app.route('/cancelMeal', methods=['POST'])
 def cancel_meal():
-    error = {};
+    error = {}
     date_range = request.form['date_range']
     if date_range == '':
-        error["status"] = 2;
-        return render_template('cancel.html',error = error)
+        error["status"] = 2
+        return render_template('cancel.html', error=error)
     try:
         breakfast = request.form['breakfast']
         breakfast = True
@@ -717,8 +701,8 @@ def cancel_meal():
     except exceptions.BadRequestKeyError:
         dinner = False
     if not (breakfast or lunch or dinner):
-        error["status"] = 3;
-        return render_template('cancel.html',error = error)
+        error["status"] = 3
+        return render_template('cancel.html', error=error)
     else:
         user = User.query.filter(and_(User.rollNo == session['rollNo'])).first()
         dic = json.loads(user.json)
@@ -754,8 +738,8 @@ def cancel_meal():
         user.json = json_mod
         db.session.commit()
 
-        error["status"] = 0;
-        return render_template('cancel.html',error = error)
+        error["status"] = 0
+        return render_template('cancel.html', error=error)
 
 
 @app.route('/view')
@@ -776,24 +760,50 @@ def view():
             new_date_str = date.strftime('%m/%d/%Y')
             for i in range(len(dic[date_str][0][0])):
                 if dic[date_str][0][0][i] == 1:
-                    breakfast_dict[new_date_str] = i
+                    if i == 0:
+                        breakfast_dict[new_date_str] = 'Breakfast - North'
+                    elif i == 1:
+                        breakfast_dict[new_date_str] = 'Breakfast - South'
+                    elif i == 2:
+                        breakfast_dict[new_date_str] = 'Breakfast - Kadamb'
+                    elif i == 3:
+                        breakfast_dict[new_date_str] = 'Breakfast - Yuktahar'
+                elif dic[date_str][0][0][i] == -1:
+                    breakfast_dict[new_date_str] = 'Breakfast - Cancelled'
 
             for i in range(len(dic[date_str][0][1])):
                 if dic[date_str][0][1][i] == 1:
-                    lunch_dict[new_date_str] = i
+                    if i == 0:
+                        lunch_dict[new_date_str] = 'Lunch - North'
+                    elif i == 1:
+                        lunch_dict[new_date_str] = 'Lunch - South'
+                    elif i == 2:
+                        lunch_dict[new_date_str] = 'Lunch - Kadamb'
+                    elif i == 3:
+                        lunch_dict[new_date_str] = 'Lunch - Yuktahar'
+                elif dic[date_str][0][1][i] == -1:
+                    lunch_dict[new_date_str] = 'Lunch - Cancelled'
 
             for i in range(len(dic[date_str][0][3])):
                 if dic[date_str][0][3][i] == 1:
-                    dinner_dict[new_date_str] = i
-            # print(breakfast_dict)
+                    if i == 0:
+                        dinner_dict[new_date_str] = 'Dinner - North'
+                    elif i == 1:
+                        dinner_dict[new_date_str] = 'Dinner - South'
+                    elif i == 2:
+                        dinner_dict[new_date_str] = 'Dinner - Kadamb'
+                    elif i == 3:
+                        dinner_dict[new_date_str] = 'Dinner - Yuktahar'
+                elif dic[date_str][0][3][i] == -1:
+                    dinner_dict[new_date_str] = 'Dinner - Cancelled'
+
             date_count -= 1
-        # print(breakfast_dict['12/10/2018'])
+        # print(breakfast_dict['12/15/2018'], "asdasdas")
         return render_template('view.html', breakfast_dict=breakfast_dict, lunch_dict=lunch_dict,
                                dinner_dict=dinner_dict)
     else:
-        error={};
-        error["a"]=2;
-        return render_template('login.html',error=error)
+        error = {"a": 2}
+        return render_template('login.html', error=error)
 
 
 # @app.route('/change')
@@ -801,7 +811,7 @@ def view():
 # 	return render_template('change.html')
 
 @app.route('/change')
-def change(status = -1):
+def change(status=-1):
     if 'username' in session:
         print(status)
         Y = {}
@@ -848,7 +858,7 @@ def change(status = -1):
             if t == 4:
                 t = 0
                 d = d + 1
-        error={};
+        error = {"status": status}
         # if status==0:
         #     error["status"] = 0
         # elif status==1:
@@ -858,18 +868,14 @@ def change(status = -1):
         # else:
         #     error["status"] = -1
 
-        error["status"] = status;
-        return render_template('change.html', Y=Y,error=error)
+        return render_template('change.html', Y=Y, error=error)
     else:
-        error={};
-        error["a"]=2;
-        return render_template('login.html',error=error)
-
+        error = {"a": 2}
+        return render_template('login.html', error=error)
 
 
 @app.route('/changeMeal', methods=['POST'])
 def change_meal_date():
-
     date_range = request.form['date_range']
     if date_range == '':
         return change(3)
@@ -938,7 +944,7 @@ def change_meal_date():
 
 @app.route('/change_meal_month', methods=['POST'])
 def change_meal_month():
-    error = {};
+    error = {}
     month = request.form['select_month']
     if month == '':
         return change(1)
@@ -1024,17 +1030,15 @@ def registerNext():
         db.session.add(user)
         db.session.commit()
     except:
-        error = {};
-        error["a"] = 3;
+        error = {"a": 3}
         return render_template('login.html', error=error)
     return redirect(url_for('index'))
 
 
 @app.route('/loginNext', methods=['GET', 'POST'])
 def loginNext():
-    error = {};
-    error["a"] = 1;
-    print(error["a"]);
+    error = {"a": 1}
+    print(error["a"])
     if request.method == "POST":
         rollNo = request.form['rollNo']
         password = request.form['loginPassword']
@@ -1068,8 +1072,8 @@ def adminIndex():
     if 'adminID' in session:
         return render_template('adminChange.html')
     else:
-        error = {};
-        return render_template('adminLogin.html',error=error)
+        error = {}
+        return render_template('adminLogin.html', error=error)
 
 
 @app.route('/admin/registerNext', methods=['GET', 'POST'])
@@ -1112,6 +1116,7 @@ def adminLogout():
         adminID = session.pop('adminID')
     return redirect(url_for('adminIndex'))
 
+
 # @app.route('/img/<int:img_id>')
 # def serve_img(img_id):
 #     pass 
@@ -1121,18 +1126,17 @@ def adminFeedback():
     if 'adminID' in session:
         feed=Feedback.query.filter(Feedback.mess==session['mess']).all()
         for f in feed:
-            f.rollNo=User.query.filter(User.id==f.user_id).first().rollNo
-            f.firstname=User.query.filter(User.id==f.user_id).first().firstname
+            f.rollNo = User.query.filter(User.id == f.user_id).first().rollNo
+            f.firstname = User.query.filter(User.id == f.user_id).first().firstname
             if f.image:
-                f.image=f.image.decode('base64')
-        return render_template('adminFeedback.html',feedback=feed)
+                f.image = f.image.decode('base64')
+        return render_template('adminFeedback.html', feedback=feed)
     else:
         return redirect(url_for('adminIndex'))
 
+
 # file_data=Feedback.query.filter_by(id=1).first()
 # return send_file(BytesIO(file_data.image),attachment_filename='abc.jpg',as_attachment=True)
-
-
 
 
 @app.route('/admin/change')
