@@ -198,7 +198,7 @@ def view():
 
 @app.route('/change')
 def change():
-	Y = {'item1': 'item1'}
+	Y = {}
 
 	time = ["breakfast", "lunch", "snacks", "dinner"]
 	day = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
@@ -215,12 +215,44 @@ def change():
 	m = 0
 
 	for menu in menus:
-		st = "item" + str(t)
-		print (menu.item1)
-		Y[st] = menu.item1
-		break;
+		st = "item" + str(d) + str(t) + str(m)
+		print (menu, end ="" )
+		s = st + str(1)
+		Y[s] = menu.item1
+		s = st + str(2)
+		Y[s] = menu.item2
+		s = st + str(3)
+		Y[s] = menu.item3
+		s = st + str(4)
+		Y[s] = menu.item4
+		s = st + str(5)
+		Y[s] = menu.item5
+		s = st + str(6)
+		Y[s] = menu.item6
+		s = st + str(7)
+		Y[s] = menu.item7
+		s = st + str(8)
+		Y[s] = menu.item8
+		s = st + str(9)
+		Y[s] = menu.item9
+		s = st + str(10)
+		Y[s] = menu.item10
+		s = st + str(11)
+		Y[s] = menu.item11
+		s = st + str(12)
+		Y[s] = menu.item12
+		m = m + 1
+		if m == 4:
+			m = 0
+			t = t + 1
+		if t == 4:
+			t = 0
+			d  = d + 1
+		print(" ", Y[s])
 
-	print(Y["item0"])
+	print(s)
+	print(Y[s])
+	print(Y["item4215"])
 	return render_template('change.html',title='change', Y=Y, menus=menus)
 
 

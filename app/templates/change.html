@@ -110,37 +110,40 @@
                           </thead>
                           <tbody>
                             <tr>
-                              <td>{{Y.item1}}</td>
+                              <td id="Y1" >{{ Y.item0001 }}</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="Y2" >-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="Y3" >-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="Y4" >-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="Y5" >-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="Y6" >-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="Y7" >-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="Y8" >-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="Y9" >-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="Y10" >-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="Y11" >-</td>
+                            </tr>
+                            <tr>
+                              <td id="Y12" >-</td>
                             </tr>
                           </tbody>
                         </table>
@@ -154,37 +157,40 @@
                           </thead>
                           <tbody>
                             <tr>
-                              <td>-</td>
+                              <td id="K1">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="K2">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="K3">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="K4">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="K5">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="K6">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="K7">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="K8">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="K9">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="K10">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="K11">-</td>
+                            </tr>
+                            <tr>
+                              <td id="K12">-</td>
                             </tr>
                           </tbody>
                         </table>
@@ -197,37 +203,40 @@
                           </thead>
                           <tbody>
                             <tr>
-                              <td>-</td>
+                              <td id ="N1">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id ="N2">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id ="N3">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id ="N4">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id ="N5">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id ="N6">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id ="N7">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id ="N8">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id ="N9">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id ="N10">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id ="N11">-</td>
+                            </tr>
+                            <tr>
+                              <td id ="N12">-</td>
                             </tr>
                           </tbody>
                         </table>
@@ -240,37 +249,40 @@
                           </thead>
                           <tbody>
                             <tr>
-                              <td>-</td>
+                              <td id="S1">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="S2">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="S3">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="S4">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="S5">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="S6">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="S7">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="S8">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="S9">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="S10">-</td>
                             </tr>
                             <tr>
-                              <td>-</td>
+                              <td id="S11">-</td>
+                            </tr>
+                            <tr>
+                              <td id="S12">-</td>
                             </tr>
                           </tbody>
                         </table>
@@ -413,11 +425,17 @@
 
         function populate(){
             console.log("populate");
-            document.getElementById("day_change").value = day;
-            document.getElementById("time_change").value = meal;
-            //document.getElementById("daywise_submit").click();
+            str = "Y." + "item" + "0" + "0" + "0" + "2";
+            val = "eval({{str}})";
+            console.log(val);
+            console.log("{{ Y.item0001 }}");
+            // document.getElementById("Y2").innerHTML =y2
+            // const keys = Object.keys("{{Y}}");
+            // console.log(keys);
+            // for (item in "{{Y}}"){
+            //   console.log(item);
+            // }
 
-            // document.getElementById('daywiseForm').action = "/daywise";
         }
 
 
