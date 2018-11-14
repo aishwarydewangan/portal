@@ -138,6 +138,107 @@ def feedback_form():
     return "Feedback added successfully"
 
 
+def calculate_mess_bill(user_dict):
+    # Encode = 0 - B, 1 - D, 2 - L, 3 - S
+    north_rates = []
+    south_rates = []
+    kadamb_rates = []
+    yuktahar_rates = []
+
+    rates_north = Rates.query.filter(Rates.mess == "north").all()
+    rates_south = Rates.query.filter(Rates.mess == "south").all()
+    rates_kadamb = Rates.query.filter(Rates.mess == "kadamb").all()
+    rates_yuktahar = Rates.query.filter(Rates.mess == "yuktahar").all()
+
+    for r in rates_north:
+        north_rates.append(int(r.rate))
+
+    for r in rates_south:
+        south_rates.append(int(r.rate))
+
+    for r in rates_kadamb:
+        kadamb_rates.append(int(r.rate))
+
+    for r in rates_yuktahar:
+        yuktahar_rates.append(int(r.rate))
+
+    start_date_str = '01/07/2018'
+    start_date = datetime.datetime.strptime(start_date_str, '%d/%m/%Y').date()
+    date_count = 364
+    while date_count > -1:
+        bill_of_date = 0
+        date = start_date + datetime.timedelta(days=date_count)
+        date_str = date.strftime('%Y-%m-%d')
+        # breakfast
+        for i in range(len(user_dict[date_str][0][0])):
+            if user_dict[date_str][0][0][0] == 1:
+                bill_of_date += north_rates[0]
+            if user_dict[date_str][0][0][1] == 1:
+                bill_of_date += south_rates[0]
+            if user_dict[date_str][0][0][2] == 1:
+                bill_of_date += kadamb_rates[0]
+            if user_dict[date_str][0][0][3] == 1:
+                bill_of_date += yuktahar_rates[0]
+            if user_dict[date_str][0][0][0] == -1:
+                bill_of_date -= north_rates[0]
+            if user_dict[date_str][0][0][1] == -1:
+                bill_of_date -= south_rates[0]
+            if user_dict[date_str][0][0][2] == -1:
+                bill_of_date -= kadamb_rates[0]
+            if user_dict[date_str][0][0][3] == -1:
+                bill_of_date -= yuktahar_rates[0]
+        # lunch
+        for i in range(len(user_dict[date_str][0][1])):
+            if user_dict[date_str][0][1][0] == 1:
+                bill_of_date += north_rates[2]
+            if user_dict[date_str][0][1][1] == 1:
+                bill_of_date += south_rates[2]
+            if user_dict[date_str][0][1][2] == 1:
+                bill_of_date += kadamb_rates[2]
+            if user_dict[date_str][0][1][3] == 1:
+                bill_of_date += yuktahar_rates[2]
+            if user_dict[date_str][0][1][0] == -1:
+                bill_of_date -= north_rates[2]
+            if user_dict[date_str][0][1][1] == -1:
+                bill_of_date -= south_rates[2]
+            if user_dict[date_str][0][1][2] == -1:
+                bill_of_date -= kadamb_rates[2]
+            if user_dict[date_str][0][1][3] == -1:
+                bill_of_date -= yuktahar_rates[2]
+        # dinner
+        for i in range(len(user_dict[date_str][0][3])):
+            if user_dict[date_str][0][3][0] == 1:
+                bill_of_date += north_rates[1]
+            if user_dict[date_str][0][3][1] == 1:
+                bill_of_date += south_rates[1]
+            if user_dict[date_str][0][3][2] == 1:
+                bill_of_date += kadamb_rates[1]
+            if user_dict[date_str][0][3][3] == 1:
+                bill_of_date += yuktahar_rates[1]
+            if user_dict[date_str][0][3][0] == -1:
+                bill_of_date += north_rates[1]
+            if user_dict[date_str][0][3][1] == -1:
+                bill_of_date += south_rates[1]
+            if user_dict[date_str][0][3][2] == -1:
+                bill_of_date += kadamb_rates[1]
+            if user_dict[date_str][0][3][3] == -1:
+                bill_of_date += yuktahar_rates[1]
+        # snacks
+        for i in range(len(user_dict[date_str][0][2])):
+            if user_dict[date_str][0][2][0] == 1:
+                bill_of_date += north_rates[3]
+            if user_dict[date_str][0][2][1] == 1:
+                bill_of_date += south_rates[3]
+            if user_dict[date_str][0][2][2] == 1:
+                bill_of_date += kadamb_rates[3]
+            if user_dict[date_str][0][2][3] == 1:
+                bill_of_date += yuktahar_rates[3]
+
+        user_dict[date_str][1] = bill_of_date
+
+        date_count -= 1
+
+
 @app.route('/daywise', methods=['POST'])
 def daywise():
     # Encoding:  N - 0, S - 1, Y - 3, K - 2
@@ -662,6 +763,7 @@ def daywise():
             new_date = start_date_needed - datetime.timedelta(days=7)
             start_date_needed = new_date
 
+    calculate_mess_bill(dic)
     json_mod = json.dumps(dic)
     user.json = json_mod
     db.session.commit()
@@ -747,6 +849,7 @@ def uncancel_meal():
                         dic[date_str][0][3][pos] = 1
             date_count -= 1
 
+        calculate_mess_bill(dic)
         json_mod = json.dumps(dic)
         user.json = json_mod
         db.session.commit()
@@ -811,6 +914,8 @@ def cancel_meal():
                         pos = dic[date_str][0][3].index(item)
                         dic[date_str][0][3][pos] = -1
             date_count -= 1
+
+        calculate_mess_bill(dic)
         json_mod = json.dumps(dic)
         user.json = json_mod
         db.session.commit()
@@ -829,7 +934,7 @@ def view():
         dinner_dict = {}
 
         start_date_str = '01/07/2018'
-        start_date = start_date = datetime.datetime.strptime(start_date_str, '%d/%m/%Y').date()
+        start_date = datetime.datetime.strptime(start_date_str, '%d/%m/%Y').date()
         date_count = 364
         while date_count > -1:
             date = start_date + datetime.timedelta(days=date_count)
@@ -1013,6 +1118,7 @@ def change_meal_date():
             dic[date_str][0][3][mess_number] = 1
         date_count -= 1
 
+    calculate_mess_bill(dic)
     json_mod = json.dumps(dic)
     user.json = json_mod
     db.session.commit()
@@ -1086,6 +1192,7 @@ def change_meal_month():
             dic[date_str][0][3][mess_number] = 1
         date_count -= 1
 
+    calculate_mess_bill(dic)
     json_mod = json.dumps(dic)
     user.json = json_mod
     db.session.commit()
@@ -1276,10 +1383,14 @@ def adminRates():
 
 @app.route('/admin/changeRates', methods=['GET', 'POST'])
 def adminChangeRates():
-    r = Rates.query.filter((Rates.mess==session['mess']) and (Rates.time == request.form['time'])).first()
+    r = Rates.query.filter((Rates.mess == session['mess']) and (Rates.time == request.form['time'])).first()
 
     r.rate = request.form['rate']
 
     db.session.commit()
+
+    user = User.query.filter(True).all()
+
+    print(len(user))
 
     return "Rate Changed successfully"
