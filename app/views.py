@@ -1324,7 +1324,8 @@ def adminRegisterNext():
         db.session.commit()
     except:
         error = {"a": 3}
-        return render_template('login.html', error=error)
+        # return render_template('adminLogin.html', error=error)
+        return redirect(url_for('adminIndex'))
     return redirect(url_for('adminIndex'))
 
 
@@ -1339,18 +1340,18 @@ def adminLoginNext():
 
         if admin:
             if sha256_crypt.verify(password, admin.password):
-                session['firstName'] = admin.firstname
+                session['firstname'] = admin.firstname
                 session['mess'] = admin.mess
                 session['adminID'] = admin.adminID
                 session['adminEmail'] = admin.email
                 return redirect(url_for('adminIndex'))
-        return render_template('login.html', error=error)
+        return render_template('adminLogin.html', error=error)
 
 
 @app.route('/admin/logout', methods=['POST', 'GET'])
 def adminLogout():
     if 'adminID' in session:
-        name = session.pop('firstName')
+        name = session.pop('firstname')
         email = session.pop('adminEmail')
         mess = session.pop('mess')
         adminID = session.pop('adminID')
@@ -1382,10 +1383,12 @@ def adminChange():
     # 			db.session.add(menu)
     # 			db.session.commit()
 
-    menus = Menu.query.filter(Menu.mess == session['mess']).all()
-    msg = {}
-    msg["status"] = -1
-    return render_template('adminChange.html', menus=menus, msg=msg)
+    if 'adminID' in session:
+        menus = Menu.query.filter(Menu.mess == session['mess']).all()
+        msg = {}
+        msg["status"] = -1
+        return render_template('adminChange.html', menus=menus, msg=msg)
+    return redirect(url_for('adminIndex'))
 
 
 @app.route('/admin/changeMenu', methods=['GET', 'POST'])
@@ -1436,11 +1439,12 @@ def adminRates():
     #         db.session.add(r)
     #         db.session.commit()
 
-    rates = Rates.query.filter(Rates.mess == session['mess']).all()
-
-    msg={};
-    msg["ret"] = -1;
-    return render_template('adminRates.html', rates=rates)
+    if 'adminID' in session:
+        rates = Rates.query.filter(Rates.mess == session['mess']).all()
+        msg={};
+        msg["ret"] = -1;
+        return render_template('adminRates.html', rates=rates)
+    return redirect(url_for('adminIndex'))
 
 
 @app.route('/admin/changeRates', methods=['GET', 'POST'])
@@ -1497,6 +1501,7 @@ def kadambMenu():
 
 @app.route('/admin/view')
 def adminView():
-    menus = Menu.query.filter(Menu.mess == session['mess']).all()
-
-    return render_template('adminView.html', menus=menus)
+    if 'adminID' in session:
+        menus = Menu.query.filter(Menu.mess == session['mess']).all()
+        return render_template('adminView.html', menus=menus)
+    return redirect(url_for('adminIndex'))
